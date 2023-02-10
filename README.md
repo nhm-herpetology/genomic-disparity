@@ -1,4 +1,6 @@
-# Genomic-Disparity
+![Genomic-disparity](https://github.com/nhm-herpetology/Genomic-disparity/blob/main/Genomic-disparity.jpg)
+
+# Genomic-disparity
 
 # Step 1: Curating chromosome-level genome assemblies
 We will need to download chromosome-level genome assemblies from NCBI or other repository. 
