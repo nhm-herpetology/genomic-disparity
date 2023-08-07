@@ -2,6 +2,8 @@
 
 # A landmark-based approach for exploring genomic variation
 
+This protocol was developed as part of the ULTRAMOD project https://github.com/AshwiniVM/ULTRAMOD
+
 # Step 1: Curating chromosome-level genome assemblies
 We will need to download chromosome-level genome assemblies from NCBI or other repository. 
 
