@@ -1,6 +1,6 @@
 ![Genomic-disparity](https://github.com/nhm-herpetology/Genomic-disparity/blob/main/Genomic-disparity.jpg)
 
-# A landmark-based approach for exploring chromsome architecture
+# A landmark-based approach for exploring chromosome architecture
 
 This protocol was developed as part of the ULTRAMOD project https://github.com/AshwiniVM/ULTRAMOD
 
