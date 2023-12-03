@@ -1,6 +1,6 @@
 ![Genomic-disparity](https://github.com/nhm-herpetology/Genomic-disparity/blob/main/Genomic-disparity.jpg)
 
-# A landmark-based approach for exploring genomic variation
+# A landmark-based approach for exploring chromsome architecture
 
 This protocol was developed as part of the ULTRAMOD project https://github.com/AshwiniVM/ULTRAMOD
 
@@ -8,7 +8,7 @@ This protocol was developed as part of the ULTRAMOD project https://github.com/A
 We will need to download chromosome-level genome assemblies from NCBI or other repository. 
 
 # Step 2: Selecting landmark sequences and formatting for reference mapping
-Landmarks can be any conserved sequence that can be aligned to genomes in your dataset. 
+Landmarks can be any conserved sequence that can be aligned to genomes in your dataset, but we have used ultraconserved elements (UCEs) as an example.  
 
 # Step 3: Reference mapping of landmarks to genomes
 BWA is used to map the landmarks to different chromosomes
