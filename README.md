@@ -1,5 +1,7 @@
 ![Genomic-disparity](https://github.com/nhm-herpetology/Genomic-disparity/blob/main/Genomic-disparity.jpg)
 
+Mohan, A.V., Goswami, A., Streicher J.W. 2024. Landmark-based estimates of genomic disparity. 
+
 # A landmark-based approach for exploring chromosome architecture
 
 This protocol was developed as part of the ULTRAMOD project https://github.com/AshwiniVM/ULTRAMOD
@@ -22,3 +24,4 @@ BWA is used to map the landmarks to different chromosomes
 # Step 7: Conduct disparity analyses and plot results
 
 # Step 8: Tools for interpretation of results
+
