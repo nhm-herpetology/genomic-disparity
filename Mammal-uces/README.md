@@ -22,9 +22,9 @@ Species | Order  | Autosomes | GenBank
 ------------ | -------------  | ------------- | ------------- 
 _Bos indicus_	| Artiodactyla | 29 | CM003021.1-CM003049.1
 _Bos taurus_	| Artiodactyla | 29 | CM008168.2-CM008196.2
-_Bubalus bubalis_	| Artiodactyla | 2 | 
-_Capra aegagrus_	| Artiodactyla | 2 | 
-_Capra hircus_	| Artiodactyla | 2 | 
+_Bubalus bubalis_	| Artiodactyla | 24 | CM034271.1-CM034294.1
+_Capra aegagrus_	| Artiodactyla | 29 | CM003214.1-CM003243.1
+_Capra hircus_	| Artiodactyla | 29 | CM004562.1-	CM004590.1
 _Giraffa tippelskirchi_	| Artiodactyla | 3 | 
 _Ovis aries_	| Artiodactyla | 2 | 
 _Ceratotherium simum_	| Perissodactyla | 9 | 
