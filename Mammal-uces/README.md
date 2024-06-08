@@ -31,7 +31,7 @@ _Ceratotherium simum_	| Perissodactyla | 40 | CM043809.1-CM043848.1
 _Equus asinus_ | Perissodactyla | 30 | CM027690.2-CM027719.2 
 _Equus caballus_	| Perissodactyla | 31 | CM009148.1-CM009178.1
 _Felis catus_ | Carnivora | 18 | CM031412.1-CM031429.1
-_Neomonachus schauinslandi_	| Carnivora | 16 | CM035896.1- 
+_Neomonachus schauinslandi_	| Carnivora | 16 | CM035896.1-CM035912.1 
 _Panthera tigris_ | Carnivora | 18 | 	CM031431.1-CM031448.1 
 _Cricetulus griseus_ | Rodentia | 9 | CM023436.1-CM023444.1 
 _Mus caroli_ | Rodentia | 19 | LT608242.1-LT608248.1 
