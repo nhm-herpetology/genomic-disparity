@@ -25,9 +25,9 @@ _Bos taurus_	| Artiodactyla | 29 | CM008168.2-CM008196.2
 _Bubalus bubalis_	| Artiodactyla | 24 | CM034271.1-CM034294.1
 _Capra aegagrus_	| Artiodactyla | 29 | CM003214.1-CM003243.1
 _Capra hircus_	| Artiodactyla | 29 | CM004562.1-	CM004590.1
-_Giraffa tippelskirchi_	| Artiodactyla | 3 | 
-_Ovis aries_	| Artiodactyla | 2 | 
-_Ceratotherium simum_	| Perissodactyla | 9 | 
+_Giraffa tippelskirchi_	| Artiodactyla | 14 | CM018103.1-CM018116.1 
+_Ovis aries_	| Artiodactyla | 26 | CM028704.1-CM028729.1 
+_Ceratotherium simum_	| Perissodactyla | 40 | CM043809.1-CM043848.1
 _Equus asinus_ | Perissodactyla | 4 | 
 _Equus caballus_	| Perissodactyla | 18 | 
 _Felis catus_ | Carnivora | C1 | 
@@ -46,7 +46,6 @@ _Macaca mulatta_	| Primates | 12 |
 _Pan troglodytes_ | Primates | 2B | 
 _Papio anubis_ | Primates | 10 | 
 _Piliocolobus tephrosceles_ | Primates | 11 |
-
 
 **We will need to download chromosome-level genome assemblies from NCBI or other repository.** 
 
