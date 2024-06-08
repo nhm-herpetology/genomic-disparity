@@ -8,39 +8,32 @@ Genomic architecture has played a key role in the evolution of biodiversity. Str
 
 <br/> 
 
-# Interspecific comparisons
+# Interspecific comparisons tutorial
 Tutorial using placental mammal genomes and ultraconserved elements (UCEs)
 
 >Click [here](https://github.com/nhm-herpetology/genomic-disparity/tree/main/Mammal-uces) to access tutorial.
 
 <br/>
 
-# Intraspecific comparisons
+# Intraspecific comparisons tutorial
 
 Tutorial using XXXXX. 
 
->You will need a Unix Command Terminal or PuTTY interface to complete this lab
 
-# A landmark-based approach for exploring chromosome architecture
+<br/>
 
-This protocol was developed as part of the ULTRAMOD project https://github.com/AshwiniVM/ULTRAMOD
+## Applying disparity scores to understand genomic evolution
 
-# Step 1: Curating chromosome-level genome assemblies
-We will need to download chromosome-level genome assemblies from NCBI or other repository. 
+Tools for understanding the accumulation of genomic disparity
 
-# Step 2: Selecting landmark sequences and formatting for reference mapping
-Landmarks can be any conserved sequence that can be aligned to genomes in your dataset, but we have used ultraconserved elements (UCEs) as an example.  
+<br/>
 
-# Step 3: Reference mapping of landmarks to genomes
-BWA is used to map the landmarks to different chromosomes
+## Evidence that chromosome-based disparity accumulates over evolutionary time 
 
-# Step 4: Identify those chromosomes that contain very similar landmarks
+A simulation study showing that genomic change and disparity scores are highly correlated
 
-# Step 5: Remove non-common landmarks and curate chromosome sets
+<br/>
 
-# Step 6: Assess the need for size correction and/or reverse complement transformation
 
-# Step 7: Conduct disparity analyses and plot results
 
-# Step 8: Tools for interpretation of results
 
