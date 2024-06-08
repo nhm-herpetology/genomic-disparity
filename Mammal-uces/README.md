@@ -34,7 +34,7 @@ We will need to download chromosome-level genome assemblies from NCBI or other r
 
 </details>
 
-## Step 4: Removing non-homologous landmarks from chromosomes
+## Step 4: Remove non-homologous landmarks from chromosomes
 
 <details>
   <summary>Click to expand content!</summary>
