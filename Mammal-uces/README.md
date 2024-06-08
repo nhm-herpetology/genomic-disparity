@@ -6,7 +6,7 @@
 
 **Dependencies**
 
-* NCBI esearch
+* NCBI Entrez Direct UNIX E-utilities
 * BWA
 * samtools
 * R statistical software
@@ -16,7 +16,7 @@
 <details>
   <summary>Click to expand content!</summary>
 
->In this tutorial we will use 26 placental mammal species belonging to five different orders. We will focus on autosomes in this tutorial (ignoring sex chromosomes). 
+>In this tutorial we will use 26 placental mammal species belonging to five different orders. We will focus on the available autosomes from each assembly (ignoring sex chromosomes and unplaced scaffolds). 
 
 Species | Order  | Autosomes | GenBank 
 ------------ | -------------  | ------------- | ------------- 
@@ -47,8 +47,25 @@ _Pan troglodytes_ | Primates | 23 | CM054434.2-	CM068906.1
 _Papio anubis_ | Primates | 19 | CM018180.1-CM018198.1
 _Piliocolobus tephrosceles_ | Primates | 21 | 	CM019240.1-CM019260.1
 
-**We will need to download chromosome-level genome assemblies from NCBI or other repository.** 
+**We will download the chromosome data from genome assemblies using Entrez Direct UNIX E-utilities** 
 
+First, we need to install the E-utilities:
+
+```  
+sh -c "$(wget -q ftp://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/install-edirect.sh -O -)"
+```
+
+Next, we will download the chromosome sequences using the configuration file ```chromosome_download.config``` and the shell script  ```chromosome_download.sh```.
+
+```
+./chromosome_download.sh
+```
+
+This command is downloading a substantial amount of data, so it may take up to 30 minutes to complete. 
+
+```
+./esearch -db nucleotide -query "AB179619.1" | ./efetch -format fasta > AB179619.1.fasta
+```
 </details>
 
 
