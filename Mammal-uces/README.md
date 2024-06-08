@@ -28,24 +28,24 @@ _Capra hircus_	| Artiodactyla | 29 | CM004562.1-	CM004590.1
 _Giraffa tippelskirchi_	| Artiodactyla | 14 | CM018103.1-CM018116.1 
 _Ovis aries_	| Artiodactyla | 26 | CM028704.1-CM028729.1 
 _Ceratotherium simum_	| Perissodactyla | 40 | CM043809.1-CM043848.1
-_Equus asinus_ | Perissodactyla | 4 | 
-_Equus caballus_	| Perissodactyla | 18 | 
-_Felis catus_ | Carnivora | C1 | 
-_Neomonachus schauinslandi_	| Carnivora | 3 | 
-_Panthera tigris_ | Carnivora | C1 | 
-_Cricetulus griseus_ | Rodentia | 6 | 
-_Mus caroli_ | Rodentia | 2 | 
-_Mus musculus_ | Rodentia | 2 |
-_Mus pahari_ | Rodentia | 3 | 
-_Mus spretus_	| Rodentia | 2 |
-_Rattus norvegicus_	| Rodentia | 3 | 
-_Peromyscus maniculatus_ | Rodentia | 4 | 
-_Gorilla gorilla_	| Primates | 3 | 
-_Macaca fascicularis_ | Primates | 12 | 
-_Macaca mulatta_	| Primates | 12 | 
-_Pan troglodytes_ | Primates | 2B | 
-_Papio anubis_ | Primates | 10 | 
-_Piliocolobus tephrosceles_ | Primates | 11 |
+_Equus asinus_ | Perissodactyla | 30 | CM027690.2-CM027719.2 
+_Equus caballus_	| Perissodactyla | 31 | CM009148.1-CM009178.1
+_Felis catus_ | Carnivora | 18 | CM031412.1-CM031429.1
+_Neomonachus schauinslandi_	| Carnivora | 16 | CM035896.1- 
+_Panthera tigris_ | Carnivora | 18 | 	CM031431.1-CM031448.1 
+_Cricetulus griseus_ | Rodentia | 9 | CM023436.1-CM023444.1 
+_Mus caroli_ | Rodentia | 19 | LT608242.1-LT608248.1 
+_Mus musculus_ | Rodentia | 19 | CM000994.3-CM001012.3
+_Mus pahari_ | Rodentia | 23 | LT608296.1-LT608309.1
+_Mus spretus_	| Rodentia | 19 | OW971678.1-OW971697.1
+_Rattus norvegicus_	| Rodentia | 20 | CM070391.1-	CM070410.1 
+_Peromyscus maniculatus_ | Rodentia | 23 | CM010879.2-CM010901.2
+_Gorilla gorilla_	| Primates | 23 | CM055446.2-CM068951.1
+_Macaca fascicularis_ | Primates | 20 | BLPH02000001.1-BLPH02000020.1 
+_Macaca mulatta_	| Primates | 20 | CM014336.1-CM014355.1
+_Pan troglodytes_ | Primates | 23 | CM054434.2-	CM068906.1 
+_Papio anubis_ | Primates | 19 | CM018180.1-CM018198.1
+_Piliocolobus tephrosceles_ | Primates | 21 | 	CM019240.1-CM019260.1
 
 **We will need to download chromosome-level genome assemblies from NCBI or other repository.** 
 
