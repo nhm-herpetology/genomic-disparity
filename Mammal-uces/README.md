@@ -8,7 +8,9 @@
 
 * NCBI esearch
 * BWA
+* samtools
 * R statistical software
+  
 
 ## Step 1: Download chromosome sequences from genome assemblies
 <details>
@@ -23,8 +25,13 @@ We will need to download chromosome-level genome assemblies from NCBI or other r
 <details>
   <summary>Click to expand content!</summary>
 
-  Landmarks can be any conserved sequence that can be aligned to genomes in your dataset, but we have used ultraconserved elements (UCEs) as an example. BWA is used to map the landmarks to different chromosomes.  
+  **Landmarks can be any single-copy, conserved sequence that can be aligned to genomes in your dataset, but we have used ultraconserved elements (UCEs) as an example.**  
 
+Download the Tetrapod 5k probe sequences (these will be used to UCE locations on the chromosomes). The probe set can also be downloaded [here](https://www.ultraconserved.org/)
+  
+```
+wget https://raw.githubusercontent.com/nhm-herpetology/museum-NGS-training/main/Unit_03/Bioinformatics_Lab/Tetrapods-UCE-5Kv1.fasta
+``` 
 </details>
 
 ## Step 3: Cluster chromosomes based on landmark similarity
