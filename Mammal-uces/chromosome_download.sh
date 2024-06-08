@@ -22,3 +22,9 @@ for i in ${chromosomes[@]}
 do
    esearch -db nucleotide -query $i | efetch -format fasta > "$i".fasta
 done
+
+# 5. Rename chromosomes with species name
+
+VAR1="$(awk '{print $2}' Taxon_*.txt)"
+
+for f in *.fasta ; do mv -- "$f" "${VAR1}_$f" ; done
