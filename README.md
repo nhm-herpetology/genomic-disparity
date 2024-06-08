@@ -11,7 +11,7 @@ Genomic architecture has played a key role in the evolution of biodiversity. Str
 # Interspecific comparisons
 Tutorial using placental mammal genomes and ultraconserved elements (UCEs)
 
->Click [here](https://github.com/nhm-herpetology/genomic-disparity/tree/main/Mammal-uces) to access tutorial.
+>Click [here](https://github.com/nhm-herpetology/genomic-disparity/tree/main/Mammal-uces/) to access tutorial.
 
 <br/>
 
