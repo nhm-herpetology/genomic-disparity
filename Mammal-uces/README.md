@@ -55,17 +55,27 @@ First, we need to install the E-utilities:
 sh -c "$(wget -q ftp://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/install-edirect.sh -O -)"
 ```
 
-Next, we will download the chromosome sequences using the configuration file ```chromosome_download.config``` and the shell script  ```chromosome_download.sh```.
+Next, we will download the chromosome sequences using the configuration file ```chromosome_download.config``` and the shell script  ```chromosome_download.sh```. The configuration file is formatted with one species or individual per row, with the first two columns being sample info, and subsequent columns being accessions numbers of chromosome assemblies to use with the pipeline. For example: 
+
+```
+Taxon_1 "CM017296.1" "CM017297.1" "CM017298.1" "CM017299.1" "CM017300.1" "CM017301.1" "CM017302.1" "CM017303.1" "CM017304.1" "CM017305.1" "CM017306.1" "CM017307.1" "CM017308.1" "CM017309.1" "CM017310.1" "CM017311.1" "CM017312.1" "CM017313.1" "CM017314.1" "CM017315.1" "CM017316.1" "CM017317.1" "CM017318.1" "CM017319.1" "CM017320.1" 
+Taxon_2 "CM017296.1" "CM017297.1" "CM017298.1" "CM017299.1" "CM017300.1" "CM017301.1" "CM017302.1" "CM017303.1" "CM017304.1" "CM017305.1" "CM017306.1" "CM017307.1" "CM017308.1" "CM017309.1" "CM017310.1" "CM017311.1" "CM017312.1" "CM017313.1" "CM017314.1"  
+Taxon_3 "CM017296.1" "CM017297.1" "CM017298.1" "CM017299.1" "CM017300.1" "CM017301.1" "CM017302.1" "CM017303.1" "CM017304.1" "CM017305.1" "CM017306.1" "CM017307.1" "CM017308.1" "CM017309.1" "CM017310.1" "CM017311.1"  
+Taxon_4 "CM017296.1" "CM017297.1" "CM017298.1" "CM017299.1" "CM017300.1" "CM017301.1" "CM017302.1" "CM017303.1" "CM017304.1" "CM017305.1" "CM017306.1" "CM017307.1" "CM017308.1" "CM017309.1" 
+```
+
+After the configuration file is ready we make the downloading shell script executable and then run it. Note: for the script to work the Entrez Direct UNIX E-utilities needs to be in your $PATH.
+
+```
+chmod +x chromosome_download.sh
+```
 
 ```
 ./chromosome_download.sh
 ```
 
-This command is downloading a substantial amount of data, so it may take up to 30 minutes to complete. 
+Depending on the number of taxa you are using, this may download a substantial amount of data. It may take up a while to complete but progress updates will be sent from the script as each taxon is processed for you to track progress. The tutorial mammal dataset (26 species) takes XX hours to download using 8 CPUS and 40G of RAM.   
 
-```
-./esearch -db nucleotide -query "AB179619.1" | ./efetch -format fasta > AB179619.1.fasta
-```
 </details>
 
 
