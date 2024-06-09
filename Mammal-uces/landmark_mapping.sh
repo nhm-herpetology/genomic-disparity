@@ -31,6 +31,8 @@ cat UCEcount_*.csv > Total_UCE_counts.txt
 echo "Total UCE landmarks mapped to chromosomes in this assembly:"
 
 echo "$(<Total_UCE_counts.txt )"
+
+awk '(NR == 1) || (FNR == 1)' bwa_mem_align_UCEs_*.fasta.sam> Chromosomes_lengths.csv
  
 mkdir fasta_files
 mkdir samtools_files
