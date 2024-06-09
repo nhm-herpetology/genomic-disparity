@@ -27,7 +27,11 @@ rm UCE_Tetrapods-UCE-5Kv1.fasta.sorted.bam.bai
 rm UCEcount_Tetrapods-UCE-5Kv1.fasta.csv
 
 cat UCEcount_*.csv > Total_UCE_counts.txt
-	
+
+echo "Total UCE landmarks mapped to chromosomes in this assembly:"
+
+echo "$(<Total_UCE_counts.txt )"
+ 
 mkdir fasta_files
 mkdir samtools_files
 mv *.fasta fasta_files/
@@ -44,5 +48,9 @@ rm UCEcount_*.csv
 for f in *.sam; do
     mv "$f" "$(basename "$f" .sam).tsv"
 done
+
+echo "Merging data for comparison with other taxa... " 
+
+cut -f1,3 *.tsv > Pres_abs_merged.tsv
 
 )done
