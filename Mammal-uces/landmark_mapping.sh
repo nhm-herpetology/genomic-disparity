@@ -53,7 +53,12 @@ echo "Merging data for comparison with other taxa... "
 
 cut -f1,3 *.tsv > Landmarks_merged.tsv
 sed 's/\t/,/g' Landmarks_merged.tsv > Landmarks_merged.csv
-awk -F, -v OFS=, '{ print $2,$1 }' Landmarks_merged.csv > Landmarks_merged_v1.csv
+awk -F, -v OFS=, '{ print $2,$1 }' Landmarks_merged.csv > Landmarks_merged-temp.csv
 
+VAR2="$(awk '{print $2}' Taxon_*.txt)"
+sed -e 's/^/'$VAR2'_/' Landmarks_merged-temp.csv > Landmarks_merged-done.csv
+
+rm Landmarks_merged-temp.csv 
+rm Landmarks_merged.csv
 
 )done
