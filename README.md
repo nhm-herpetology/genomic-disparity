@@ -10,14 +10,14 @@ Genomic architecture has played a key role in the evolution of biodiversity. Str
 
 <br/> 
 
-## Placental mammal UCEs: a tutorial using interspecific comparisons
+## Placental mammal UCEs: an interspecific tutorial
 Using Genomic Disparity Analysis to study the structural evolution of UCEs.
 
 >Click [here](https://github.com/nhm-herpetology/genomic-disparity/tree/main/Mammal-uces) to access tutorial.
 
 <br/>
 
-## Detecing chromosomal inversions with UCEs: a tutorial using intraspecific comparisons
+## Detecing chromosomal inversions with UCEs: an intraspecific tutorial
 Using Genomic Disparity Analysis to explore variation in landmark placement on a single chromosome
 
 >Click [here] to access tutorial. 
