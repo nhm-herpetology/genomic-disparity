@@ -51,6 +51,9 @@ done
 
 echo "Merging data for comparison with other taxa... " 
 
-cut -f1,3 *.tsv > Pres_abs_merged.tsv
+cut -f1,3 *.tsv > Landmarks_merged.tsv
+sed 's/\t/,/g' Landmarks_merged.tsv > Landmarks_merged.csv
+awk -F, -v OFS=, '{ print $2,$1 }' Landmarks_merged.csv > Landmarks_merged_v1.csv
+
 
 )done
