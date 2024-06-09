@@ -17,7 +17,7 @@ Using Genomic Disparity Analysis to study structural evolution on multiple chrom
 
 <br/>
 
-## Detecing chromosomal inversions with UCEs: an intraspecific tutorial
+## Detecting chromosomal inversions with UCEs: an intraspecific tutorial
 Using Genomic Disparity Analysis to explore variation in landmark placement on a single chromosome.
 
 >Click [here] to access tutorial. 
