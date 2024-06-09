@@ -110,11 +110,11 @@ Depending on the number of taxa you are using, this may download a substantial a
 We will use the mapping shell script ```landmark_mapping.sh``` to identfy the location of different landmarks on the various chromosomes. We will make the script executable and then run it. Note: BWA and samtools need to be in your $PATH for the script to work.  
 
 ```
-chmod +x chromosome_download.sh
+chmod +x landmark_mapping.sh
 ```
 
 ```
-./chromosome_download.sh
+./landmark_mapping.sh
 ```
 
 
