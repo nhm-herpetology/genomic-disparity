@@ -1,4 +1,4 @@
-# Placental Mammal UCE Tutorial
+# Genomic Disparity: Placental Mammal UCE Tutorial
 
 ![Mammal-uces-PC2-PC3](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Mammal-uces-PC2-PC3.jpg)
 
