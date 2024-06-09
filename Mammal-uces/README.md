@@ -104,14 +104,29 @@ Depending on the number of taxa you are using, this may download a substantial a
 ## Step 2: Reference mapping of landmark sequences
 <details>
   <summary>Click to expand content!</summary>
+  
+>Landmarks can be any single-copy, conserved sequence that can be aligned to chromosomes in your dataset, but we have used ultraconserved elements (UCEs) in this tutorial as an example.
 
-  **Landmarks can be any single-copy, conserved sequence that can be aligned to genomes in your dataset, but we have used ultraconserved elements (UCEs) as an example.**  
-
-Download the Tetrapod 5k probe sequences (these will be used to UCE locations on the chromosomes). The probe set can also be downloaded [here](https://www.ultraconserved.org/)
+We will now map landmark sequences to all of the chromosomes that were downloaded in the previous step. Download the Tetrapod 5k probe sequences for UCEs. The probe set can also be downloaded [here](https://www.ultraconserved.org/)
   
 ```
-wget https://raw.githubusercontent.com/nhm-herpetology/museum-NGS-training/main/Unit_03/Bioinformatics_Lab/Tetrapods-UCE-5Kv1.fasta
-``` 
+wget https://raw.githubusercontent.com/nhm-herpetology/genomic-disparity/main/Mammal-uces/Tetrapods-UCE-5Kv1.fasta
+```
+
+We will use the mapping shell script ```landmark_mapping.sh``` to identfy the location of different landmarks on the various chromosomes. We will make the script executable and then run it. Note: BWA and samtools need to be in your $PATH for the script to work.  
+
+```
+chmod +x chromosome_download.sh
+```
+
+```
+./chromosome_download.sh
+```
+
+
+The UCE probe set was developed to capture UCEs across diverse taxa, as such some UCEs are targeted by multiple probes, so to control for the variation this creates in mapping, we average the probe placement across landmarks targeting the same UCE. 
+
+
 </details>
 
 ## Step 3: Cluster chromosomes based on landmark similarity
