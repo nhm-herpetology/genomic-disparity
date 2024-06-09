@@ -105,13 +105,7 @@ Depending on the number of taxa you are using, this may download a substantial a
 <details>
   <summary>Click to expand content!</summary>
   
->Landmarks can be any single-copy, conserved sequence that can be aligned to chromosomes in your dataset, but we have used ultraconserved elements (UCEs) in this tutorial as an example.
-
-We will now map landmark sequences to all of the chromosomes that were downloaded in the previous step. Download the Tetrapod 5k probe sequences for UCEs. The probe set can also be downloaded [here](https://www.ultraconserved.org/)
-  
-```
-wget https://raw.githubusercontent.com/nhm-herpetology/genomic-disparity/main/Mammal-uces/Tetrapods-UCE-5Kv1.fasta
-```
+>Landmarks can be any single-copy, conserved sequence that can be aligned to chromosomes in your dataset, but we have used ultraconserved elements (UCEs) in this tutorial as an example. More information about tetrapod UCEs can be found [here](https://www.ultraconserved.org/)
 
 We will use the mapping shell script ```landmark_mapping.sh``` to identfy the location of different landmarks on the various chromosomes. We will make the script executable and then run it. Note: BWA and samtools need to be in your $PATH for the script to work.  
 
