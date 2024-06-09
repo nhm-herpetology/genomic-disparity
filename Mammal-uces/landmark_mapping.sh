@@ -20,6 +20,29 @@ done
 
 echo "Finished with mapping... tidying file structure"
 
+rm mapped_Tetrapods-UCE-5Kv1.fasta.sam
+rm UCE_Tetrapods-UCE-5Kv1.fasta.bam
+rm UCE_Tetrapods-UCE-5Kv1.fasta.sorted.bam
+rm UCE_Tetrapods-UCE-5Kv1.fasta.sorted.bam.bai
+rm UCEcount_Tetrapods-UCE-5Kv1.fasta.csv
+
 cat UCEcount_*.csv > Total_UCE_counts.txt
+	
+mkdir fasta_files
+mkdir samtools_files
+mv *.fasta fasta_files/
+mv *.bam samtools_files/
+mv *.bai samtools_files/
+mv *.amb samtools_files/
+mv *.ann samtools_files/
+mv *.bwt samtools_files/
+mv *.pac samtools_files/
+mv *.sa samtools_files/
+mv bwa_mem_align_*.sam samtools_files/
+rm UCEcount_*.csv
+
+for f in *.sam; do
+    mv "$f" "$(basename "$f" .sam).tsv"
+done
 
 )done
