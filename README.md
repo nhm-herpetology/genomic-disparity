@@ -1,6 +1,6 @@
 ![Genomic-disparity](https://github.com/nhm-herpetology/Genomic-disparity/blob/main/Genomic-disparity.jpg)
 
-## A discovery tool for exploring chromosome variation in high-quality genome assemblies
+## An approach for exploring chromosome variation in high-quality genome assemblies
 
 Genomic architecture has played a key role in the evolution of biodiversity. Structural comparisons of genome sequences have informed the study of supergenes, sex chromosomes, and some of the earliest divergences in the tree of life. **Genomic disparity analysis** is a computationally non-intensive approach, based on geometric morphometrics, that captures disparity scores across conserved chromosomal regions using single-copy, conserved sequences as landmarks. The method allows users to visualize structural variation in multivariate space using PCA for many species or individuals at the same time.
 
@@ -10,14 +10,14 @@ Genomic architecture has played a key role in the evolution of biodiversity. Str
 
 <br/> 
 
-## Interspecific comparisons tutorial
-Tutorial using placental mammal genomes and ultraconserved elements (UCEs)
+## Placental mammal UCEs: a tutorial using interspecific comparisons
+Using genomic disparity analysis to study the structural evolution of ultraconserved elements (UCEs)
 
 >Click [here](https://github.com/nhm-herpetology/genomic-disparity/tree/main/Mammal-uces) to access tutorial.
 
 <br/>
 
-## Intraspecific comparisons tutorial
+## Intraspecific comparisons tutorial: exploring the distribution and complexity of chromosomal inverisons
 
 Tutorial using XXXXX. 
 
