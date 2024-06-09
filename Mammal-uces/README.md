@@ -184,7 +184,7 @@ Using the tutorial data this should produce a plot that looks like this:
 
 [INSERT PLOT]
 
-The UCE probe set was developed to capture UCEs across diverse taxa, as such some UCEs are targeted by multiple probes, so to control for the variation this creates in mapping, we average the probe placement across landmarks targeting the same UCE. 
+Data points in this plot represent chromosomes from the different species we used in the pipeline. Because we used presence/absence of landmarks as the input data for this analysis, the placement of different data points should largely correspond to how many landmarks they share. At this point we can use the MMDS scores to identify those chromosomes that clearly have many UCE landmarks in common, indicating they likely contain homologous genomic regions. Setting a threshold for identifying chromosomes to process with Genomic Disparity Analysis can be done by using non-overlap on different MMDS axes. For example, in the tutorial dataset we can see that a value of XX on Axis 1 divides. Users are encouraged to experiment with this threshold and determine how robust downstream results are. 
 
 Following this procedure you should have identified the following chromosomes as belonging to **Chromosome Set 1**
 
@@ -233,6 +233,8 @@ _Piliocolobus tephrosceles_ | Primates | 11
 <details>
   <summary>Click to expand content!</summary>
 
+The UCE probe set was developed to capture UCEs across diverse taxa, as such some UCEs are targeted by multiple probes, so to control for the variation this creates in mapping, we average the probe placement across landmarks targeting the same UCE. 
+  
   R statistical software is used to make exciting plots!
 
 </details>
