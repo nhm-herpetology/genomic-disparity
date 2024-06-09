@@ -162,6 +162,28 @@ head(matrix)
 write.csv(matrix, file = 'sample_pres_abs.csv')
 ```
 
+Then we extract the relevant columns for the MMDS:
+
+```
+X <- matrix[3:5126]
+d <- dist(X)
+fit <- cmdscale(d,eig=TRUE, k=2)
+temp <-cbind(matrix[1],fit$points)
+write.csv(temp, file = 'MMDS_sample.csv')
+data <- read.csv("MMDS_sample.csv", header =T, row.names = 1)
+head(data)
+```
+
+Finally we plot the results using: 
+
+```
+ggplot(data, aes(x=axis1, y=axis2)) + geom_point() + geom_text(size=4,label=rownames(data),check_overlap = F)
+```
+
+Using the tutorial data this should produce a plot that looks like this: 
+
+[INSERT PLOT]
+
 The UCE probe set was developed to capture UCEs across diverse taxa, as such some UCEs are targeted by multiple probes, so to control for the variation this creates in mapping, we average the probe placement across landmarks targeting the same UCE. 
 
 Following this procedure you should have identified the following chromosomes as belonging to **Chromosome Set 1**
