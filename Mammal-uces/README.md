@@ -117,6 +117,8 @@ chmod +x landmark_mapping.sh
 ./landmark_mapping.sh
 ```
 
+This script will take a while to execute, but like the download script, it will report progress along the way to keep you updated. When the script is done running each Taxon directory should have summary files called ```Total_UCE_counts.txt``` and ```Chromosome_lengths.csv``` which summarize the number of UCEs mapped to each chromosome and the length (in bp) of each chromosome, respectively. There should also be new directories for archiving the FASTA and SAMTOOLS files. Finally, the parent directory should have an R input file called ```sample_input_pres_abs.csv``` which will be used in the next step.
+
 </details>
 
 ## Step 3: Cluster chromosomes based on landmark similarity
