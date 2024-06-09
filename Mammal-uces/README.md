@@ -117,10 +117,6 @@ chmod +x landmark_mapping.sh
 ./landmark_mapping.sh
 ```
 
-
-The UCE probe set was developed to capture UCEs across diverse taxa, as such some UCEs are targeted by multiple probes, so to control for the variation this creates in mapping, we average the probe placement across landmarks targeting the same UCE. 
-
-
 </details>
 
 ## Step 3: Cluster chromosomes based on landmark similarity
@@ -128,7 +124,43 @@ The UCE probe set was developed to capture UCEs across diverse taxa, as such som
 <details>
   <summary>Click to expand content!</summary>
 
-  MMDS in R statistical software is used to identify which chromosomes likley contain homologous blocks of genomes (i.e. supergenes, Marian fragments etc.). 
+>MMDS in R statistical software is used to identify which chromosomes likely contain homologous blocks of genomes (i.e. supergenes, Marian fragments etc.). 
+
+After the last step we should now have a file called ```sample_input_pres_abs.csv``` which is used in R to identify which chromosomes have many landmarks in common. The first few lines of this file should look like: 
+
+```
+chromosomes,uces
+Bos_taurus_1,uce-76_p1
+Bos_taurus_1,uce-95_p1
+Bos_taurus_1,uce-110_p1
+Bos_taurus_1,uce-117_p2
+Bos_taurus_1,uce-127_p1
+Bos_taurus_1,uce-153_p1
+Bos_taurus_1,uce-197_p1
+Bos_taurus_1,uce-232_p2
+Bos_taurus_1,uce-235_p1
+Bos_taurus_1,uce-264_p4
+```
+
+You can execute the R script, ```chromosome_cluster.R``` to run all at once, but for the purpose of the tutorial we will walk through the key steps here. Start with loading the following R libraries:
+
+```
+library(ggplot2)
+library(ggbio)
+library(GenomicRanges)
+library(reshape2)
+```
+
+Next, we format the input file for presence-absence analysis of landmarks:
+
+```
+Input_pres_abs <- as.data.frame(read.csv("sample_input_pres_abs.csv", stringsAsFactors = F))
+matrix <-dcast(Input_pres_abs, chromsomes ~ uces, length)
+head(matrix)
+write.csv(matrix, file = 'sample_pres_abs.csv')
+```
+
+The UCE probe set was developed to capture UCEs across diverse taxa, as such some UCEs are targeted by multiple probes, so to control for the variation this creates in mapping, we average the probe placement across landmarks targeting the same UCE. 
 
 Following this procedure you should have identified the following chromosomes as belonging to **Chromosome Set 1**
 
