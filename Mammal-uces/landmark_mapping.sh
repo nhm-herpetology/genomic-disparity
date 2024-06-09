@@ -57,8 +57,15 @@ awk -F, -v OFS=, '{ print $2,$1 }' Landmarks_merged.csv > Landmarks_merged-temp.
 
 VAR2="$(awk '{print $2}' Taxon_*.txt)"
 sed -e 's/^/'$VAR2'_/' Landmarks_merged-temp.csv > Landmarks_merged-done.csv
+mv -- Landmarks_merged-done.csv "${VAR2}_Landmarks.land" 
 
 rm Landmarks_merged-temp.csv 
 rm Landmarks_merged.csv
 
+mv *.land ../
+
 )done
+
+cat *.land > All_taxa.land
+
+sed ' 1 s/.*/chromosomes,uces/' All_taxa.land > sample_input_pres_abs.csv
