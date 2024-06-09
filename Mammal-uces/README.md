@@ -96,7 +96,7 @@ chmod +x chromosome_download.sh
 ./chromosome_download.sh
 ```
 
-Depending on the number of taxa you are using, this may download a substantial amount of data. It may take up a while to complete but progress updates will be sent from the script as each taxon is processed for you to track progress. The tutorial mammal dataset (26 species) takes XX hours to download using 8 CPUS and 40G of RAM.   
+Depending on the number of taxa you are using, this may download a substantial amount of data. It may take up a while to complete but progress updates will be sent from the script as each taxon is processed for you to track progress. The tutorial mammal dataset (26 species) takes **~5.5 hours** to download using 8 CPUS and 40G of RAM.   
 
 </details>
 
