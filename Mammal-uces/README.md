@@ -272,10 +272,20 @@ _Piliocolobus tephrosceles_ | Primates | 11 (CM019250.1)
 
 >We need to remove any landmarks that the chromosomes do not share, check the directionality of the mapping, and merge UCE landmarks before Genomic Disparity Analysis 
   
-Now that we have identified the 26 chromosomes that comprise **Chromosome Set 1**, we will extract them for further analysis using R:
+Now that we have identified the 26 chromosomes that comprise **Chromosome Set 1**, we will extract them for further analysis using R. We will do this using the ```landmark_pres_abs.csv``` file generated during the previous step. 
 
 ```
-Code here
+library(reshape2)
+data1 <- read.csv("landmark_pres_abs.csv", header =T, row.names = 1)
+data2 <- t(data1)
+write.csv(data2, file = 'landmark_exclusion_matrix.csv')
+data3 <- read.csv("landmark_exclusion_matrix.csv", skip = 1)
+```
+
+Now we will subset the columns that correspond to the UCE landmarks + the 26 chromosomes of interest:
+
+```
+data4 <-data3[c("chromosomes", "Felis_catus_CM031419.1", "Panthera_tigris_CM031438.1", "Mus_musculus_CM000995.3", "Cricetulus_griseus_CM023440.1", "Mus_spretus_OW971679.1", "Peromyscus_maniculatus_CM010882.2", "Mus_caroli_LT608244.1", "Mus_pahari_LT608290.1", "Ovis_aries_CM028705.1", "Pan_troglodytes_CM054447.2", "Rattus_norvegicus_CM070393.1", "Gorilla_gorilla_CM055457.2", "Macaca_mulatta_CM014347.1", "Papio_anubis_CM018189.1", "Piliocolobus_tephrosceles_CM019250.1", "Macaca_fascicularis_NW_025540829.1", "Giraffa_tippelskirchi_CM018105.1", "Bos_taurus_CM008169.2", "Capra_hircus_CM004563.1", "Neomonachus_schauinslandi_CM035899.1", "Bubalus_bubalis_CM034272.1", "Bos_indicus_CM003022.1", "Equus_asinus_CM027693.2", "Equus_caballus_CM027693.2", "Ceratotherium_simum_CM043826.1", "Capra_aegagrus_CM003215.1")]
 ```
 
 </details>
