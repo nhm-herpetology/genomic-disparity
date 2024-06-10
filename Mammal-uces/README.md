@@ -197,7 +197,7 @@ Data points in this plot represent 567 different chromosomes from the species we
 
 **Identifying chromosome sets for Genomic Disparity Analysis**
 
-We need to set thresholds for landmark similarity in order to identify chromosomes that will be analyzed together. For example, we can see in the plot above that on Axis 1 there is a cluster of chromosomes with MMDS scores >10. We can use this threshold to extract the names of these chromosomes from the ```MMDS_sample.csv file```. We can open the CSV file (using excel or similar program) and sort the Axis 1 scores from largest to smallest to identify the following chromosomes as belonging to this Chromosome Set, which we will cal **Chromosome Set 1**.  
+We need to set thresholds for landmark similarity in order to identify chromosomes that will be analyzed together. For example, we can see in the plot above that on Axis 1 there is a cluster of chromosomes with MMDS scores greater than 10. We can use this threshold to extract the names of these chromosomes from the ```MMDS_sample.csv file```. We can open the CSV file (using excel or similar program) and sort the Axis 1 scores from largest to smallest to identify the following chromosomes as belonging to this Chromosome Set, which we will cal **Chromosome Set 1**.  
 
 Chromosome ID | Species + Chromosome GenBank  | Axis 1 Score  
 ------------ | -------------  | -------------
@@ -228,7 +228,7 @@ Chromosome ID | Species + Chromosome GenBank  | Axis 1 Score
 154	| Ceratotherium_simum_CM043826.1	| 15.34565128
 82	| Capra_aegagrus_CM003215.1	| 14.51796749
 
-The next closest score on Axis 1 is 2.65, so we will call these 26 chromosomes (one for each species in the dataset) **Chromosome Set 1**. Based on the MMDS result, it is clear that the chromosomes contained in **Chromosome Set 1** share many landmarks suggesting these chromosomes contain homologous genomic regions. However, identifying an MMDS score threshold is not always this clear. For example, althought it also includes one chromosome for each of the 26 mammal species, **Chromosome Set 2** described in Mohan et al. (2024) has a much narrower gap based on an Axis 2 MMDS score threshold (scores <-8). When using other datasets, users are encouraged to experiment with chromosome set thresholds to determine how robust downstream results are. The plot below shows the two chromosome sets and the threshold values used:
+The next closest score on Axis 1 is 2.65, so we will call these 26 chromosomes (one for each species in the dataset) **Chromosome Set 1**. Based on the MMDS result, it is clear that the chromosomes contained in **Chromosome Set 1** share many landmarks suggesting these chromosomes contain homologous genomic regions. However, identifying an MMDS score threshold is not always this clear. For example, althought it also includes one chromosome for each of the 26 mammal species, **Chromosome Set 2** described in Mohan et al. (2024) has a much narrower gap based on an Axis 2 MMDS score threshold (scores less than -8). When using other datasets, users are encouraged to experiment with chromosome set thresholds to determine how robust downstream results are. The plot below shows the two chromosome sets and the threshold values used:
 
 ![Landmarks-2](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Landmarks-2.jpg)
 
