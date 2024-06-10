@@ -117,7 +117,7 @@ chmod +x landmark_mapping.sh
 ./landmark_mapping.sh
 ```
 
-This script will take a while to execute, but like the download script, it will report progress along the way to keep you updated. When the script is done running each Taxon directory should have summary files called ```Total_UCE_counts.txt``` and ```Chromosome_lengths.csv``` which summarize the number of UCEs mapped to each chromosome and the length (in bp) of each chromosome, respectively. There should also be new directories for archiving the FASTA and SAMTOOLS files. Finally, the parent directory should have an R input file called ```sample_input_pres_abs.csv``` which will be used in the next step.
+This script will take a while to execute, but like the download script, it will report progress along the way to keep you updated. Allowing 16 CPUS and 40GB of RAM the tutorial dataset takes **~17 hours** to be processed. When the script is done running each Taxon directory should have summary files called ```Total_UCE_counts.txt``` and ```Chromosome_lengths.txt``` which summarize the number of UCEs mapped to each chromosome and the length (in bp) of each chromosome, respectively. There should also be new directories for archiving the FASTA and SAMTOOLS files. Finally, the parent directory should have an R input file called ```sample_input_pres_abs.csv``` which will be used in the next step.
 
 </details>
 
@@ -132,16 +132,19 @@ After the last step we should now have a file called ```sample_input_pres_abs.cs
 
 ```
 chromosomes,uces
-Bos_taurus_1,uce-76_p1
-Bos_taurus_1,uce-95_p1
-Bos_taurus_1,uce-110_p1
-Bos_taurus_1,uce-117_p2
-Bos_taurus_1,uce-127_p1
-Bos_taurus_1,uce-153_p1
-Bos_taurus_1,uce-197_p1
-Bos_taurus_1,uce-232_p2
-Bos_taurus_1,uce-235_p1
-Bos_taurus_1,uce-264_p4
+Bos_indicus_CM003021.1,uce-95_p1
+Bos_indicus_CM003021.1,uce-110_p1
+Bos_indicus_CM003021.1,uce-117_p2
+Bos_indicus_CM003021.1,uce-127_p1
+Bos_indicus_CM003021.1,uce-153_p1
+Bos_indicus_CM003021.1,uce-197_p1
+Bos_indicus_CM003021.1,uce-232_p2
+Bos_indicus_CM003021.1,uce-264_p4
+Bos_indicus_CM003021.1,uce-279_p1
+Bos_indicus_CM003021.1,uce-286_p1
+Bos_indicus_CM003021.1,uce-288_p1
+Bos_indicus_CM003021.1,uce-319_p1
+Bos_indicus_CM003021.1,uce-322_p1
 ```
 
 You can execute the R script, ```chromosome_cluster.R``` to run all at once, but for the purpose of the tutorial we will walk through the key steps here. Start with loading the following R libraries:
