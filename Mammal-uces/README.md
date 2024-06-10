@@ -232,29 +232,29 @@ The next closest score on Axis 1 is 2.65, so we will call these 26 chromosomes (
 
 ![Landmarks-2](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Landmarks-2.jpg)
 
-Following this procedure you should have identified the following chromosomes as belonging to **Chromosome Set 1**
+For the rest of the tutorial we will focus on processing **Chromosome Set 1**. Following the procedure described above, you should have identified the following chromosomes as belonging to **Chromosome Set 1**
 
 Species | Order  | Chromosome (in MMDS set 1) 
 ------------ | -------------  | ------------- 
-_Bos indicus_	| Artiodactyla | 2
-_Bos taurus_	| Artiodactyla | 2
-_Bubalus bubalis_	| Artiodactyla | 2
-_Capra aegagrus_	| Artiodactyla | 2
-_Capra hircus_	| Artiodactyla | 2
-_Giraffa tippelskirchi_	| Artiodactyla | 3
-_Ovis aries_	| Artiodactyla | 2
-_Ceratotherium simum_	| Perissodactyla | 9
-_Equus asinus_ | Perissodactyla | 4
-_Equus caballus_	| Perissodactyla | 18
-_Felis catus_ | Carnivora | C1
-_Neomonachus schauinslandi_	| Carnivora | 3
-_Panthera tigris_ | Carnivora | C1
-_Cricetulus griseus_ | Rodentia | 6
-_Mus caroli_ | Rodentia | 2
-_Mus musculus_ | Rodentia | 2
-_Mus pahari_ | Rodentia | 3
-_Mus spretus_	| Rodentia | 2
-_Rattus norvegicus_	| Rodentia | 3
+_Bos indicus_	| Artiodactyla | 2 (CM003022.1)
+_Bos taurus_	| Artiodactyla | 2 (CM008169.2)
+_Bubalus bubalis_	| Artiodactyla | 2 (CM034272.1)
+_Capra aegagrus_	| Artiodactyla | 2 (CM003215.1)
+_Capra hircus_	| Artiodactyla | 2 (CM004563.1)
+_Giraffa tippelskirchi_	| Artiodactyla | 3 (CM018105.1)
+_Ovis aries_	| Artiodactyla | 2 (CM028705.1)
+_Ceratotherium simum_	| Perissodactyla | 9 (CM043826.1)
+_Equus asinus_ | Perissodactyla | 4 (CM027693.2)
+_Equus caballus_	| Perissodactyla | 18 (CM027693.2)
+_Felis catus_ | Carnivora | C1 (CM031419.1)
+_Neomonachus schauinslandi_	| Carnivora | 3 (CM035899.1)
+_Panthera tigris_ | Carnivora | C1 (CM031438.1)
+_Cricetulus griseus_ | Rodentia | 6 (CM023440.1)
+_Mus caroli_ | Rodentia | 2 (LT608244.1)
+_Mus musculus_ | Rodentia | 2 (CM000995.3)
+_Mus pahari_ | Rodentia | 3 (LT608290.1)
+_Mus spretus_	| Rodentia | 2 (OW971679.1)
+_Rattus norvegicus_	| Rodentia | 3 (CM070393.1)
 _Peromyscus maniculatus_ | Rodentia | 4
 _Gorilla gorilla_	| Primates | 3
 _Macaca fascicularis_ | Primates | 12
