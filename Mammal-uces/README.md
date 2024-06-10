@@ -187,14 +187,50 @@ We then plot the results using:
 ```
 data <- read.csv("MMDS_sample.csv", header =T, row.names = 1)
 ggplot(data, aes(x=Axis1, y=Axis2)) + geom_point() + geom_text(size=4,label=rownames(data),check_overlap = F) + xlab("Chromosome Landmark Similarity Axis 1") + ylab("Chromosome Landmark Similarity Axis 1") + theme_classic()
-
 ```
 
 Using the tutorial data this should produce a plot that looks like this: 
 
-![Mammal-uces-PC2-PC3](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Landmarks-1.jpg)
+![Landmarks-1](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Landmarks-1.jpg)
 
-Data points in this plot represent 567 different chromosomes from the species we used in the pipeline. Because we used presence/absence of landmarks as the input data for this analysis, the placement of different data points should largely correspond to how many landmarks they share. At this point we can use the MMDS scores to identify those chromosomes that clearly have many UCE landmarks in common, indicating they likely contain homologous genomic regions. Setting a threshold for identifying chromosomes to process with Genomic Disparity Analysis can be done by using non-overlap on different MMDS axes. For example, in the tutorial dataset we can see that a value of XX on Axis 1 divides. Users are encouraged to experiment with this threshold and determine how robust downstream results are. 
+Data points in this plot represent 567 different chromosomes from the species we used in the pipeline. Because we used presence/absence of landmarks as the input data for this analysis, the placement of different data points should largely correspond to how many landmarks they share.We use the MMDS scores to identify those chromosomes that should have many UCE landmarks in common, indicating they likely contain homologous genomic regions. 
+
+**Identifying chromosome sets for Genomic Disparity Analysis**
+
+We need to set thresholds for landmark similarity in order to identify chromosomes that will be analyzed together. For example, we can see in the plot above that on Axis 1 there is a cluster of chromosomes with MMDS scores >10. We can use this threshold to extract the names of these chromosomes from the ```MMDS_sample.csv file```. We can open the CSV file (using excel or similar program) and sort the Axis 1 scores from largest to smallest to identify the following chromosomes as belonging to this Chromosome Set, which we will cal **Chromosome Set 1**.  
+
+Chromosome ID | Species + Chromosome GenBank  | Axis 1 Score  
+------------ | -------------  | -------------
+250	| Felis_catus_CM031419.1	| 18.45603982
+479	| Panthera_tigris_CM031438.1	| 18.45352839
+353	| Mus_musculus_CM000995.3	| 16.76595889
+181	| Cricetulus_griseus_CM023440.1	| 16.73988689
+393	| Mus_spretus_OW971679.1	| 16.73905454
+510	| Peromyscus_maniculatus_CM010882.2	| 16.64799578
+348	| Mus_caroli_LT608244.1	| 16.64046105
+374	| Mus_pahari_LT608290.1	| 16.62978242
+426	| Ovis_aries_CM028705.1	| 16.62075814
+461	| Pan_troglodytes_CM054447.2	| 16.50669384
+551	| Rattus_norvegicus_CM070393.1	| 16.49902926
+282	| Gorilla_gorilla_CM055457.2	| 16.45284339
+326	| Macaca_mulatta_CM014347.1	| 16.40570999
+498	| Papio_anubis_CM018189.1	| 16.39394662
+539	| Piliocolobus_tephrosceles_CM019250.1	| 16.38174391
+306	| Macaca_fascicularis_NW_025540829.1	| 16.36260442
+262	| Giraffa_tippelskirchi_CM018105.1	| 16.26180669
+31	| Bos_taurus_CM008169.2	| 16.20595656
+110	| Capra_hircus_CM004563.1	| 16.20479132
+412	| Neomonachus_schauinslandi_CM035899.1	| 16.16641741
+59	| Bubalus_bubalis_CM034272.1	| 16.12303766
+2	| Bos_indicus_CM003022.1	| 15.69361074
+188	| Equus_asinus_CM027693.2	| 15.42305316
+217	| Equus_caballus_CM027693.2	| 15.42305316
+154	| Ceratotherium_simum_CM043826.1	| 15.34565128
+82	| Capra_aegagrus_CM003215.1	| 14.51796749
+
+The next closest score on Axis 1 is 2.65, so we will call these 26 chromosomes (one for each species in the dataset) **Chromosome Set 1**. Based on the MMDS result, it is clear that the chromosomes contained in **Chromosome Set 1** share many landmarks suggesting these chromosomes contain homologous genomic regions. However, identifying an MMDS score threshold is not always this clear. For example, althought it also includes one chromosome for each of the 26 mammal species, **Chromosome Set 2** described in Mohan et al. (2024) has a much narrower gap based on an Axis 2 MMDS score threshold (scores <-8). When using other datasets, users are encouraged to experiment with chromosome set thresholds to determine how robust downstream results are. The plot below shows the two chromosome sets and the threshold values used:
+
+![Landmarks-2](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Landmarks-2.jpg)
 
 Following this procedure you should have identified the following chromosomes as belonging to **Chromosome Set 1**
 
