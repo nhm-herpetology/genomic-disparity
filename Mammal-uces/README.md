@@ -301,8 +301,13 @@ write.csv(chr_clean, file = "allmammals_cluster1_presenceonlyUCEs.csv")
 
 >This should result in an output file that has 220 UCE probes that were present (=1) in all 16 species. 
 
+Now we will use these to extract position for each probe on each chromosome from the SAM files generated during **Step 2**
+
 ```
+library(matrixStats)
 chr_clean <- read.csv("allmammals_cluster1_presenceonlyUCEs.csv")
+
+
 ```
 
 </details>
