@@ -128,7 +128,7 @@ This script will take a while to execute, but like the download script, it will 
 
 >MMDS in R statistical software is used to identify which chromosomes likely contain homologous blocks of genomes (i.e. supergenes, Marian fragments etc.). 
 
-After the last step we should now have a 4.69 MB file called ```sample_input_pres_abs.csv``` which is used in R to identify which chromosomes have many landmarks in common. The first few lines of this file should look like: 
+After the last step we should now have a 4.7 MB file called ```sample_input_pres_abs.csv``` which is used in R to identify which chromosomes have many landmarks in common. The first few lines of this file should look like: 
 
 ```
 chromosomes,uces
@@ -160,34 +160,41 @@ Next, we format the input file for presence-absence analysis of landmarks:
 
 ```
 Input_pres_abs <- as.data.frame(read.csv("sample_input_pres_abs.csv", stringsAsFactors = F))
-matrix <-dcast(Input_pres_abs, chromsomes ~ uces, length)
-head(matrix)
-write.csv(matrix, file = 'sample_pres_abs.csv')
-```
-
-Then we extract the relevant columns for the MMDS:
+matrix <-dcast(Input_pres_abs, chromosomes ~ uces, length)
+write.csv(matrix, file = 'landmark_pres_abs.csv')
 
 ```
-X <- matrix[3:5126]
+
+These commands will produce a 5.6 MB CSV file ```landmark_pres_abs.csv``` that contains the presence-absence of each landmark. Then we extract the relevant columns for the MMDS:
+
+```
+X <- matrix[3:5113]
+```
+
+>NOTE: The tutorial dataset has a total of 5,110 mapped landmarks, this value will differ when using other input data and the user will need to calculate the number of non-string columns to proceed.  
+
+```
 d <- dist(X)
 fit <- cmdscale(d,eig=TRUE, k=2)
 temp <-cbind(matrix[1],fit$points)
+colnames(temp)[2]  <- "Axis1"
+colnames(temp)[3]  <- "Axis2"
 write.csv(temp, file = 'MMDS_sample.csv')
+```
+
+We then plot the results using: 
+
+```
 data <- read.csv("MMDS_sample.csv", header =T, row.names = 1)
-head(data)
-```
+ggplot(data, aes(x=Axis1, y=Axis2)) + geom_point() + geom_text(size=4,label=rownames(data),check_overlap = F) + xlab("Chromosome Landmark Similarity Axis 1") + ylab("Chromosome Landmark Similarity Axis 1") + theme_classic()
 
-Finally we plot the results using: 
-
-```
-ggplot(data, aes(x=axis1, y=axis2)) + geom_point() + geom_text(size=4,label=rownames(data),check_overlap = F)
 ```
 
 Using the tutorial data this should produce a plot that looks like this: 
 
-[INSERT PLOT]
+![Mammal-uces-PC2-PC3](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Landmarks-1.jpg)
 
-Data points in this plot represent chromosomes from the different species we used in the pipeline. Because we used presence/absence of landmarks as the input data for this analysis, the placement of different data points should largely correspond to how many landmarks they share. At this point we can use the MMDS scores to identify those chromosomes that clearly have many UCE landmarks in common, indicating they likely contain homologous genomic regions. Setting a threshold for identifying chromosomes to process with Genomic Disparity Analysis can be done by using non-overlap on different MMDS axes. For example, in the tutorial dataset we can see that a value of XX on Axis 1 divides. Users are encouraged to experiment with this threshold and determine how robust downstream results are. 
+Data points in this plot represent 567 different chromosomes from the species we used in the pipeline. Because we used presence/absence of landmarks as the input data for this analysis, the placement of different data points should largely correspond to how many landmarks they share. At this point we can use the MMDS scores to identify those chromosomes that clearly have many UCE landmarks in common, indicating they likely contain homologous genomic regions. Setting a threshold for identifying chromosomes to process with Genomic Disparity Analysis can be done by using non-overlap on different MMDS axes. For example, in the tutorial dataset we can see that a value of XX on Axis 1 divides. Users are encouraged to experiment with this threshold and determine how robust downstream results are. 
 
 Following this procedure you should have identified the following chromosomes as belonging to **Chromosome Set 1**
 
