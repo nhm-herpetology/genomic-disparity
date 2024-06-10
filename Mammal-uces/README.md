@@ -232,7 +232,7 @@ The next closest score on Axis 1 is 2.65, so we will call these 26 chromosomes (
 
 ![Landmarks-2](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Landmarks-2.jpg)
 
-For the rest of the tutorial we will focus on processing **Chromosome Set 1**. Following the procedure described above, you should have identified the following chromosomes as belonging to **Chromosome Set 1**
+For the rest of the tutorial we will focus on processing **Chromosome Set 1**. Following the procedure described above, you should have identified the following chromosomes as belonging to **Chromosome Set 1**:
 
 Species | Order  | Chromosome (in MMDS set 1) 
 ------------ | -------------  | ------------- 
@@ -271,9 +271,14 @@ _Piliocolobus tephrosceles_ | Primates | 11 (CM019250.1)
 
 <details>
   <summary>Click to expand content!</summary>
+
 >We need to remove any landmarks that the chromosomes do not share, check the directionality of the mapping, and merge UCE landmarks before Genomic Disparity Analysis 
   
-  R statistical software is used to remove the landmarks that do not match in the refined chromosome set.  
+Now that we have identified the 26 chromosomes that comprise **Chromosome Set 1**, we will extract them for further analysis using R:
+
+```
+Code here
+```
 
 </details>
 
