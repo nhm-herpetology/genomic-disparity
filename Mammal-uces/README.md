@@ -128,7 +128,7 @@ This script will take a while to execute, but like the download script, it will 
 
 >MMDS in R statistical software is used to identify which chromosomes likely contain homologous blocks of genomes (i.e. supergenes, Marian fragments etc.). 
 
-After the last step we should now have a file called ```sample_input_pres_abs.csv``` which is used in R to identify which chromosomes have many landmarks in common. The first few lines of this file should look like: 
+After the last step we should now have a 4.69 MB file called ```sample_input_pres_abs.csv``` which is used in R to identify which chromosomes have many landmarks in common. The first few lines of this file should look like: 
 
 ```
 chromosomes,uces
