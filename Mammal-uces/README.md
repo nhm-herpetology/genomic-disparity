@@ -151,8 +151,6 @@ You can execute the R script, ```chromosome_cluster.R``` to run all at once, but
 
 ```
 library(ggplot2)
-library(ggbio)
-library(GenomicRanges)
 library(reshape2)
 ```
 
