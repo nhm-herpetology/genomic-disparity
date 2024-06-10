@@ -255,21 +255,24 @@ _Mus musculus_ | Rodentia | 2 (CM000995.3)
 _Mus pahari_ | Rodentia | 3 (LT608290.1)
 _Mus spretus_	| Rodentia | 2 (OW971679.1)
 _Rattus norvegicus_	| Rodentia | 3 (CM070393.1)
-_Peromyscus maniculatus_ | Rodentia | 4
-_Gorilla gorilla_	| Primates | 3
-_Macaca fascicularis_ | Primates | 12
-_Macaca mulatta_	| Primates | 12
-_Pan troglodytes_ | Primates | 2B
-_Papio anubis_ | Primates | 10
-_Piliocolobus tephrosceles_ | Primates | 11
+_Peromyscus maniculatus_ | Rodentia | 4 (CM010882.2)
+_Gorilla gorilla_	| Primates | 3 (CM055457.2)
+_Macaca fascicularis_ | Primates | 12 (NW_025540829.1)
+_Macaca mulatta_	| Primates | 12 (CM014347.1)
+_Pan troglodytes_ | Primates | 2B (CM054447.2)
+_Papio anubis_ | Primates | 10 (CM018189.1)
+_Piliocolobus tephrosceles_ | Primates | 11 (CM019250.1)
+
+**Now that we have identified the 26 chromosomes we will analyze, they will be further prepped in the next step.** 
 
 </details>
 
-## Step 4: Remove non-homologous landmarks from chromosomes
+## Step 4: Preparing landmarked chromosomes for downstream analysis
 
 <details>
   <summary>Click to expand content!</summary>
-
+>We need to remove any landmarks that the chromosomes do not share, check the directionality of the mapping, and merge UCE landmarks before Genomic Disparity Analysis 
+  
   R statistical software is used to remove the landmarks that do not match in the refined chromosome set.  
 
 </details>
