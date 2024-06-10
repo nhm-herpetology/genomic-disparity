@@ -186,7 +186,7 @@ We then plot the results using:
 
 ```
 data <- read.csv("MMDS_sample.csv", header =T, row.names = 1)
-ggplot(data, aes(x=Axis1, y=Axis2)) + geom_point() + geom_text(size=4,label=rownames(data),check_overlap = F) + xlab("Chromosome Landmark Similarity Axis 1") + ylab("Chromosome Landmark Similarity Axis 1") + theme_classic()
+ggplot(data, aes(x=Axis1, y=Axis2)) + geom_point() + geom_text(size=4,label=rownames(data),check_overlap = F) + xlab("Chromosome Landmark Similarity Axis 1") + ylab("Chromosome Landmark Similarity Axis 2") + theme_classic()
 ```
 
 Using the tutorial data this should produce a plot that looks like this: 
