@@ -197,7 +197,7 @@ Data points in this plot represent 567 different chromosomes from the species we
 
 **Identifying chromosome sets for Genomic Disparity Analysis**
 
-We need to set thresholds for landmark similarity in order to identify chromosomes that will be analyzed together. For example, we can see in the plot above that on Axis 1 there is a cluster of chromosomes with MMDS scores greater than 10. We can use this threshold to extract the names of these chromosomes from the ```MMDS_sample.csv file```. We can open the CSV file (using excel or similar program) and sort the Axis 1 scores from largest to smallest to identify the following chromosomes as belonging to this Chromosome Set, which we will cal **Chromosome Set 1**.  
+We need to set thresholds for landmark similarity in order to identify chromosomes that will be analyzed together. For example, we can see in the plot above that on Axis 1 there is a cluster of chromosomes with MMDS scores greater than 10. We can use this threshold to extract the names of these chromosomes from the ```MMDS_sample.csv file```. We can open the CSV file (using excel or similar program) and sort the Axis 1 scores from largest to smallest to identify the following chromosomes as belonging to this Chromosome Set, which we will call **Chromosome Set 1**.  
 
 Chromosome ID | Species + Chromosome GenBank  | Axis 1 Score  
 ------------ | -------------  | -------------
