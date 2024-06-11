@@ -313,9 +313,50 @@ chmod +x chromosome_retriever.sh
 
 This script will create a directory called ```chromosome_set``` that contains all 26 chromosomes from **Chromosome Set 1**. We will access it in the following steps using R. 
 
+**THE CODE BELOW IS A WORK IN PROGRESS AND IS NOT WORKING!**
+
 ```
-library(matrixStats)
+library(dplyr)
+
 chr_clean <- read.csv("present_landmarks.csv")
+folder_path <- "./chromosome_set"
+file_list <- list.files(folder_path, pattern = "\\.tsv$", full.names = TRUE)
+for (folder_path in file_list) {
+  data <- read.table(folder_path, sep = "\t", header = FALSE, fill = TRUE, stringsAsFactors = FALSE)
+  data <- data[, 1:15]
+  write.table(data, file = folder_path, sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
+}
+
+matrices <- list()
+for (file in file_list) {
+  species <- gsub(".tsv", "", basename(file))
+  data <- read.table(file, header = FALSE, sep = "\t")
+  matrix <- as.matrix(data)
+  matrices[[species]] <- matrix
+}
+
+
+homologousUCE <- chr_clean
+
+for (species in names(matrices)) {
+  df_name <- species
+  df <- as.data.frame(matrices[[species]])
+  df <- df[, c(1, 2, 4)]
+  colnames(df)[colnames(df) == "V1"] <- "chromosomes"
+  colnames(df)[colnames(df) == "V4"] <- df_name
+  homologousUCE <- left_join(homologousUCE, df, by = "chromosomes")
+}
+
+write.csv(homologousUCE, file = "homologous_UCEs_extracted.csv", row.names = TRUE)
+
+data <- read.csv("homologous_UCEs_extracted.csv")
+
+columns_to_remove <- colnames(data)[apply(data == 1, 2, all)]
+
+data <- data[, !colnames(data) %in% columns_to_remove]
+
+write.csv(data, file = "homologous_UCEs_extracted.csv", row.names = TRUE)
+
 ```
 
 </details>
