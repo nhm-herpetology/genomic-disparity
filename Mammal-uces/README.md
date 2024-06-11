@@ -301,7 +301,7 @@ write.csv(chr_clean, file = "present_landmarks.csv")
 
 >This should result in an output file that has 220 UCE probes that were present (=1) in all 16 species. 
 
-Now we will use these to extract position for each probe on each chromosome from the SAM files generated during **Step 2**. We will use the shell script ```chromosome_retriever.sh``` to collect the necessary SAM files (now in TSV format). 
+Now we will use these to extract position for each probe on each chromosome from the SAM files generated during **Step 2**. We will use the shell script ```chromosome_retriever.sh``` to collect the necessary SAM files (now in TSV format). We will make the script executable and then run it in the same directory that the previous shell scripts were executed in. 
 
 ```
 chmod +x chromosome_retriever.sh
@@ -311,7 +311,7 @@ chmod +x chromosome_retriever.sh
 ./chromosome_retriever.sh
 ```
 
-This script will creat a directory called chromosome_set that contains all 26 chromosomes from **Chromosome Set 1**. We will access it in the following steps using R. 
+This script will create a directory called ```chromosome_set``` that contains all 26 chromosomes from **Chromosome Set 1**. We will access it in the following steps using R. 
 
 ```
 library(matrixStats)
