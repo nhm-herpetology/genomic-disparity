@@ -296,18 +296,16 @@ Next we will remove all of the landmarks (UCE probes) that are not shares across
 chr <- data4
 chr_matchedUCEs <- apply(chr, 1, function(row) all(row != 0))
 chr_clean <- chr[chr_matchedUCEs,]
-write.csv(chr_clean, file = "allmammals_cluster1_presenceonlyUCEs.csv")
+write.csv(chr_clean, file = "present_landmarks.csv")
 ```
 
 >This should result in an output file that has 220 UCE probes that were present (=1) in all 16 species. 
 
-Now we will use these to extract position for each probe on each chromosome from the SAM files generated during **Step 2**
+Now we will use these to extract position for each probe on each chromosome from the SAM files generated during **Step 2**. We will use the shell script ```chromosome-retriever.sh``` to collect the necessary SAM files (now in TSV format). 
 
 ```
 library(matrixStats)
-chr_clean <- read.csv("allmammals_cluster1_presenceonlyUCEs.csv")
-
-
+chr_clean <- read.csv("present_landmarks.csv")
 ```
 
 </details>
