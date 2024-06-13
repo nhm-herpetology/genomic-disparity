@@ -335,7 +335,6 @@ for (species in names(matrices)) {
   df <- as.data.frame(matrices[[species]])
   df <- df[, c(1, 2, 4)]
   df <- data.frame(lapply(df, function(x) {gsub("-", ".", x)}))
-  df <- data.frame(lapply(df, function(x) {gsub("mapped_", "", x)}))
   colnames(df)[colnames(df) == "V1"] <- "chromosomes"
   colnames(df)[colnames(df) == "V4"] <- df_name
   homologousUCE <- left_join(homologousUCE, df, by = "chromosomes")
