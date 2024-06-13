@@ -270,7 +270,7 @@ _Piliocolobus tephrosceles_ | Primates | 11 (CM019250.1)
 <details>
   <summary>Click to expand content!</summary>
 
->We need to remove any landmarks that the chromosomes do not share, check the directionality of the mapping, and merge UCE landmarks before Genomic Disparity Analysis 
+>We need to remove any landmarks that the chromosomes do not share, check the directionality/orientation of the chromosomes, and merge UCE landmarks before Genomic Disparity Analysis 
   
 Now that we have identified the 26 chromosomes that comprise **Chromosome Set 1**, we will extract them for further analysis using R. We will do this using the ```landmark_pres_abs.csv``` file generated during the previous step. 
 
@@ -311,21 +311,15 @@ chmod +x chromosome_retriever.sh
 ./chromosome_retriever.sh
 ```
 
-This script will create a directory called ```chromosome_set``` that contains all 26 chromosomes from **Chromosome Set 1**. We will access it in the following steps using R. 
-
-**THE CODE BELOW IS A WORK IN PROGRESS AND IS NOT WORKING!**
+This script will create a directory called ```chromosome_set``` that contains all 26 chromosomes from **Chromosome Set 1**. We will access it in the following steps using R. Now that we have the files with landmark positions isolated, we need to extract just the landmark, direction and position information from each file. 
 
 ```
-library(dplyr)
+library(matrixStats)
 
-chr_clean <- read.csv("present_landmarks.csv")
+homologousUCE <- chr_clean
+
 folder_path <- "./chromosome_set"
 file_list <- list.files(folder_path, pattern = "\\.tsv$", full.names = TRUE)
-for (folder_path in file_list) {
-  data <- read.table(folder_path, sep = "\t", header = FALSE, fill = TRUE, stringsAsFactors = FALSE)
-  data <- data[, 1:15]
-  write.table(data, file = folder_path, sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
-}
 
 matrices <- list()
 for (file in file_list) {
@@ -334,9 +328,6 @@ for (file in file_list) {
   matrix <- as.matrix(data)
   matrices[[species]] <- matrix
 }
-
-
-homologousUCE <- chr_clean
 
 for (species in names(matrices)) {
   df_name <- species
@@ -347,15 +338,10 @@ for (species in names(matrices)) {
   homologousUCE <- left_join(homologousUCE, df, by = "chromosomes")
 }
 
+columns_to_remove <- colnames(homologousUCE)[apply(homologousUCE == 1, 2, all)]
+homologousUCE <- homologousUCE[, !colnames(homologousUCE) %in% columns_to_remove]
+
 write.csv(homologousUCE, file = "homologous_UCEs_extracted.csv", row.names = TRUE)
-
-data <- read.csv("homologous_UCEs_extracted.csv")
-
-columns_to_remove <- colnames(data)[apply(data == 1, 2, all)]
-
-data <- data[, !colnames(data) %in% columns_to_remove]
-
-write.csv(data, file = "homologous_UCEs_extracted.csv", row.names = TRUE)
 
 ```
 
