@@ -315,8 +315,9 @@ This script will create a directory called ```chromosome_set``` that contains al
 
 ```
 library(matrixStats)
+library(dplyr)
 
-homologousUCE <- chr_clean
+homologousUCE <- read.csv("present_landmarks.csv", header =T, row.names = 1)
 
 folder_path <- "./chromosome_set"
 file_list <- list.files(folder_path, pattern = "\\.tsv$", full.names = TRUE)
