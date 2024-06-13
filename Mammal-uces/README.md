@@ -335,6 +335,7 @@ for (species in names(matrices)) {
   df <- as.data.frame(matrices[[species]])
   df <- df[, c(1, 2, 4)]
   df <- data.frame(lapply(df, function(x) {gsub("-", ".", x)}))
+  df <- data.frame(lapply(df, function(x) {gsub("mapped_", "", x)}))
   colnames(df)[colnames(df) == "V1"] <- "chromosomes"
   colnames(df)[colnames(df) == "V4"] <- df_name
   homologousUCE <- left_join(homologousUCE, df, by = "chromosomes")
@@ -346,6 +347,8 @@ homologousUCE <- homologousUCE[, !colnames(homologousUCE) %in% columns_to_remove
 write.csv(homologousUCE, file = "homologous_UCEs_extracted.csv", row.names = TRUE)
 
 ```
+
+After this step you will have a CSV file called ```homologous_UCEs_extracted.csv``` which contains two columns for each species: (1) the direction that landmarks were mapped on the chromosomes (0 [forward] or 16 [reverse]) and (2) the mapping location (in base pairs) of each landmark.  
 
 </details>
 
