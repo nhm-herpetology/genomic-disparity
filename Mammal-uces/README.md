@@ -335,9 +335,9 @@ for (species in names(matrices)) {
   df <- as.data.frame(matrices[[species]])
   df <- df[, c(1, 2, 4)]
   df <- data.frame(lapply(df, function(x) {gsub("-", ".", x)}))
-  colnames(df)[colnames(df) == "V1"] <- "chromosomes"
+  colnames(df)[colnames(df) == "V1"] <- "landmarks"
   colnames(df)[colnames(df) == "V4"] <- df_name
-  homologousUCE <- left_join(homologousUCE, df, by = "chromosomes")
+  homologousUCE <- left_join(homologousUCE, df, by = "landmarks")
 }
 
 columns_to_remove <- colnames(homologousUCE)[apply(homologousUCE == 1, 2, all)]
@@ -347,32 +347,32 @@ write.csv(homologousUCE, file = "homologous_UCEs_extracted.csv", row.names = TRU
 
 ```
 
-After this step you will have a CSV file called ```homologous_UCEs_extracted.csv``` which contains two columns for each species: (1) the 'V2' direction that landmarks were mapped on the chromosomes (0 [forward] or 16 [reverse]) and (2) the mapping location (in base pairs) of each landmark. In the tutorial dataset there should be several examples of species with chromsomes that have been assembled with opposite Complementarities. For example, if we look at the first 20 landmark positions for _Capra aegragrus_ and _Capra_hircus_ in the ```homologous_UCEs_extracted.csv``` file we should see this:   
+After this step you will have a CSV file called ```homologous_UCEs_extracted.csv``` which contains two columns for each species: (1) the 'V2' direction that landmarks were mapped on the chromosomes (0 [forward] or 16 [reverse]) and (2) the mapping location (in base pairs) of each landmark. In the tutorial dataset there should be several examples of species with chromsomes that have been assembled with opposite complementarities. For example, if we look at the first 20 landmark positions for _Capra aegragrus_ and _Capra hircus_ in the ```homologous_UCEs_extracted.csv``` file we should see this:   
 
-```
-V2.y.y	Capra_aegagrus_CM003215.1.fasta	        V2.x.x.x	Capra_hircus_CM004563.1.fasta
-16	    50568525	                              0	        84091246
-16	    50568465	                              0	        84091306
-16	    50568405	                              0	        84091366
-16	    36102876                              	0	        99207598
-16	    38905700	                              0	        96044026
-16	    50308872	                              0	        84336628
-0	      18829966	                              16	      114936983
-0	      18830026	                              16	      114936923
-16	    50555754	                              0	        84103333
-16	    51538534	                              0        	83172024
-16	    50991589	                              0        	83702175
-16	    51789652	                              0	        82921983
-0	      30815279	                              16	      104073711
-16	    38900786	                              0	        96048941
-0	      31036783	                              16	      103852106
-16	    49929220	                              0	        84716751
-16    	49778672	                              0	        84869062
-0	      29898324	                              16	      104364483
-16	    50992659	                              0	        83701105
-16	    50992599	                              0	        83701165
-```
+V2.y.y | Capra_aegagrus_CM003215.1.fasta	  | V2.x.x.x | Capra_hircus_CM004563.1.fasta
+------------ | -------------  | ------------- | -------------	        	
+16	 | 50568525	   |                             0	 |       84091246
+16	 |   50568465	 |                             0	 |      84091306
+16	 |   50568405	 |                            0	   |     84091366
+16	 |   36102876  |                            	0	 |       99207598
+16	 |   38905700	 |                             0	 |       96044026
+16	 |   50308872	 |                             0	 |       84336628
+0	   |   18829966	 |                             16	 |     114936983
+0	   |   18830026	 |                             16	 |     114936923
+16	 |   50555754	 |                             0	 |       84103333
+16	 |   51538534	 |                             0   |     	83172024
+16	 |   50991589	 |                             0   |     	83702175
+16	 |   51789652	 |                             0	 |       82921983
+0	   |   30815279	 |                             16	 |     104073711
+16	 |   38900786	 |                             0	 |       96048941
+0	   |   31036783	 |                             16	 |     103852106
+16	 |   49929220	 |                             0	 |       84716751
+16   | 	49778672	 |                             0	 |       84869062
+0	   |  29898324	 |                             16	 |     104364483
+16	 |   50992659	 |                             0	 |       83701105
+16	 |   50992599	 |                             0	 |       83701165
 
+We can see that the direction of the landmark placement is opposite in all cases which suggests that these chromosomes have been submitted to NCBI in opposite complementarities. Another way to see evidence of this is to visualize the placement of the landmarks on the chromosomes where we can easily see the need to 'flip' the chromsomes for some taxa so that the landmark positions are homologous in an evolutionary sense. 
 
 </details>
 
