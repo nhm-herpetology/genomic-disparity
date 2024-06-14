@@ -335,9 +335,9 @@ for (species in names(matrices)) {
   df <- as.data.frame(matrices[[species]])
   df <- df[, c(1, 2, 4)]
   df <- data.frame(lapply(df, function(x) {gsub("-", ".", x)}))
-  colnames(df)[colnames(df) == "V1"] <- "landmarks"
+  colnames(df)[colnames(df) == "V1"] <- "chromosomes"
   colnames(df)[colnames(df) == "V4"] <- df_name
-  homologousUCE <- left_join(homologousUCE, df, by = "landmarks")
+  homologousUCE <- left_join(homologousUCE, df, by = "chromosomes")
 }
 
 columns_to_remove <- colnames(homologousUCE)[apply(homologousUCE == 1, 2, all)]
@@ -372,7 +372,38 @@ V2.y.y | Capra_aegagrus_CM003215.1.fasta	  | V2.x.x.x | Capra_hircus_CM004563.1.
 16	 |   50992659	 |                             0	 |       83701105
 16	 |   50992599	 |                             0	 |       83701165
 
-We can see that the direction of the landmark placement is opposite in all cases which suggests that these chromosomes have been submitted to NCBI in opposite complementarities. Another way to see evidence of this is to visualize the placement of the landmarks on the chromosomes where we can easily see the need to 'flip' the chromsomes for some taxa so that the landmark positions are homologous in an evolutionary sense. 
+We can see that the direction of the landmark placement is opposite in all cases which suggests that these chromosomes have been submitted to NCBI with opposite complementarities. Another way to see evidence of this is to visualize the placement of the landmarks on the chromosomes where we can easily see the need to 'flip' the chromsomes for some taxa so that the landmark positions are homologous in an evolutionary sense. 
+
+[INSERT JPG]
+
+[INSERT DETAILS FOR FLIPPING CHROMOSOMES]
+
+Now we will transpose the matrix for the final preparation step: 
+
+```
+data <- read.csv("homologous_UCEs_extracted.csv")
+transposed_data <- data %>%
+  t() %>%
+  as.data.frame()
+write.csv(transposed_data, file = "homologous_UCEs_extracted.csv", row.names = FALSE)
+```
+The final step of the data preparation relates to a specific caveat of using the UCE probe set. The UCE probe set was developed to capture UCEs across diverse taxa, as such some UCEs are targeted by multiple probes, so to control for the variation this creates in mapping, we average the probe placement across landmarks targeting the same UCE. We will remove the probe numbers (e.g. p1) in order to merge information from the probes targeting multiple parts of the same UCE landmark. 
+  
+```
+##### now remove the second parts of the column name '_p1' etc and average the UCE position ######
+data <- read.csv("homologous_UCEs_extracted.csv")
+# Check column names
+col_names <- names(data)
+# Remove the second part of column names separated by '_'
+col_names <- sub("_.*", "", col_names)
+# Identify column names with the same name
+unique_col_names <- unique(col_names)
+# Average data for columns with the same name
+averaged_data <- aggregate(. ~ col_names, data, mean)
+# Save the modified data
+write.csv(averaged_data, file = "homologous_UCEs_extracted_forPCA.csv", row.names = TRUE)
+```
+This will produce the file ```homologous_UCEs_extracted_forPCA.csv``` which is the input file for Genomic Disparity Analysis as outlined in the final step of the tutorial. 
 
 </details>
 
@@ -381,8 +412,8 @@ We can see that the direction of the landmark placement is opposite in all cases
 <details>
   <summary>Click to expand content!</summary>
 
-The UCE probe set was developed to capture UCEs across diverse taxa, as such some UCEs are targeted by multiple probes, so to control for the variation this creates in mapping, we average the probe placement across landmarks targeting the same UCE. 
-  
+>In this final step we will visualize the disparity in landmark placement using Principal Components analysis. We will specifically focus on PCs 1, 2 and 3 from this analysis. 
+
   R statistical software is used to make exciting plots!
 
 </details>
