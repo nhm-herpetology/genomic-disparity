@@ -1,4 +1,4 @@
-![image](https://github.com/nhm-herpetology/genomic-disparity/assets/35033128/83f736e9-dce4-421a-8b68-23b579f0f733)# Genomic Disparity Analysis: Placental Mammal UCE Tutorial
+# Genomic Disparity Analysis: Placental Mammal UCE Tutorial
 
 ![Mammal-uces-PC2-PC3](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Mammal-uces-PC2-PC3.jpg)
 
