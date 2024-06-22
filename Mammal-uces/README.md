@@ -421,7 +421,23 @@ landmarkflip$Cricetulus_griseus_CM023440.1.fasta <- Crgr
 landmarkflip$Equus_asinus_CM027693.2.fasta <- Eqas
 landmarkflip$Equus_caballus_CM027693.2.fasta <- Eqca
 
-write.csv(landmarkflip, file = "homologous_UCEs_extracted_flipped.csv", row.names = TRUE)
+A <-as.numeric(landmarkflip$Bos_indicus_CM003022.1.fasta)
+B <-as.numeric(landmarkflip$Bos_taurus_CM008169.2.fasta)
+C <-as.numeric(landmarkflip$Bubalus_bubalis_CM034272.1.fasta)
+D <-as.numeric(landmarkflip$Capra_aegagrus_CM003215.1.fasta)
+E <-as.numeric(landmarkflip$Cricetulus_griseus_CM023440.1.fasta)
+F <-as.numeric(landmarkflip$Equus_asinus_CM027693.2.fasta)
+G <-as.numeric(landmarkflip$Equus_caballus_CM027693.2.fasta)
+
+landmarkflip$Bos_indicus_CM003022.1.fasta <- A
+landmarkflip$Bos_taurus_CM008169.2.fasta <- B
+landmarkflip$Bubalus_bubalis_CM034272.1.fasta <- C
+landmarkflip$Capra_aegagrus_CM003215.1.fasta <- D
+landmarkflip$Cricetulus_griseus_CM023440.1.fasta <- E
+landmarkflip$Equus_asinus_CM027693.2.fasta <- F
+landmarkflip$Equus_caballus_CM027693.2.fasta <- G
+
+write.csv(landmarkflip, file = "homologous_UCEs_extracted_flipped.csv")
 
 ```
  
