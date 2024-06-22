@@ -421,6 +421,8 @@ landmarkflip$Cricetulus_griseus_CM023440.1.fasta <- Crgr
 landmarkflip$Equus_asinus_CM027693.2.fasta <- Eqas
 landmarkflip$Equus_caballus_CM027693.2.fasta <- Eqca
 
+write.csv(landmarkflip, file = "homologous_UCEs_extracted_flipped.csv", row.names = TRUE)
+
 ```
  
 
