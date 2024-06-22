@@ -374,7 +374,7 @@ V2.y.y | Capra_aegagrus_CM003215.1.fasta	  | V2.x.x.x | Capra_hircus_CM004563.1.
 
 We can see that the direction of the landmark placement is opposite in all cases which suggests that these chromosomes have been submitted to NCBI with opposite complementarities. Another way to see evidence of this is to visualize the placement of the landmarks on the chromosomes where we can easily see the need to 'flip' the chromsomes for some taxa so that the landmark positions are homologous in an evolutionary sense. 
 
-![Capra-raw-mapping](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Capra_landmarks_raw.jpg)
+![Capra_landmarks_raw](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Capra_landmarks_raw.jpg)
 
 [INSERT DETAILS FOR FLIPPING CHROMOSOMES]
 
