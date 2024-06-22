@@ -372,13 +372,59 @@ V2.y.y | Capra_aegagrus_CM003215.1.fasta	  | V2.x.x.x | Capra_hircus_CM004563.1.
 16	 |   50992659	 |                             0	 |       83701105
 16	 |   50992599	 |                             0	 |       83701165
 
-We can see that the direction of the landmark placement is opposite in all cases which suggests that these chromosomes have been submitted to NCBI with opposite complementarities. Another way to see evidence of this is to visualize the placement of the landmarks on the chromosomes where we can easily see the need to 'flip' the chromsomes for some taxa so that the landmark positions are homologous in an evolutionary sense. 
+We can see that the direction of the landmark placement is opposite in all cases which suggests that these chromosomes have been submitted to NCBI with opposite complementarities. Another way to see evidence of this is to visualize the placement of the landmarks on the chromosomes where we can easily see the need to 'flip' the chromsomes for some taxa so that the landmark positions are homologous in an evolutionary sense. In the image below UCE landmarks are indicated in orange on the grey chromosomes, homologous UCE landmarks are connected with a light blue line. 
 
-![Capra_landmarks_raw](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Capra_landmarks_raw.jpg)
+![Capra](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Capra.jpg)
 
-If we take the reverse complement of all the landmark positions for _Capra aegragrus_ we see that the landmark positions are now located in a way that is more what we would expect for two species within the same genus. 
+If we take the reverse complement of all the landmark positions for _Capra aegragrus_ we see that the landmark positions are now oriented in the same direction. 
 
-![Capra_landmarks_flipped](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Capra_landmarks_flipped.jpg)
+![Capra_flipped](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Capra_flipped.jpg)
+
+Determining which taxa to 'flip' is arbitrary for disparity analysis, but for the tutorial dataset we will 'flip' those taxa with the same landmark directionalities as _Capra aegragrus_. That includes six other species: _Bos indicus_, _Bos taurus_, _Bubalus bubalus_, _Cricetulus griseus_, _Equus asinus_, and _Equus caballus_. In order to 'flip' taxa we can subtract the total length of the chromosome from the existing BWA-inferred landmark positions. We can find the total lengths of of the chromosomes in the ```Chromosome_lengths.tsv``` files we generated during **Step 2**.
+
+Species | Accession	  | Length (bp)
+------------ | -------------  | -------------     	
+_Bos indicus_ | CM003022.1 | 140680885
+_Bos taurus_ | CM008169.2 | 136231102
+_Bubalus bubalus_ | CM034272.1 | 188164321
+_Capra aegragrus_	 | CM003215.1	| 128023632
+_Cricetulus griseus_ | CM023440.1 | 155611870
+_Equus asinus_ | CM027693.2 | 92916174
+ _Equus caballus_ | CM027693.2 | 82641348
+
+This 'flipping' step can be conducted in Excel or similar spreadsheet editor. We can also use R to 'flip' these chromosomes using function commands: 
+
+```
+landmarkflip <- read.csv("homologous_UCEs_extracted.csv", header =T, row.names = 1)
+
+fun1 <- function(x) {140680885-x}
+fun2 <- function(x) {136231102-x}
+fun3 <- function(x) {188164321-x}
+fun4 <- function(x) {128023632-x}
+fun5 <- function(x) {155611870-x}
+fun6 <- function(x) {92916174-x}
+fun7 <- function(x) {82641348-x}
+
+Boin <-lapply(landmarkflip$Bos_indicus_CM003022.1.fasta, fun1)
+Bota <-lapply(landmarkflip$Bos_taurus_CM008169.2.fasta, fun2)
+Bubu <-lapply(landmarkflip$Bubalus_bubalis_CM034272.1.fasta, fun3)
+Caae <-lapply(landmarkflip$Capra_aegagrus_CM003215.1.fasta, fun4)
+Crgr <-lapply(landmarkflip$Cricetulus_griseus_CM023440.1.fasta, fun5)
+Eqas <-lapply(landmarkflip$Equus_asinus_CM027693.2.fasta, fun6)
+Eqca <-lapply(landmarkflip$Equus_caballus_CM027693.2.fasta, fun7)
+
+landmarkflip$Bos_indicus_CM003022.1.fasta <- Boin
+landmarkflip$Bos_taurus_CM008169.2.fasta <- Bota
+landmarkflip$Bubalus_bubalis_CM034272.1.fasta <- Bubu
+landmarkflip$Capra_aegagrus_CM003215.1.fasta <- Caae
+landmarkflip$Cricetulus_griseus_CM023440.1.fasta <- Crgr
+landmarkflip$Equus_asinus_CM027693.2.fasta <- Eqas
+landmarkflip$Equus_caballus_CM027693.2.fasta <- Eqca
+
+```
+ 
+
+>Note: In chromosomes with relatively conserved landmark placements, it should be obvious which taxa need to be 'flipped'. However, when landmarks are more evolutionarily labile it may be diffcult to justify a 'flipping' operation, so we encourage users to think about this operation carefully. 
 
 [INSERT DETAILS FOR FLIPPING CHROMOSOMES]
 
