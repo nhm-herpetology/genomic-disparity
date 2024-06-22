@@ -376,6 +376,10 @@ We can see that the direction of the landmark placement is opposite in all cases
 
 ![Capra_landmarks_raw](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Capra_landmarks_raw.jpg)
 
+If we take the reverse complement of all the landmark positions for _Capra aegragrus_ we see that the landmark positions are now located in a way that is more what we would expect for two species within the same genus. 
+
+![Capra_landmarks_flipped](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Capra_landmarks_flipped.jpg)
+
 [INSERT DETAILS FOR FLIPPING CHROMOSOMES]
 
 Now we will transpose the matrix for the final preparation step: 
