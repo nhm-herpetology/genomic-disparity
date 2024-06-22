@@ -25,4 +25,18 @@ find ./Taxon_** -name "mapped_$i.fasta.tsv" -exec cp "{}" ./chromosome_set \;
 
 done
 
-echo "Chromosome set extracted and placed in directory chromosome_set"
+echo "Chromosome set extracted and placed in directory chromosome_set..."
+
+echo "Renaming final chromosome files..."
+
+cd chromosome_set/
+
+for filename in *.fasta.tsv; do 
+    [ -f "$filename" ] || continue
+    mv "$filename" "${filename//mapped_/}"
+
+done
+
+cd ..
+
+echo "Chromosome retrieval complete"
