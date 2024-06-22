@@ -436,38 +436,51 @@ landmarkflip$Capra_aegagrus_CM003215.1.fasta <- D
 landmarkflip$Cricetulus_griseus_CM023440.1.fasta <- E
 landmarkflip$Equus_asinus_CM027693.2.fasta <- F
 landmarkflip$Equus_caballus_CM027693.2.fasta <- G
-
-write.csv(landmarkflip, file = "homologous_UCEs_extracted_flipped.csv")
-
 ```
  
-
 >Note: In chromosomes with relatively conserved landmark placements, it should be obvious which taxa need to be 'flipped'. However, when landmarks are more evolutionarily labile it may be diffcult to justify a 'flipping' operation, so we encourage users to think about this operation carefully. 
 
-[INSERT DETAILS FOR FLIPPING CHROMOSOMES]
-
-Now we will transpose the matrix for the final preparation step: 
+Now all of the chromosomes are positioned correctly and we can remove the mapping direction information and export our final file:
 
 ```
-data <- read.csv("homologous_UCEs_extracted.csv")
-transposed_data <- data %>%
-  t() %>%
-  as.data.frame()
-write.csv(transposed_data, file = "homologous_UCEs_extracted.csv", row.names = FALSE)
+data5 <- landmarkflip[-c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50)]
+
+write.csv(data5, file = "homologous_UCEs_extracted_flipped.csv")
 ```
+
+After the last step we have a file called ```homologous_UCEs_extracted_flipped.csv``` that is ready for the final preparation steps, starting with transposing the matrix: 
+
+```
+data6 <- read.csv("homologous_UCEs_extracted_flipped.csv")
+
+transposed_data <- data6 %>% t() %>% as.data.frame()
+
+write.csv(transposed_data, file = "homologous_UCEs_transposed.csv", row.names = FALSE)
+```
+
 The final step of the data preparation relates to a specific caveat of using the UCE probe set. The UCE probe set was developed to capture UCEs across diverse taxa, as such some UCEs are targeted by multiple probes, so to control for the variation this creates in mapping, we average the probe placement across landmarks targeting the same UCE. We will remove the probe numbers (e.g. p1) in order to merge information from the probes targeting multiple parts of the same UCE landmark. 
   
 ```
-##### now remove the second parts of the column name '_p1' etc and average the UCE position ######
-data <- read.csv("homologous_UCEs_extracted.csv")
-# Check column names
-col_names <- names(data)
-# Remove the second part of column names separated by '_'
+data7 <- read.csv("homologous_UCEs_transposed.csv")
+
+names(data7) <- data7[2,]
+data8 <-data7[-1,]
+data9 <-data8[-1,]
+
+write.csv(data9, file = "test.csv", row.names = FALSE)
+
+data10 <- read.csv("test.csv")
+
+col_names <- names(data10)
+
 col_names <- sub("_.*", "", col_names)
-# Identify column names with the same name
+
+names(data10) <- col_names
+
 unique_col_names <- unique(col_names)
+
 # Average data for columns with the same name
-averaged_data <- aggregate(. ~ col_names, data, mean)
+averaged_data <- aggregate(. ~ col_names, data10, mean)
 # Save the modified data
 write.csv(averaged_data, file = "homologous_UCEs_extracted_forPCA.csv", row.names = TRUE)
 ```
