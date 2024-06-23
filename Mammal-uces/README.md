@@ -487,6 +487,7 @@ At the end of **Step 4** we will have the file ```homologous_UCEs_Set1_PCA.csv``
 ```
 library(dplyr)
 library(ggplot2)
+library(cowplot)
 
 Set1_PCA <- read.csv("homologous_UCEs_Set1_PCA.csv", row.names = 1)
 names(Set1_PCA) <- Set1_PCA[1,]
@@ -498,31 +499,22 @@ PCA1 <-prcomp(PCprep)
 
 ```
 
-After the PCA has completed there will be five lists of results including "sdev", "rotation", "center", "scale", and "x". The "x" variable contains the PC scores that we will use for Genomic Disparity analysis. We will now extract them and prepare for visualizing the results in ggplot2.
+After the PCA has completed there will be five lists of results including "sdev", "rotation", "center", "scale", and "x". The "x" variable contains the PC scores that we will use for Genomic Disparity analysis. We will now extract them and visualize the genomic disparity results in ggplot2.
 
 ```
 PCA1_scores <-as.data.frame(PCA1$x)
 
-gplot(PCA1_scores, aes(x = PC1, y = PC2, label = row.names(PCA1_scores))) + geom_point(size = 3) + geom_text(size = 3)  + theme_classic()
-gplot(PCA1_scores, aes(x = PC2, y = PC3, label = row.names(PCA1_scores))) + geom_point(size = 3) + geom_text(size = 3)  + theme_classic()
+Order <-c("Artiodactyla", "Artiodactyla", "Artiodactyla", "Artiodactyla", "Artiodactyla", "Perissodactyla", "Rodentia", "Perissodactyla", "Perissodactyla", "Carnivora", "Artiodactyla", "Primates", "Primates", "Rodentia", "Rodentia", "Rodentia", "Rodentia", "Carnivora", "Artiodactyla", "Primates", "Carnivora", "Primates", "Rodentia", "Primates", "Rodentia")
 
+PCA1_plots <-cbind(PCA1_scores, Order)
+
+P1 <-ggplot(PCA1_plots, aes(x = PC1, y = PC2, color = Order)) + geom_point(size = 4, alpha=0.9) + scale_color_manual(breaks = c("Artiodactyla","Carnivora","Perissodactyla","Primates","Rodentia"), values=c("orange", "red","brown","blue","purple")) + theme_classic()
+
+P2 <-ggplot(PCA1_plots, aes(x = PC3, y = PC4, color = Order)) + geom_point(size = 4, alpha=0.9) + scale_color_manual(breaks = c("Artiodactyla","Carnivora","Perissodactyla","Primates","Rodentia"), values=c("orange", "red","brown","blue","purple")) + theme_classic()
+
+plot_grid(P1, P2, ncol = 1)
 ```
+![PCA_results](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/PCA_results.jpg)
 
-![PC1_PC2_dirty](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/PC1_PC2_dirty.jpg)
-
-![PC2_PC3_dirty](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/PC2_PC3_dirty.jpg)
-
-Using these two plots we can see the variation in UCE landmark placement across the three most explanatory axes. For clearer interpretation, we can tidy up the plots by adding information about the mammalian orders, and making the plots again. 
-
-```
-Orders <-c("Artiodactlya", "Artiodactlya", "Artiodactlya", "Artiodactlya", "Artiodactlya", "Perissodactyla", "Rodentia", "Perissodactyla", "Perissodactyla", "Carnivora", "Artiodactlya", "Primates", "Primates", "Rodentia", "Rodentia", "Rodentia", "Rodentia", "Carnivora", "Artiodactlya", "Primates", "Carnivora", "Primates", "Rodentia", "Primates", "Rodentia")
-
-PCA1_plots <-cbind(PCA1_scores, Orders)
-
-ggplot(PCA1_plots, aes(x = PC1, y = PC2, color = Orders)) + geom_point(size = 3) + theme_classic()
-
-ggplot(PCA1_plots, aes(x = PC2, y = PC3, color = Orders)) + geom_point(size = 3) + theme_classic()
-
-```
 
 </details>
