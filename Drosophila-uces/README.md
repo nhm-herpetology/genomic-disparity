@@ -13,7 +13,7 @@ Chromosomal inversions are thought to be involved in speciation, the formation o
 * R statistical software
   
 
-## Step 1: Download chromosome sequences from genome assemblies
+## Step 1: Download chromosome 5 sequences
 <details>
   <summary>Click to expand content!</summary>
 
