@@ -448,43 +448,23 @@ data5 <- landmarkflip[-c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40
 write.csv(data5, file = "homologous_UCEs_extracted_flipped.csv")
 ```
 
-After the last step we have a file called ```homologous_UCEs_extracted_flipped.csv``` that is ready for the final preparation steps, starting with transposing the matrix: 
+After the last step we have a file called ```homologous_UCEs_extracted_flipped.csv``` that is ready for the final preparation steps. This includes accounting for a specific caveat of using the UCE probe set. The UCE probe set was developed to capture UCEs across diverse taxa, as such some UCEs are targeted by multiple probes, so to control for the variation this creates in mapping, we average the probe placement across landmarks targeting the same UCE. We will remove the probe numbers (e.g. p1) in order to merge information from the probes targeting multiple parts of the same UCE landmark. After we average the UCE positions, we transpose the matrix to prepare it for the PCA: 
 
 ```
 data6 <- read.csv("homologous_UCEs_extracted_flipped.csv")
+data6$landmarks <- sub("_.*", "", data6$landmarks)
+data6$X <-NULL
 
-transposed_data <- data6 %>% t() %>% as.data.frame()
+data7 <-aggregate(data6, by = list(data6$landmarks), mean)
+data7$landmarks<-NULL
+colnames(data7)[colnames(data7) == "Group.1"] <- "chromosomes"
 
-write.csv(transposed_data, file = "homologous_UCEs_transposed.csv", row.names = FALSE)
+transposed_data <- data7 %>% t() %>% as.data.frame()
+
+write.csv(transposed_data, file = "homologous_UCEs_cluster1_PCA.csv")
 ```
-
-The final step of the data preparation relates to a specific caveat of using the UCE probe set. The UCE probe set was developed to capture UCEs across diverse taxa, as such some UCEs are targeted by multiple probes, so to control for the variation this creates in mapping, we average the probe placement across landmarks targeting the same UCE. We will remove the probe numbers (e.g. p1) in order to merge information from the probes targeting multiple parts of the same UCE landmark. 
   
-```
-data7 <- read.csv("homologous_UCEs_transposed.csv")
-
-names(data7) <- data7[2,]
-data8 <-data7[-1,]
-data9 <-data8[-1,]
-
-write.csv(data9, file = "test.csv", row.names = FALSE)
-
-data10 <- read.csv("test.csv")
-
-col_names <- names(data10)
-
-col_names <- sub("_.*", "", col_names)
-
-names(data10) <- col_names
-
-unique_col_names <- unique(col_names)
-
-# Average data for columns with the same name
-averaged_data <- aggregate(. ~ col_names, data10, mean)
-# Save the modified data
-write.csv(averaged_data, file = "homologous_UCEs_extracted_forPCA.csv", row.names = TRUE)
-```
-This will produce the file ```homologous_UCEs_extracted_forPCA.csv``` which is the input file for Genomic Disparity Analysis as outlined in the final step of the tutorial. 
+This will produce the file ```homologous_UCEs_cluster1_PCA.csv``` which is the input file for Genomic Disparity Analysis as outlined in the final step of the tutorial. 
 
 </details>
 
