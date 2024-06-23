@@ -380,7 +380,7 @@ If we take the reverse complement of all the landmark positions for _Capra aegra
 
 ![Capra_flipped](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Capra_flipped.jpg)
 
-Determining which taxa to 'flip' is arbitrary for disparity analysis, but for the tutorial dataset we will 'flip' those taxa with the same landmark directionalities as _Capra aegragrus_. That includes six other species: _Bos indicus_, _Bos taurus_, _Bubalus bubalus_, _Cricetulus griseus_, _Equus asinus_, and _Equus caballus_. In order to 'flip' taxa we can subtract the total length of the chromosome from the existing BWA-inferred landmark positions. We can find the total lengths of of the chromosomes in the ```Chromosome_lengths.tsv``` files we generated during **Step 2**.
+Determining which taxa to 'flip' is arbitrary for disparity analysis, but for the tutorial dataset we will 'flip' those taxa with the same landmark directionalities as _Capra aegragrus_. That includes seven other species: _Bos indicus_, _Bos taurus_, _Bubalus bubalus_, _Cricetulus griseus_, _Equus asinus_, _Equus caballus_, and _Ovis aries_. In order to 'flip' taxa we can subtract the total length of the chromosome from the existing BWA-inferred landmark positions. We can find the total lengths of of the chromosomes in the ```Chromosome_lengths.tsv``` files we generated during **Step 2**.
 
 Species | Accession	  | Length (bp)
 ------------ | -------------  | -------------     	
@@ -391,6 +391,7 @@ _Capra aegragrus_	 | CM003215.1	| 128023632
 _Cricetulus griseus_ | CM023440.1 | 155611870
 _Equus asinus_ | CM027693.2 | 92916174
  _Equus caballus_ | CM027693.2 | 82641348
+ _Ovis aries_ | CM028705.1 | 250202058
 
 This 'flipping' step can be conducted in Excel or similar spreadsheet editor. We can also use R to 'flip' these chromosomes using function commands: 
 
@@ -404,6 +405,7 @@ fun4 <- function(x) {128023632-x}
 fun5 <- function(x) {155611870-x}
 fun6 <- function(x) {92916174-x}
 fun7 <- function(x) {82641348-x}
+fun8 <- function(x) {250202058-x}
 
 Boin <-lapply(landmarkflip$Bos_indicus_CM003022.1.fasta, fun1)
 Bota <-lapply(landmarkflip$Bos_taurus_CM008169.2.fasta, fun2)
@@ -412,6 +414,7 @@ Caae <-lapply(landmarkflip$Capra_aegagrus_CM003215.1.fasta, fun4)
 Crgr <-lapply(landmarkflip$Cricetulus_griseus_CM023440.1.fasta, fun5)
 Eqas <-lapply(landmarkflip$Equus_asinus_CM027693.2.fasta, fun6)
 Eqca <-lapply(landmarkflip$Equus_caballus_CM027693.2.fasta, fun7)
+Ovar <-lapply(landmarkflip$Ovis_aries_CM028705.1.fasta, fun8)
 
 landmarkflip$Bos_indicus_CM003022.1.fasta <- Boin
 landmarkflip$Bos_taurus_CM008169.2.fasta <- Bota
@@ -420,6 +423,8 @@ landmarkflip$Capra_aegagrus_CM003215.1.fasta <- Caae
 landmarkflip$Cricetulus_griseus_CM023440.1.fasta <- Crgr
 landmarkflip$Equus_asinus_CM027693.2.fasta <- Eqas
 landmarkflip$Equus_caballus_CM027693.2.fasta <- Eqca
+landmarkflip$Ovis_aries_CM028705.1.fasta <- Ovar
+
 
 A <-as.numeric(landmarkflip$Bos_indicus_CM003022.1.fasta)
 B <-as.numeric(landmarkflip$Bos_taurus_CM008169.2.fasta)
@@ -428,6 +433,7 @@ D <-as.numeric(landmarkflip$Capra_aegagrus_CM003215.1.fasta)
 E <-as.numeric(landmarkflip$Cricetulus_griseus_CM023440.1.fasta)
 F <-as.numeric(landmarkflip$Equus_asinus_CM027693.2.fasta)
 G <-as.numeric(landmarkflip$Equus_caballus_CM027693.2.fasta)
+H <-as.numeric(landmarkflip$Ovis_aries_CM028705.1.fasta)
 
 landmarkflip$Bos_indicus_CM003022.1.fasta <- A
 landmarkflip$Bos_taurus_CM008169.2.fasta <- B
@@ -436,6 +442,7 @@ landmarkflip$Capra_aegagrus_CM003215.1.fasta <- D
 landmarkflip$Cricetulus_griseus_CM023440.1.fasta <- E
 landmarkflip$Equus_asinus_CM027693.2.fasta <- F
 landmarkflip$Equus_caballus_CM027693.2.fasta <- G
+landmarkflip$Ovis_aries_CM028705.1.fasta <- H
 ```
  
 >Note: In chromosomes with relatively conserved landmark placements, it should be obvious which taxa need to be 'flipped'. However, when landmarks are more evolutionarily labile it may be diffcult to justify a 'flipping' operation, so we encourage users to think about this operation carefully. 
