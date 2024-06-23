@@ -529,9 +529,18 @@ Standard deviation | 4.681e+08 | 4.708e+07 | 8.612e+06 | 2.376e+06
 Proportion of Variance | 0.9896 | 0.0100 | 0.0034 | 0.0003 
 Cumulative Proportion | 0.9896 |0.9960 | 0.9999 | 1.0000
 
-Most of the variance is explained by PC1, which we show in the Mohan et al. (2024) paper is associated with chromosome size (similar to the body size varaible of morphological PCAs). While the remaining three PCs do not cumulatively explain much variance, we can see from the plot above they are likely biologically meaningful. We can further intepret the patterns by exploring which UCE landmarks are weighted heavily on each axis. 
+Most of the variance is explained by PC1, which we show in the Mohan et al. (2024) paper is associated with chromosome size (similar to the body size varaible of morphological PCAs). While the remaining three PCs do not cumulatively explain much variance, we can see from the plot above they are likely biologically meaningful. We can further intepret the patterns by exploring which UCE landmarks are weighted heavily on each axis by further examining the "rotation" list from the PCA. 
 
-Finally, we can visualize group centroids for all of the Orders using ggplot. This gives us an appreciation of how much disparity each of the orders has in terms of genomic landmark placement in this conserved genomic region.  
+```
+write.csv(PCA1$rotation, file = "component_loadings_PCA.csv")
+```
+
+Exploring this spreadsheet will help identify which UCE landmarks are driving the patterns observed in the above plots. For example, in PC3 by arranging the scores in order from smallest to largest we can see that landmarks **uce.884**, **uce.7269**, **uce.7947**, and **uce.6988** are likely involved in the pattern as they represent the highest and lowest component loadings.  
+
+>At this point you have completed the tutorial and should have all the tools necessary to conduct Genomic Disparity Analysis on your own interspecific dataset. 
+
+
+**BONUS**: we can also visualize group centroids for all of the Orders using ggplot. This gives us an appreciation of how much disparity each of the orders has in terms of landmark placement in this conserved genomic region:  
 
 ```
 cent1 <- aggregate(cbind(PC1, PC2) ~Order, data = PCA1_plots, FUN = mean)
@@ -541,7 +550,7 @@ segs2 <- merge(PCA1_plots, setNames(cent2, c('Order','oPC3','oPC4')), by = 'Orde
 
 out1 <-ggplot(PCA1_plots, aes(x = PC1, y = PC2, color = Order)) + geom_segment(data = segs1, mapping = aes(xend = oPC1, yend = oPC2)) + geom_point(data = cent1, size = 5) + geom_point() + coord_fixed() + xlab('PC1 (98.9%)') + ylab('PC2 (1.0%)') + scale_color_manual(breaks = c("Artiodactyla", "Carnivora","Perissodactyla","Primates","Rodentia"), values=c("orange", "red","brown","blue","purple")) + theme_classic()
 
-out2 <-ggplot(PCA1_plots, aes(x = PC3, y = PC4, color = Order)) + geom_segment(data = segs2, mapping = aes(xend = oPC3, yend = oPC4)) + geom_point(data = cent2, size = 5) + geom_point() + coord_fixed() + xlab('PC3 (0.03%)') + ylab('PC4 (0.003%)') + scale_color_manual(breaks = c("Artiodactyla", "Carnivora","Perissodactyla","Primates","Rodentia"), values=c("orange", "red","brown","blue","purple")) + theme_classic()
+out2 <-ggplot(PCA1_plots, aes(x = PC3, y = PC4, color = Order)) + geom_segment(data = segs2, mapping = aes(xend = oPC3, yend = oPC4)) + geom_point(data = cent2, size = 5) + geom_point() + coord_fixed() + xlab('PC3 (0.3%)') + ylab('PC4 (0.03%)') + scale_color_manual(breaks = c("Artiodactyla", "Carnivora","Perissodactyla","Primates","Rodentia"), values=c("orange", "red","brown","blue","purple")) + theme_classic()
 
 plot_grid(out1, out2, ncol = 1)
 ```
