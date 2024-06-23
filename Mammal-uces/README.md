@@ -503,7 +503,19 @@ After the PCA has completed there will be five lists of results including "sdev"
 ```
 PCA1_scores <-as.data.frame(PCA1$x)
 
+gplot(PCA1_scores, aes(x = PC1, y = PC2, label = row.names(PCA1_scores))) + geom_point(size = 3) + geom_text(size = 3)  + theme_classic()
+gplot(PCA1_scores, aes(x = PC2, y = PC3, label = row.names(PCA1_scores))) + geom_point(size = 3) + geom_text(size = 3)  + theme_classic()
 
+```
+
+![PC1_PC2_dirty](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/PC1_PC2_dirty.jpg)
+
+![PC2_PC3_dirty](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/PC2_PC3_dirty.jpg)
+
+Using these two plots we can see the variation in UCE landmark placement across the three most explanatory axes. For clearer interpretation, we can tidy up the plots by adding information about the mammalian orders, and making the plots again. 
+
+```
+final code here
 ```
 
 </details>
