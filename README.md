@@ -24,18 +24,6 @@ Using Genomic Disparity Analysis to explore variation in landmark placement on a
 
 <br/>
 
-## Applying disparity scores to understand genomic evolution
-
-Tools for understanding the accumulation of genomic disparity
-
-<br/>
-
-## Evidence that chromosome-based disparity accumulates over evolutionary time 
-
-A simulation study showing that genomic change and disparity scores are highly correlated
-
-<br/>
-
 
 
 
