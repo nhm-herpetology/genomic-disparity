@@ -515,7 +515,14 @@ gplot(PCA1_scores, aes(x = PC2, y = PC3, label = row.names(PCA1_scores))) + geom
 Using these two plots we can see the variation in UCE landmark placement across the three most explanatory axes. For clearer interpretation, we can tidy up the plots by adding information about the mammalian orders, and making the plots again. 
 
 ```
-final code here
+Orders <-c("Artiodactlya", "Artiodactlya", "Artiodactlya", "Artiodactlya", "Artiodactlya", "Perissodactyla", "Rodentia", "Perissodactyla", "Perissodactyla", "Carnivora", "Artiodactlya", "Primates", "Primates", "Rodentia", "Rodentia", "Rodentia", "Rodentia", "Carnivora", "Artiodactlya", "Primates", "Carnivora", "Primates", "Rodentia", "Primates", "Rodentia")
+
+PCA1_plots <-cbind(PCA1_scores, Orders)
+
+ggplot(PCA1_plots, aes(x = PC1, y = PC2, color = Orders)) + geom_point(size = 3) + theme_classic()
+
+ggplot(PCA1_plots, aes(x = PC2, y = PC3, color = Orders)) + geom_point(size = 3) + theme_classic()
+
 ```
 
 </details>
