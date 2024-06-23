@@ -461,10 +461,10 @@ colnames(data7)[colnames(data7) == "Group.1"] <- "chromosomes"
 
 transposed_data <- data7 %>% t() %>% as.data.frame()
 
-write.csv(transposed_data, file = "homologous_UCEs_cluster1_PCA.csv")
+write.csv(transposed_data, file = "homologous_UCEs_Set1_PCA.csv")
 ```
   
-This will produce the file ```homologous_UCEs_cluster1_PCA.csv``` which is the input file for Genomic Disparity Analysis as outlined in the final step of the tutorial. 
+After averaging the positions, there should be **186 UCE landmarks**. This final prep will produce the file ```homologous_UCEs_cluster1_PCA.csv``` which is the input file for Genomic Disparity Analysis as outlined in the final step of the tutorial. 
 
 </details>
 
@@ -473,8 +473,30 @@ This will produce the file ```homologous_UCEs_cluster1_PCA.csv``` which is the i
 <details>
   <summary>Click to expand content!</summary>
 
->In this final step we will visualize the disparity in landmark placement using Principal Components analysis. We will specifically focus on PCs 1, 2 and 3 from this analysis. 
+>In this final step we will visualize the disparity in landmark placement using Principal Components Analysis (PCA). We will specifically focus on PCs 1, 2 and 3 from this analysis. 
 
-  R statistical software is used to make exciting plots!
+At the end of **Step 4** we will have the file ```homologous_UCEs_Set1_PCA.csv```, which we will now load into R for the PCA:  
+
+```
+library(dplyr)
+library(ggplot2)
+
+Set1_PCA <- read.csv("homologous_UCEs_Set1_PCA.csv", row.names = 1)
+names(Set1_PCA) <- Set1_PCA[1,]
+Set1_PCA <- Set1_PCA[-1,]
+
+PCprep <- Set1_PCA %>% mutate_at(1:186, as.numeric)
+
+PCA1 <-prcomp(PCprep)
+
+```
+
+After the PCA has completed there will be five lists of results including "sdev", "rotation", "center", "scale", and "x". The "x" variable contains the PC scores that we will use for Genomic Disparity analysis. We will now extract them and prepare for visualizing the results in ggplot2.
+
+```
+PCA1_scores <-as.data.frame(PCA1$x)
+
+
+```
 
 </details>
