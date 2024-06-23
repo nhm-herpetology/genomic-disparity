@@ -516,5 +516,36 @@ plot_grid(P1, P2, ncol = 1)
 ```
 ![PCA_results](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/PCA_results.jpg)
 
+The two plots above show the PC scores for PC1 vs. PC2 (top plot) and PC3 vs. PC4 (bottom plot). Across the four most explanatory axes we can see evidence of phylogenetic cohesion in genomic landmark placement, with several orders having substantially less within-Order disparity than between-Order disparity. We can see how much variance is explained by each axis using the command below:
+
+```
+summary(PCA1)
+```
+We should see that 100% of the variance in landmark position is explained by the first four PCs. 
+
+Variable | PC1 | PC2 | PC3 | PC4
+------------ | -------------  | ------------- | ------------- | -------------     	
+Standard deviation | 4.681e+08 | 4.708e+07 | 8.612e+06 | 2.376e+06
+Proportion of Variance | 0.9896 | 0.0100 | 0.0034 | 0.0003 
+Cumulative Proportion | 0.9896 |0.9960 | 0.9999 | 1.0000
+
+Most of the variance is explained by PC1, which we show in the Mohan et al. (2024) paper is associated with chromosome size (similar to the body size varaible of morphological PCAs). While the remaining three PCs do not cumulatively explain much variance, we can see from the plot above they are likely biologically meaningful. We can further intepret the patterns by exploring which UCE landmarks are weighted heavily on each axis. 
+
+Finally, we can visualize group centroids for all of the Orders using ggplot. This gives us an appreciation of how much disparity each of the orders has in terms of genomic landmark placement in this conserved genomic region.  
+
+```
+cent1 <- aggregate(cbind(PC1, PC2) ~Order, data = PCA1_plots, FUN = mean)
+cent2 <- aggregate(cbind(PC3, PC4) ~Order, data = PCA1_plots, FUN = mean)
+segs1 <- merge(PCA1_plots, setNames(cent1, c('Order','oPC1','oPC2')), by = 'Order', sort = FALSE)
+segs2 <- merge(PCA1_plots, setNames(cent2, c('Order','oPC3','oPC4')), by = 'Order', sort = FALSE)
+
+out1 <-ggplot(PCA1_plots, aes(x = PC1, y = PC2, color = Order)) + geom_segment(data = segs1, mapping = aes(xend = oPC1, yend = oPC2)) + geom_point(data = cent1, size = 5) + geom_point() + coord_fixed() + xlab('PC1 (98.9%)') + ylab('PC2 (1.0%)') + scale_color_manual(breaks = c("Artiodactyla", "Carnivora","Perissodactyla","Primates","Rodentia"), values=c("orange", "red","brown","blue","purple")) + theme_classic() + theme(legend.position = "none")
+
+out2 <-ggplot(PCA1_plots, aes(x = PC3, y = PC4, color = Order)) + geom_segment(data = segs2, mapping = aes(xend = oPC3, yend = oPC4)) + geom_point(data = cent2, size = 5) + geom_point() + coord_fixed() + xlab('PC3 (0.03%)') + ylab('PC4 (0.003%)') + scale_color_manual(breaks = c("Artiodactyla", "Carnivora","Perissodactyla","Primates","Rodentia"), values=c("orange", "red","brown","blue","purple")) + theme_classic()
+
+plot_grid(out1, out2, ncol = 1)
+
+```
+
 
 </details>
