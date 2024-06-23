@@ -17,10 +17,10 @@ Using Genomic Disparity Analysis to study structural evolution on multiple chrom
 
 <br/>
 
-## Detecting chromosomal inversions with UCEs: an intraspecific tutorial
-Using Genomic Disparity Analysis to explore variation in landmark placement on a single chromosome.
+## Detecting chromosomal inversions with UCEs: a speciation tutorial
+Using Genomic Disparity Analysis to explore variation in landmark placement on a single chromosome in the _Drosophila virilis_ group.
 
->Click [here] to access tutorial. 
+>Click [here](https://github.com/nhm-herpetology/genomic-disparity/tree/main/Drosophila-uces/README.md) to access tutorial. 
 
 <br/>
 
