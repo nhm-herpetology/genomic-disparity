@@ -188,6 +188,43 @@ _Drosophila novamexicana_ | CM061080.1 | 26715699
 _Drosophila virilia_	| CM017608.2 | 27902728
 _Drosophila virilia_	| CM061075.1 | 27785111
 
+The 'flipping' step can be conducted in Excel or similar spreadsheet editor. We can also use R to 'flip' the _Drosophila flavomontana_ chromosome using a function command: 
+
+```
+landmarkflip <- read.csv("homologous_UCEs_extracted.csv", row.names = 1)
+fun1 <- function(x) {27217941-x}
+Drfl <-lapply(landmarkflip$mapped_D_flavomontana_c5.fasta, fun1)
+landmarkflip$mapped_D_flavomontana_c5.fasta <- Drfl
+A <-as.numeric(landmarkflip$mapped_D_flavomontana_c5.fasta)
+landmarkflip$mapped_D_flavomontana_c5.fasta <-A
+```
+>Note: In chromosomes with relatively conserved landmark placements, it should be obvious which taxa need to be 'flipped'. However, when landmarks are more evolutionarily labile it may be diffcult to justify a 'flipping' operation, so we encourage users to think about this operation carefully. 
+
+Now all of the chromosomes are positioned correctly and we can remove the mapping direction information and export our final file:
+
+```
+data2 <- landmarkflip[-c(2,4,6,8,10,12)]
+
+write.csv(data2, file = "homologous_UCEs_extracted_flipped.csv")
+```
+
+After the last step we have a file called ```homologous_UCEs_extracted_flipped.csv``` that is ready for the final preparation steps. This includes accounting for a specific caveat of using the UCE probe set. The UCE probe set was developed to capture UCEs across diverse taxa, as such some UCEs are targeted by multiple probes, so to control for the variation this creates in mapping, we average the probe placement across landmarks targeting the same UCE. We will remove the probe numbers (e.g. p1) in order to merge information from the probes targeting multiple parts of the same UCE landmark. After we average the UCE positions, we transpose the matrix to prepare it for the PCA: 
+
+```
+data3 <- read.csv("homologous_UCEs_extracted_flipped.csv")
+data3$chromosomes <- sub("_.*", "", data3$chromosomes)
+data3$X <-NULL
+
+data4 <-aggregate(data3, by = list(data3$chromosomes), mean)
+data4$chromosomes<-NULL
+colnames(data4)[colnames(data4) == "Group.1"] <- "chromosomes"
+
+transposed_data <- data4 %>% t() %>% as.data.frame()
+
+write.csv(transposed_data, file = "homologous_UCEs_chromosome_5_PCA.csv")
+```
+  
+After averaging the positions, there should be **191 UCE landmarks**. This final prep will produce the file ```homologous_UCEs_chromosome_5_PCA.csv``` which is the input file for Genomic Disparity Analysis as outlined in the final step of the tutorial. 
 
 </details>
 
