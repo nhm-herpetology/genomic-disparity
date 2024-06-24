@@ -85,9 +85,20 @@ rm UCE_Diptera-UCE-2.7K-v1.fasta.sorted.bam
 rm UCE_Diptera-UCE-2.7K-v1.fasta.sorted.bam.bai
 rm UCEcount_Diptera-UCE-2.7K-v1.fasta.csv
 
+for f in *.sam; do
+    mv "$f" "$(basename "$f" .sam).tsv"
+done
+
+mkdir chromosome_5
+mv mapped_*.tsv chromosome_5/
+cd chromosome_5/
+
+cut -f1,3 *.tsv > Landmarks_merged.tsv
+sed 's/\t/,/g' Landmarks_merged.tsv > Landmarks_merged.csv
+sed ' 1 s/.*/chromosomes,uces/' Landmarks_merged.csv > sample_input_pres_abs.csv
 ```
 
-
+You will now have a file called ```sample_input_pres_abs.csv``` that reports which landmarks were mapped to which chromosomes. We will use this information to prepare the chromosomes for Genomic Disparity Analysis. 
 
 </details>
 
@@ -96,7 +107,25 @@ rm UCEcount_Diptera-UCE-2.7K-v1.fasta.csv
 <details>
   <summary>Click to expand content!</summary>
 
-We need to do a few prep steps on the mapped chromsome 5 data before they are ready for Genomic Disparity Analysis...
+>We need to remove any landmarks that the chromosomes do not share, check the directionality/orientation of the chromosomes, and merge UCE landmarks before Genomic Disparity Analysis.
+
+We will use the ```landmark_pres_abs.csv``` file from **Step 2** to remove UCEs that the chromosomes do not share in R:
+
+```
+library(reshape2)
+Input_pres_abs <- as.data.frame(read.csv("sample_input_pres_abs.csv", stringsAsFactors = F))
+matrix <-dcast(Input_pres_abs, chromosomes ~ uces, length)
+write.csv(matrix, file = 'landmark_pres_abs.csv')
+
+data1 <- read.csv("landmark_pres_abs.csv", row.names = 1)
+chr <- data1
+chr_matchedUCEs <- apply(chr, 1, function(row) all(row != 0))
+chr_clean <- chr[chr_matchedUCEs,]
+write.csv(chr_clean, file = "present_landmarks.csv")
+```
+>This procedure should result in the identification of 413 UCE landmarks that the _Drosophila_ have in common on chromosome 5.
+
+
 
 </details>
 
