@@ -51,3 +51,21 @@ wget
 ```
 
 </details>
+
+## Step 3: Preparing landmarked chromosomes for downstream analysis
+
+<details>
+  <summary>Click to expand content!</summary>
+
+We need to do a few prep steps on the mapped chromsome 5 data before they are ready for Genomic Disparity Analysis...
+
+</details>
+
+## Step 4: Principal components analysis of landmark disparity
+
+<details>
+  <summary>Click to expand content!</summary>
+
+Do we see evidence of inversions?
+
+</details>
