@@ -271,10 +271,19 @@ The commands above produce two plots: PC1 vs. PC2 and PC3 vs PC4.
 
 ![PCA_results](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/PCA_results.jpg)
 
-To help us with interpreting the landmark variation, we will have a look at how the landmark placement vary relative to the species that we have two representatives of in the analysis, _Drosophila virilia_. First we will compare the two individuals of _Drosophila virilia_:
+To help us with interpreting the landmark variation, we will have a look at how the landmark placements vary relative to the species that we have two representatives of in the analysis, _Drosophila virilia_. First we will compare the two individuals of _Drosophila virilia_:
 
+![vi-vi-c5](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/vi-vi-c5.jpg)
 
+![fl-vi-c5](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/fl-vi-c5.jpg)
 
+![mo-vi-c5](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/mo-vi-c5.jpg)
+
+![am-vi-c5](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/am-vi-c5.jpg)
+
+![no-vi-c5](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/no-vi-c5.jpg)
+
+![am-no-c5](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/am-no-c5.jpg)
 
 
 </details>
