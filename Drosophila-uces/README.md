@@ -38,10 +38,18 @@ esearch -db nucleotide -query  CM061080.1 | efetch -format fasta > D_novamexican
 esearch -db nucleotide -query CM017608.2 | efetch -format fasta > D_virilia_c5_A.fasta.fasta
 esearch -db nucleotide -query CM061075.1 | efetch -format fasta > D_virilia_c5_B.fasta.fasta
 
-wget
-wget
+wget https://raw.githubusercontent.com/nhm-herpetology/genomic-disparity/main/Drosophila-uces/D_montana_c5.zip
+wget https://raw.githubusercontent.com/nhm-herpetology/genomic-disparity/main/Drosophila-uces/D_flavomontana_c5.zip
 
+unzip D_montana_c5.zip
+unzip D_flavomontana_c5.zip
+
+mv D_montata_c5/D_montata_c5.fasta ./
+mv D_flavomontata_c5/D_flavomontata_c5.fasta ./
 ```
+>Note:NCBI Entrez Direct UNIX E-utilities need to be in your $PATH for the above commands to work correctly. 
+
+Now that all chromosome 5 sequences for the six taxa are in your working directory, we can move on to mapping the UCE landmarks on each chromosome. 
 
 </details>
 
@@ -54,7 +62,7 @@ wget
 We need the Diptera 2K probe set.
 
 ```
-wget 
+wget https://raw.githubusercontent.com/nhm-herpetology/genomic-disparity/main/Drosophila-uces/Tetrapods-UCE-5Kv1.fasta
 ```
 
 </details>
