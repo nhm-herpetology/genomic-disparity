@@ -59,11 +59,35 @@ Now that all chromosome 5 sequences for the six taxa are in your working directo
   
 >Landmarks can be any single-copy, conserved sequence that can be aligned to chromosomes in your dataset, but we have used ultraconserved elements (UCEs) in this tutorial as an example. More information about dipteran UCEs can be found [here](https://www.ultraconserved.org/)
 
-We need the Diptera 2K probe set.
+We need to download the ```Diptera-UCE-2.7K-v1.fasta``` file to map to the different chromosomes. 
 
 ```
-wget https://raw.githubusercontent.com/nhm-herpetology/genomic-disparity/main/Drosophila-uces/Tetrapods-UCE-5Kv1.fasta
+wget https://raw.githubusercontent.com/nhm-herpetology/genomic-disparity/main/Drosophila-uces/Diptera-UCE-2.7K-v1.fasta
 ```
+
+We can use a looping command to conduct BWA mapping on all of the chromosomes in the directory. 
+
+```
+for i in $(ls *.fasta)
+do
+	bwa index $i
+	bwa mem $i Diptera-UCE-2.7K-v1.fasta -t 6 > bwa_mem_align_UCEs_$i.sam 
+	samtools view -S -b bwa_mem_align_UCEs_$i.sam > UCE_$i.bam 
+	samtools sort UCE_$i.bam  -o UCE_$i.sorted.bam 
+	samtools index UCE_$i.sorted.bam 
+	samtools view -F 4 UCE_$i.bam > mapped_$i.sam 
+	wc -l mapped_$i.sam  | tr "," "." > UCEcount_$i.csv
+done
+
+rm mapped_Diptera-UCE-2.7K-v1.fasta.sam
+rm UCW_Diptera-UCE-2.7K-v1.fasta.bam
+rm UCE_Diptera-UCE-2.7K-v1.fasta.sorted.bam
+rm UCE_Diptera-UCE-2.7K-v1.fasta.sorted.bam.bai
+rm UCEcount_Diptera-UCE-2.7K-v1.fasta.csv
+
+```
+
+
 
 </details>
 
