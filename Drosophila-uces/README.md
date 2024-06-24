@@ -125,7 +125,40 @@ write.csv(chr_clean, file = "present_landmarks.csv")
 ```
 >This procedure should result in the identification of 413 UCE landmarks that the _Drosophila_ have in common on chromosome 5.
 
+Next, we will extract position information for the 413 UCE landmarks from the BWA-mapping using R: 
 
+```
+library(matrixStats)
+library(dplyr)
+
+homologousUCE <- read.csv("present_landmarks.csv", row.names = 1)
+
+folder_path <- "./chromosome_5"
+file_list <- list.files(folder_path, pattern = "\\.tsv$", full.names = TRUE)
+
+matrices <- list()
+for (file in file_list) {
+  species <- gsub(".tsv", "", basename(file))
+  data <- read.table(file, header = FALSE, sep = "\t")
+  matrix <- as.matrix(data)
+  matrices[[species]] <- matrix
+}
+
+for (species in names(matrices)) {
+  df_name <- species
+  df <- as.data.frame(matrices[[species]])
+  df <- df[, c(1, 2, 4)]
+  df <- data.frame(lapply(df, function(x) {gsub("-", ".", x)}))
+  colnames(df)[colnames(df) == "V1"] <- "chromosomes"
+  colnames(df)[colnames(df) == "V4"] <- df_name
+  homologousUCE <- left_join(homologousUCE, df, by = "chromosomes")
+}
+
+columns_to_remove <- colnames(homologousUCE)[apply(homologousUCE == 1, 2, all)]
+homologousUCE <- homologousUCE[, !colnames(homologousUCE) %in% columns_to_remove]
+
+write.csv(homologousUCE, file = "homologous_UCEs_extracted.csv", row.names = TRUE)
+```
 
 </details>
 
