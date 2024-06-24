@@ -271,11 +271,15 @@ The commands above produce two plots: PC1 vs. PC2 and PC3 vs PC4.
 
 ![PCA_results](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/PCA_results.jpg)
 
-To help us with interpreting the landmark variation, we will have a look at how the landmark placements vary relative to the species that we have two representatives of in the analysis, _Drosophila virilia_. First we will compare the two individuals of _Drosophila virilia_:
+To help us with interpreting the landmark variation, we will have a look at how the landmark placements vary relative to the species that we have two representatives of in the analysis, _Drosophila virilia_. In all of the chromosome mapping plots below, light blue lines connect homologous UCE landmarks across the chromosomes. First we will compare the two individuals of _Drosophila virilia_:
 
 ![vi-vi-c5](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/vi-vi-c5.jpg)
 
+We see that the landmark distribution between these two individuals of _Drosophila virilia_ is highly conserved with no evidence of inversions. Next, we will compare the landmark placement in _Drosophila virilia_ to the species that recieved a high score on PC1, _Drosophila flavomontana_:
+
 ![fl-vi-c5](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/fl-vi-c5.jpg)
+
+There are clearly some substantial differences in landmark placement here. 
 
 ![mo-vi-c5](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/mo-vi-c5.jpg)
 
