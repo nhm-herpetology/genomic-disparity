@@ -260,11 +260,21 @@ Species <-c("americana", "flavomontana", "montana", "novamexicana", "virilis", "
 
 PCAC5_plots <-cbind(PCAC5_scores, Species)
 
-P1 <-ggplot(PCAC5_plots, aes(x = PC1, y = PC2, color = Species)) + geom_point(size = 4, alpha=0.9) + scale_color_manual(breaks = c("americana", "flavomontana", "montana", "novamexicana", "virilis"), values=c("orange", "red","brown","blue","purple")) + theme_classic()
+P1 <-ggplot(PCAC5_plots, aes(x = PC1, y = PC2, color = Species)) + geom_point(size = 4, alpha=0.9) + scale_color_manual(breaks = c("americana", "flavomontana", "montana", "novamexicana", "virilis"), values=c("orange", "pink2","darkred","darkgreen","purple")) + theme_classic()
 
-P2 <-ggplot(PCAC5_plots, aes(x = PC3, y = PC4, color = Species)) + geom_point(size = 4, alpha=0.9) + scale_color_manual(breaks = c("americana", "flavomontana", "montana", "novamexicana", "virilis"), values=c("orange", "red","brown","blue","purple")) + theme_classic()
+P2 <-ggplot(PCAC5_plots, aes(x = PC3, y = PC4, color = Species)) + geom_point(size = 4, alpha=0.9) + scale_color_manual(breaks = c("americana", "flavomontana", "montana", "novamexicana", "virilis"), values=c("orange", "pink2","darkred","darkgreen","purple")) + theme_classic()
 
 plot_grid(P1, P2, ncol = 1)
 ```
+
+The commands above produce two plots: PC1 vs. PC2 and PC3 vs PC4. 
+
+![PCA_results](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/PCA_results.jpg)
+
+To help us with interpreting the landmark variation, we will have a look at how the landmark placement vary relative to the species that we have two representatives of in the analysis, _Drosophila virilia_. First we will compare the two individuals of _Drosophila virilia_:
+
+
+
+
 
 </details>
