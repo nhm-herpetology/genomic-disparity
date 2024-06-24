@@ -85,6 +85,9 @@ rm UCE_Diptera-UCE-2.7K-v1.fasta.sorted.bam
 rm UCE_Diptera-UCE-2.7K-v1.fasta.sorted.bam.bai
 rm UCEcount_Diptera-UCE-2.7K-v1.fasta.csv
 
+cat UCEcount_*.csv > Total_UCE_counts.txt
+awk '(NR == 1) || (FNR == 1)' bwa_mem_align_UCEs_*.fasta.sam > Chromosomes_lengths.txt
+
 for f in *.sam; do
     mv "$f" "$(basename "$f" .sam).tsv"
 done
@@ -148,7 +151,6 @@ for (species in names(matrices)) {
   df_name <- species
   df <- as.data.frame(matrices[[species]])
   df <- df[, c(1, 2, 4)]
-  df <- data.frame(lapply(df, function(x) {gsub("-", ".", x)}))
   colnames(df)[colnames(df) == "V1"] <- "chromosomes"
   colnames(df)[colnames(df) == "V4"] <- df_name
   homologousUCE <- left_join(homologousUCE, df, by = "chromosomes")
@@ -159,6 +161,33 @@ homologousUCE <- homologousUCE[, !colnames(homologousUCE) %in% columns_to_remove
 
 write.csv(homologousUCE, file = "homologous_UCEs_extracted.csv", row.names = TRUE)
 ```
+
+After this step you will have a CSV file called ```homologous_UCEs_extracted.csv``` which contains two columns for each species: (1) the 'V2' direction that landmarks were mapped on the chromosomes (0 [forward] or 16 [reverse]) and (2) the mapping location (in base pairs) of each landmark. Sometimes chromosomes are assembled with opposite complementarities. For example, if we look at the first 9 landmark positions in the ```homologous_UCEs_extracted.csv``` file we should see this:   
+
+
+V2.x |	mapped_D_americana_c5.fasta | V2.y | mapped_D_flavomontana_c5.fasta | V2.x.x | mapped_D_montana_c5.fasta | V2.y.y | mapped_D_novamexicana_c5.fasta | V2.x.x.x | mapped_D_virilis_c5_A.fasta | V2.y.y.y | mapped_D_virilis_c5_B.fasta
+------------ | -------------  | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- | -------------
+16 | 9468162 | 0 | 17552991 | 0 | 15039180 | 16 | 9451004 | 16 | 9109883 | 16 | 9207235
+16 | 9468140 | 0 | 17553031 | 0 | 15039220 | 16 | 9450982 | 16 | 9109843 | 16 | 9207195
+16 | 22024688 | 0 | 8535617 | 16 | 22114936 | 16 | 21807240 | 16 | 21487388 | 16 | 21571438
+16 | 22024688 | 0 | 8535614 | 16 | 22114936 | 16 | 21807240 | 16 | 21487388 | 16 | 21571438
+16 | 19346268 | 0 | 11231717 | 16 | 19370570 | 16 | 19130702 | 16 | 18910683 | 16 | 18976268
+16 | 19346266 | 0 | 11231665 | 16 | 19370568 | 16 | 19130700 | 16 | 18910681 | 16 | 18976266
+0 | 25602768 | 16 | 5075950 | 0 | 25564769 | 0 | 25229190 | 0 | 24875739 | 0 | 24933228
+0 | 25602808 | 16 | 5075916 | 0 | 25564809 | 0 |  25229230 | 0 | 24875779 | 0 | 24933268
+16 | 25543223 | 0 | 5138695 | 16 | 25503819 | 16 | 25169374 | 16 | 24816581 | 16 | 24874057
+
+We can see that for almsot all of these landmarks (7 out of 9) _Drosophila flavomontana_ has the opposite landmark direction as the other taxa. This pattern continues in the rest of the ```homologous_UCEs_extracted.csv``` file, so we conclude that this species chromosome sequence was uploaded with an opposite complementarity when compared to the other _Drosophila_. Determining which taxa to 'flip' is arbitrary for disparity analysis, but for the tutorial dataset we will 'flip' _Drosophila flavomontana_ so that the landmark positions are more consistent with the other taxa. To 'flip' we need to know the total lengths of each chromosome. We can find the total lengths of of the chromosomes in the ```Chromosome_lengths.tsv``` files we generated during **Step 2**.
+
+Species | GenBank/Reference | Chromosome 5 Length 
+------------ | -------------  | -------------
+_Drosophila americana_	| CM061086.1 | 27587546  
+_Drosophila flavomontana_ | Poikela et al. (2024) | 27217941
+_Drosophila montana_	| Poikela et al. (2024) | 26508887
+_Drosophila novamexicana_ | CM061080.1 | 26715699
+_Drosophila virilia_	| CM017608.2 | 27902728
+_Drosophila virilia_	| CM061075.1 | 27785111
+
 
 </details>
 
