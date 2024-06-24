@@ -1,5 +1,6 @@
 # Genomic Disparity Analysis: _Drosophila virilis_ group tutorial
 
+![Drosophila_header](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/Drosophila_header.jpg)
 
 >This tutorial was developed as part of the ULTRAMOD project https://github.com/AshwiniVM/ULTRAMOD
 
