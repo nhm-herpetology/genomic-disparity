@@ -30,10 +30,17 @@ _Drosophila virilia_	| 5 | CM061075.1
 
 >The two chromosome 5 assemblies from Poikela et al. (2024) were obtained from https://zenodo.org/records/10635471.
 
-First, we need to obtain the data for the chromosome 5 FASTA data which we will download from this GitHub repository and NCBI:
+To obtain the FASTA data for chromosome 5 we will download files from NCBI and this GitHub repository:
 
 ```
-./chromosome_download.sh
+esearch -db nucleotide -query CM061086.1 | efetch -format fasta > D_americana_c5.fasta
+esearch -db nucleotide -query  CM061080.1 | efetch -format fasta > D_novamexicana_c5.fasta
+esearch -db nucleotide -query CM017608.2 | efetch -format fasta > D_virilia_c5_A.fasta.fasta
+esearch -db nucleotide -query CM061075.1 | efetch -format fasta > D_virilia_c5_B.fasta.fasta
+
+wget
+wget
+
 ```
 
 </details>
@@ -44,7 +51,7 @@ First, we need to obtain the data for the chromosome 5 FASTA data which we will 
   
 >Landmarks can be any single-copy, conserved sequence that can be aligned to chromosomes in your dataset, but we have used ultraconserved elements (UCEs) in this tutorial as an example. More information about dipteran UCEs can be found [here](https://www.ultraconserved.org/)
 
-We also need the Diptera 2K probe set.
+We need the Diptera 2K probe set.
 
 ```
 wget 
