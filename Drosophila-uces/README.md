@@ -233,6 +233,38 @@ After averaging the positions, there should be **191 UCE landmarks**. This final
 <details>
   <summary>Click to expand content!</summary>
 
-Do we see evidence of inversions?
+>In this final step we will visualize the disparity in landmark placement using Principal Components Analysis (PCA). 
+
+At the end of **Step 3** we will have the file ```homologous_UCEs_chromosome_5_PCA.csv```, which we will now load into R for the PCA:  
+
+```
+library(dplyr)
+library(ggplot2)
+library(cowplot)
+
+C5_PCA <- read.csv("homologous_UCEs_chromosome_5_PCA.csv", row.names = 1)
+names(C5_PCA) <- C5_PCA[1,]
+C5_PCA <- C5_PCA[-1,]
+
+PCprep <- C5_PCA %>% mutate_at(1:191, as.numeric)
+
+PCAC5 <-prcomp(PCprep)
+```
+
+After the PCA has completed there will be five lists of results including "sdev", "rotation", "center", "scale", and "x". The "x" variable contains the PC scores that we will use for Genomic Disparity analysis. We will now extract them and visualize the genomic disparity results in ggplot2.
+
+```
+PCAC5_scores <-as.data.frame(PCAC5$x)
+
+Species <-c("americana", "flavomontana", "montana", "novamexicana", "virilis", "virilis")
+
+PCAC5_plots <-cbind(PCAC5_scores, Species)
+
+P1 <-ggplot(PCAC5_plots, aes(x = PC1, y = PC2, color = Species)) + geom_point(size = 4, alpha=0.9) + scale_color_manual(breaks = c("americana", "flavomontana", "montana", "novamexicana", "virilis"), values=c("orange", "red","brown","blue","purple")) + theme_classic()
+
+P2 <-ggplot(PCAC5_plots, aes(x = PC3, y = PC4, color = Species)) + geom_point(size = 4, alpha=0.9) + scale_color_manual(breaks = c("americana", "flavomontana", "montana", "novamexicana", "virilis"), values=c("orange", "red","brown","blue","purple")) + theme_classic()
+
+plot_grid(P1, P2, ncol = 1)
+```
 
 </details>
