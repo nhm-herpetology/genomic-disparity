@@ -4,7 +4,7 @@
 
 >This tutorial was developed as part of the ULTRAMOD project https://github.com/AshwiniVM/ULTRAMOD
 
-Chromosomal inversions are thought to be involved in speciation, the formation of supergenes and other evolutionary phenomena. In this tutorial we will use Genomic Disparity Analysis to identify chromosomal inversions that have occurred in chromosome 5 of the _Drosophila virilis_ group. 
+Chromosomal inversions are involved in speciation, the formation of supergenes and other evolutionary phenomena. In this tutorial we will use Genomic Disparity Analysis to identify chromosomal inversions that have occurred in chromosome 5 of the _Drosophila virilis_ group. We will use the method to determine how much the inversions (and other changes) have influenced the spatial landscape of the chromosome across and within species.  
 
 **Dependencies**
 
