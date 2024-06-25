@@ -303,7 +303,7 @@ The third axis, PC3, provides the most seperation between _Drosophila virilia_ a
 
 ![no-vi-c5](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/no-vi-c5.jpg)
 
-These comparisons provide some clear explanations for the observed patterns of genomic disparity. We can also see that those species and indiviudals close to one another in multivariate space have highly conserved landmark placements. For example, the two individuals of _Drosophila virilia_ and _Drosophila americana_ + _Drosophila novamexicana_.
+These comparisons provide some clear explanations for the observed patterns of genomic disparity. We can also see that those species and individuals close to one another in multivariate space have highly conserved landmark placements. For example, the two individuals of _Drosophila virilia_ and _Drosophila americana_ + _Drosophila novamexicana_.
 
 ![vi-vi-c5](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/vi-vi-c5.jpg)
 
