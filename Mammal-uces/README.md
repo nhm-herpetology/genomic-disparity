@@ -147,7 +147,7 @@ Bos_indicus_CM003021.1,uce-319_p1
 Bos_indicus_CM003021.1,uce-322_p1
 ```
 
-You can execute the R script, ```chromosome_cluster.R``` to run all at once, but for the purpose of the tutorial we will walk through the key steps here. Start with loading the following R libraries:
+You can find all of the R commands in the file, ```Mammal-uces.R```, but for the purpose of the tutorial we will walk through the key steps here. Start with loading the following R libraries:
 
 ```
 library(ggplot2)
