@@ -111,7 +111,7 @@ You will now have a file called ```sample_input_pres_abs.csv``` that reports whi
 <details>
   <summary>Click to expand content!</summary>
 
->We need to remove any landmarks that the chromosomes do not share, check the directionality/orientation of the chromosomes, and merge UCE landmarks before Genomic Disparity Analysis.
+>We need to remove any landmarks that the chromosomes do not share, check the directionality/orientation of the chromosomes, and merge UCE landmarks before Genomic Disparity Analysis. All R commands described below can be found in the file ```Drosophila-uces.R```. 
 
 We will use the ```landmark_pres_abs.csv``` file from **Step 2** to remove UCEs that the chromosomes do not share in R:
 
