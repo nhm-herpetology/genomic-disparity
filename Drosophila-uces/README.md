@@ -272,23 +272,41 @@ The commands above produce two plots: PC1 vs. PC2 and PC3 vs PC4.
 
 ![PCA_results](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/PCA_results.jpg)
 
-To help us with interpreting the landmark variation, we will have a look at how the landmark placements vary relative to the species that we have two representatives of in the analysis, _Drosophila virilia_. In all of the chromosome mapping plots below, light blue lines connect homologous UCE landmarks across the chromosomes. First we will compare the two individuals of _Drosophila virilia_:
+The two plots above show the PC scores for PC1 vs. PC2 (top plot) and PC3 vs. PC4 (bottom plot). From first glances, it appears that there are at least four different UCE landmark orientations across the studied _Drosophila_ species. We can see how much variance is explained by each axis using the command below:
 
-![vi-vi-c5](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/vi-vi-c5.jpg)
+```
+summary(PCAC5)
+```
+We should see that 100% of the variance in landmark position is explained by the first four PCs. 
 
-We see that the landmark distribution between these two individuals of _Drosophila virilia_ is highly conserved with no evidence of inversions. Next, we will compare the landmark placement in _Drosophila virilia_ to the species that recieved a high score on PC1, _Drosophila flavomontana_:
+Variable | PC1 | PC2 | PC3 | PC4
+------------ | -------------  | ------------- | ------------- | -------------     	
+Standard deviation | 5.326e+07 | 1.254e+07 | 4.664e+06 | 1.076e+06
+Proportion of Variance | 0.9403 | 0.0521 | 0.0072 | 0.0004 
+Cumulative Proportion | 0.9403 |0.9924 | 0.9996 | 1.0000
+
+Another way to view this result is that variation in UCE landmark position is explained by four major differences. To help us with diagnosing the cause of these differences, we can look at pairwise chromosome maps. In all of the chromosome mapping plots below, light blue lines connect homologous UCE landmarks across the chromosomes. The most variance (by far) is explained by PC1 which separates _Drosophila flavomontana_ from all of the other species. If we compare the landmark orientation of _Drosophila flavomontana_ to _Drosophila virilia_ we see that two blocks of UCE landmarks are located on very different sides of the chromosomes.
 
 ![fl-vi-c5](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/fl-vi-c5.jpg)
 
-There are clearly some substantial differences in landmark placement here. 
+The second axis, PC2, clearly separates _Drosophila flavomontana_ from the other species. If we compare the landmark orientation of _Drosophila montana_ to _Drosophila virilia_ we see clear evidence of a perientric chromosomal inversion.
 
 ![mo-vi-c5](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/mo-vi-c5.jpg)
+
+Importantly, if we compare the landmark orientations on _Drosophila montana_ and _Drosophila flavomontana_ we see evidence of the two blocks of UCE landmarks being moved (likely related to PC1 scores) and the pericentric inversion (likely related to PC2 scores).
+
+![fl-mo-c5](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/fl-mo-c5.jpg)
+
+The third axis, PC3, provides the most seperation between _Drosophila virilia_ and _Drosophila americana_ + _Drosophila novamexicana_. We can see see evidence of a paracentric inversion that _Drosophila virilia_ has relative to both _Drosophila americana_ and _Drosophila novamexicana_.
 
 ![am-vi-c5](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/am-vi-c5.jpg)
 
 ![no-vi-c5](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/no-vi-c5.jpg)
 
-![am-no-c5](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/am-no-c5.jpg)
+These comparisons provide some clear explanations for the observed patterns of genomic disparity. We can also see that those species and indiviudals close to one another in multivariate space have highly conserved landmark placements. For example, the two individuals of _Drosophila virilia_ and _Drosophila americana_ + _Drosophila novamexicana_.
 
+![vi-vi-c5](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/vi-vi-c5.jpg)
+
+![am-no-c5](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/am-no-c5.jpg)
 
 </details>
