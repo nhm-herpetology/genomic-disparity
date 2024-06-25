@@ -18,7 +18,7 @@ Chromosomal inversions are involved in speciation, the formation of supergenes a
 <details>
   <summary>Click to expand content!</summary>
 
->In this tutorial we will use six examples of _Drosophila_ chromosome 5 which has known chromosomal inversions identified by Poikela et al. (2024) in their study of _Drosophila_ speciation.
+>In this tutorial we will use six examples of _Drosophila_ chromosome 5 which has known chromosomal inversions identified by Poikela et al. [2024](https://academic.oup.com/gbe/article/16/3/evae024/7628473) in their study of _Drosophila_ speciation.
 
 Species | Autosome | GenBank/Reference 
 ------------ | -------------  | -------------
