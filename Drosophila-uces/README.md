@@ -48,7 +48,7 @@ unzip D_flavomontana_c5.zip
 mv D_montata_c5/D_montata_c5.fasta ./
 mv D_flavomontata_c5/D_flavomontata_c5.fasta ./
 ```
->Note:NCBI Entrez Direct UNIX E-utilities need to be in your $PATH for the above commands to work correctly. 
+>Note: NCBI Entrez Direct UNIX E-utilities need to be in your $PATH for the above commands to work correctly. 
 
 Now that all chromosome 5 sequences for the six taxa are in your working directory, we can move on to mapping the UCE landmarks on each chromosome. 
 
