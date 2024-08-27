@@ -289,7 +289,7 @@ Another way to view this result is that variation in UCE landmark position is ex
 
 ![fl-vi-c5](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/fl-vi-c5.jpg)
 
-The second axis, PC2, clearly separates _Drosophila flavomontana_ from the other species. If we compare the landmark orientation of _Drosophila montana_ to _Drosophila virilia_ we see clear evidence of a perientric chromosomal inversion.
+The second axis, PC2, clearly separates _Drosophila montana_ from the other species. If we compare the landmark orientation of _Drosophila montana_ to _Drosophila virilia_ we see clear evidence of a perientric chromosomal inversion.
 
 ![mo-vi-c5](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/mo-vi-c5.jpg)
 
