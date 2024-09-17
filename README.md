@@ -11,6 +11,16 @@ Genomic architecture has played a key role in the evolution of biodiversity. Str
 <br/>
 <br/>
 
+<img src="https://github.com/nhm-herpetology/Genomic-disparity/blob/main/Tutorial_2_header.jpg" width="500" height="100">
+
+## Speciation: UCEs x _Drosophila virilis_ group
+Using Genomic Disparity Analysis to detect chromosomal inversions on a single chromosome.
+
+>Click [here](https://github.com/nhm-herpetology/genomic-disparity/tree/main/Drosophila-uces/README.md) to access tutorial. 
+
+<br/>
+<br/>
+
 <img src="https://github.com/nhm-herpetology/Genomic-disparity/blob/main/Tutorial_1_header.jpg" width="500" height="100">
 
 ## Deep phylogeny:  UCEs x Placental mammals
@@ -18,15 +28,7 @@ Using Genomic Disparity Analysis to explore structural evolution on multiple chr
 
 >Click [here](https://github.com/nhm-herpetology/genomic-disparity/tree/main/Mammal-uces/README.md) to access tutorial.
 
-<br/>
-<br/>
 
-<img src="https://github.com/nhm-herpetology/Genomic-disparity/blob/main/Tutorial_2_header.jpg" width="500" height="100">
-
-## Speciation: UCEs x _Drosophila virilis_ group
-Using Genomic Disparity Analysis to detect chromosomal inversions on a single chromosome.
-
->Click [here](https://github.com/nhm-herpetology/genomic-disparity/tree/main/Drosophila-uces/README.md) to access tutorial. 
 
 <br/>
 
