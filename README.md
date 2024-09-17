@@ -9,9 +9,6 @@ Genomic architecture has played a key role in the evolution of biodiversity. Str
 **Mohan, A.V., Goswami, A., Streicher J.W. 2024. Landmark-based estimates of genomic disparity. Under Revision.**
 
 <br/>
-<br/>
-
-<img src="https://github.com/nhm-herpetology/Genomic-disparity/blob/main/Tutorial_drosophila_header.jpg" width="200" height="100">
 
 ## Speciation: UCEs x _Drosophila virilis_ group
 Using Genomic Disparity Analysis when chromosomal homology is known.
@@ -19,16 +16,20 @@ Using Genomic Disparity Analysis when chromosomal homology is known.
 >Click [here](https://github.com/nhm-herpetology/genomic-disparity/tree/main/Drosophila-uces/README.md) to access tutorial. 
 
 <br/>
-<br/>
 
-<img src="https://github.com/nhm-herpetology/Genomic-disparity/blob/main/Tutorial_mammal_header.jpg" width="200" height="100">
+<img src="https://github.com/nhm-herpetology/Genomic-disparity/blob/main/Tutorial_drosophila_header.jpg" width="200" height="100">
+
+<br/>
+<br/>
 
 ## Deep phylogeny:  UCEs x Placental mammals
 Using Genomic Disparity Analysis when chromosomal homology is unknown.
 
 >Click [here](https://github.com/nhm-herpetology/genomic-disparity/tree/main/Mammal-uces/README.md) to access tutorial.
 
+<br/>
 
+<img src="https://github.com/nhm-herpetology/Genomic-disparity/blob/main/Tutorial_mammal_header.jpg" width="200" height="100">
 
 <br/>
 
