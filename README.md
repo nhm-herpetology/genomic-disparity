@@ -7,6 +7,7 @@ Genomic architecture has played a key role in the evolution of biodiversity. Str
 >Citation:
 
 **Mohan, A.V., Goswami, A., Streicher J.W. 2024. Landmark-based estimates of genomic disparity. Under Revision.**
+[Supporting files](https://github.com/nhm-herpetology/genomic-disparity/tree/main/Supporting_files/README.md)
 
 <br/>
 
