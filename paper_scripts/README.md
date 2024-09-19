@@ -1,1 +1,1 @@
-This directory contains R scripts used in the original Mohan et al. paper.  
+This directory contains R scripts and input files used in the original Mohan et al. paper.  
