@@ -299,7 +299,7 @@ chr_clean <- chr[chr_matchedUCEs,]
 write.csv(chr_clean, file = "present_landmarks.csv")
 ```
 
->This should result in an output file that has 220 UCE probes that were present (=1) in all 16 species. 
+>This should result in an output file that has 220 UCE probes that were present (=1) in all 26 species. 
 
 Now we will use these to extract position for each probe on each chromosome from the SAM files generated during **Step 2**. We will use the shell script ```chromosome_retriever.sh``` to collect the necessary SAM files (now in TSV format). We will make the script executable and then run it in the same directory that the previous shell scripts were executed in. 
 
