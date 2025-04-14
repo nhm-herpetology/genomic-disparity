@@ -18,7 +18,7 @@ Using Structural Disparity Analysis to study sex-linked genes. An approach for u
 
 <br/>
 
-<img src="https://github.com/nhm-herpetology/Genomic-disparity/blob/main/Tutorial_amniote_header.jpg" width="200" height="200">
+<img src="https://github.com/nhm-herpetology/Genomic-disparity/blob/main/Tutorial_amniote_header.jpg" width="278" height="211">
 
 <br/>
 
