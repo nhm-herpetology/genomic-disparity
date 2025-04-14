@@ -1,4 +1,4 @@
-![Structural-disparity](https://github.com/nhm-herpetology/Genomic-disparity/blob/main/Structural-disparity.jpg)
+![structural-disparity](https://github.com/nhm-herpetology/Genomic-disparity/blob/main/structural-disparity.jpg)
 
 ## A method for studying structural variants (SVs) in chromosome sequences
 
