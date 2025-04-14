@@ -11,14 +11,14 @@ Chromosome architecture has played a key role in the evolution of biodiversity. 
 
 <br/>
 
-## Sex chromosomes: Human X-linked BUSCOs x Amniote vertebrates
+## Sex chromosomes: BUSCOs x Amniote vertebrates
 Using Structural Disparity Analysis to study sex-linked genes. An approach for use with generic feature format (gff3) annotation files.  
 
 >Click [here](https://github.com/nhm-herpetology/genomic-disparity/tree/main/Amniote-busco/README.md) to access tutorial. 
 
 <br/>
 
-<img src="https://github.com/nhm-herpetology/Genomic-disparity/blob/main/Tutorial_amniote_header.jpg" width="200" height="100">
+<img src="https://github.com/nhm-herpetology/Genomic-disparity/blob/main/Tutorial_amniote_header.jpg" width="200" height="200">
 
 <br/>
 
