@@ -4,3 +4,43 @@
 
 >This tutorial was developed as part of the ULTRAMOD project https://github.com/AshwiniVM/ULTRAMOD
 
+**Dependencies**
+
+* GFF3 file
+* BWA
+* samtools
+* R statistical software
+  
+
+## Step 1: Download generic feature format (gff3) annotation file
+<details>
+  <summary>Click to expand content!</summary>
+
+>In this tutorial we will use 16 species of amniote vertebrates from Lovell et al. (2022) and BUSCO landmarks assocaited with the human X chromosome. The groups include representatives from placental mammals, marsupial mammals, monotreme mammals, birds, and squamate reptiles.  
+
+Species | Group  | Chromosome
+------------ | -------------  | -------------
+_Mus musculus_	| Placental | X 
+_Choloepus hoffmannis_	| Placental | X 
+_Homo sapiens_	| Placental | X 
+_Tursiops truncatus_	| Placental | X
+_Rhinolophus ferrumequinum_	| Placental | X
+_Sarcophilus harrisii_	| Marsupial| X 
+_Trichosurus vulpecula_	| Marsupial | X 
+_Monodelphis domestica_	| Marsupial | X 
+_Tachyglossus aculeatus_ | Monotreme | 6  
+_Ornithorhynchus anatinus_	| Monotreme | 6
+_Taeniopygia guttata_ | Bird | 4A
+_Cygnus olor_	| Bird | 13
+_Calypte anna_ | Bird | 4
+_Gallus gallus_ | Bird | 4
+_Lacerta agilis_ | Squamate | Z 
+_Thamnophis elegans_ | Squamate | 12
+
+**We will download the gff3 file from Lovell et al. (2022)** 
+
+```  
+wget https://github.com/jtlovell/GENESPACE_data/tree/master/vertebrates/gffWithOgs.txt.gz
+```
+
+</details>
