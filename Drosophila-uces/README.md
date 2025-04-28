@@ -229,7 +229,7 @@ After averaging the positions, there should be **191 UCE landmarks**. This final
 
 </details>
 
-## Step 4: Principal components analysis of landmark disparity
+## Step 4: Principal component analysis of landmark disparity
 
 <details>
   <summary>Click to expand content!</summary>
