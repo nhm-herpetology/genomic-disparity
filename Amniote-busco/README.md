@@ -63,7 +63,7 @@ wget https://github.com/jtlovell/GENESPACE_data/tree/master/vertebrates/gffWithO
 
   </details>
 
-  ## Step 5: Principal components analysis of landmark disparity
+  ## Step 5: Principal component analysis of landmark disparity
 <details>
   <summary>Click to expand content!</summary>
 
