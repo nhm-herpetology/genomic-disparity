@@ -45,6 +45,14 @@ _Thamnophis elegans_ | Squamate | 12
 wget https://github.com/jtlovell/GENESPACE_data/raw/refs/heads/master/vertebrates/gffWithOgs.txt.gz
 ```
 
+Next, we will expand the file so that we can work with it in R
+
+```  
+gunzip gffWithOgs.txt.gz
+```
+
+There should now be a file called 'gffWithOgs.txt' in your directory. 
+
 </details>
 
 ## Step 2: Select landmark genes of interest
