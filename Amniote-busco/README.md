@@ -44,3 +44,27 @@ wget https://github.com/jtlovell/GENESPACE_data/tree/master/vertebrates/gffWithO
 ```
 
 </details>
+
+## Step 2: Select landmark genes of interest
+<details>
+  <summary>Click to expand content!</summary>
+
+  </details>
+
+  ## Step 3: Identify orthologs on chromosomes
+<details>
+  <summary>Click to expand content!</summary>
+
+  </details>
+  
+  ## Step 4: Prepare dataset for structural disparity analysis
+<details>
+  <summary>Click to expand content!</summary>
+
+  </details>
+
+  ## Step 5: Principal component analysis of structural disparity
+<details>
+  <summary>Click to expand content!</summary>
+
+  </details>
