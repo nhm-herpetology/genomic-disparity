@@ -57,13 +57,13 @@ wget https://github.com/jtlovell/GENESPACE_data/tree/master/vertebrates/gffWithO
 
   </details>
   
-  ## Step 4: Prepare dataset for structural disparity analysis
+  ## Step 4: Preparing landmarked chromosomes for downstream analysis
 <details>
   <summary>Click to expand content!</summary>
 
   </details>
 
-  ## Step 5: Principal component analysis of structural disparity
+  ## Step 5: Principal components analysis of landmark disparity
 <details>
   <summary>Click to expand content!</summary>
 
