@@ -42,7 +42,7 @@ _Thamnophis elegans_ | Squamate | 12
 **We will download the gff3 file from Lovell et al. (2022)** 
 
 ```  
-wget https://github.com/jtlovell/GENESPACE_data/tree/master/vertebrates/gffWithOgs.txt.gz
+wget https://github.com/jtlovell/GENESPACE_data/raw/refs/heads/master/vertebrates/gffWithOgs.txt.gz
 ```
 
 </details>
