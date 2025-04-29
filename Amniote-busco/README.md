@@ -100,6 +100,116 @@ The count read command should report there are 1838 BUSCO genes on the human X c
 <details>
   <summary>Click to expand content!</summary>
 
+Now that we have the genes of interest identified, we can locate them on other genome asseblies in the gff3 annotation file. First, we need to normalize the gene IDs and then find occurrences of them in non-human species included in the file.
+
+```  
+original_data <- original_data %>%
+  mutate(id = normalize_gene_id(id))
+
+gene_occurrences <- original_data %>%
+  filter(id %in% human_X_genes$id)
+
+```
+
+Next, we will count the number of unique chromosomes in each species that contain human X-linked genes.
+
+```
+
+chr_counts <- gene_occurrences %>%
+  group_by(genome) %>%
+  summarise(matching_chromosomes = n_distinct(chr))  # Count distinct chromosomes per species
+
+chr_counts
+
+```
+
+The final command 'chr_counts' should produce this table: 
+
+genome | matching_chromosomes
+------------ | ------------- 
+brushtailPossum	| 16 
+chicken	| 23 
+dolphin | 4
+echidna | 4
+garterSnake | 9
+hoseshowBat | 3
+human | 1
+hummingbird | 6
+mouse | 13
+opossum | 15
+platypus | 4
+sandLizard | 8
+sloth | 14
+swan | 7
+tasmaniandevil | 6
+zebrafinch | 7
+
+Instead of listing them in a table, we can confirm that all 16 species have matching chromosomes using the following commands. 
+
+```  
+write.csv(chr_counts, "matching_chromosomes_tohumanX.csv", row.names = FALSE)
+
+cat("Number of species with matching chromosomes:", nrow(chr_counts), "\n")
+
+print(chr_counts) 
+
+```
+
+This should result in R telling you 'Number of species with matching chromosomes: 16'. The next series of commands will identify a set of 16 chromosomes (one for each species) with common human X-linked BUSCO genes on them. First, we count the number of genes appearing on each species chromosomes.
+
+```
+
+total_genes_in_human_X <- nrow(human_X_genes)
+
+gene_counts_per_chr <- gene_occurrences %>%
+  group_by(genome, chr) %>%
+  summarise(matching_gene_count = n(), .groups = "drop")  # Count genes per species' chromosome
+
+```
+
+Next, we will filter chromosomes from all of the species so that we only keep chromosomes with at least 1/8 of the human X-linked genes. This is an arbitraty threshold that you may want to experiment with when using this appraoch with other datasets.  
+
+```
+
+gene_proportions <- gene_counts_per_chr %>%
+  mutate(proportion = matching_gene_count / total_genes_in_human_X) %>%
+  filter(proportion >= 1/8)
+
+print(gene_proportions, n = 23)
+
+```
+
+The last command here should produce the following table. 
+
+genome | matching_chromosomes | matching_gene_count | proportion
+------------ | ------------- | ------------- | ------------- 
+brushtailPossum | 2   |          |        137  |    0.163
+brushtailPossum | X             |        193  |   0.230
+chicken     |    1             |        136  |    0.162
+chicken     |    4             |        249  |    0.297
+dolphin     |    X             |        568  |    0.678
+echidna     |    6             |        352  |    0.420
+garterSnake |    12            |       212  |    0.253
+horseshoeBat |    1             |        591  |    0.705
+human       |    X             |        838  |    1    
+hummingbird |    1             |        127  |    0.152
+hummingbird |    4             |        236  |    0.282
+mouse       |    X             |        588  |    0.702
+opossum     |   X             |        291  |    0.347
+platypus    |    6             |        355  |    0.424
+sandLizard  |    4             |        122  |    0.146
+sandLizard  |    Z             |        221  |    0.264
+sloth       |    X             |        419  |    0.5  
+swan        |    1             |        130  |    0.155
+swan         |   13            |        251  |    0.300
+tasmaniandevil | 3             |        147  |    0.175
+tasmaniandevil | X             |        332  |    0.396
+zebrafinch     | 1             |        128  |    0.153
+zebrafinch     | 4A            |        243  |    0.290
+
+
+# Save the results
+
   </details>
   
   ## Step 4: Preparing landmarked chromosomes for downstream analysis
