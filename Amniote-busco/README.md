@@ -307,8 +307,13 @@ write.csv(gene_position_matrix, "gene_position_matrix.csv", row.names = FALSE)
 
 After this step you will have a CSV file called ```gene_position_matrix.csv```. Next we need assess if the orientation of the landmarks is correct across the chromosomes. 
 
+One way to see evidence of this is to visualize the placement of the landmarks as analyzed in Lovell et al. (2022) on the chromosomes where we can easily see the need to 'flip' the chromsomes for some taxa so that the landmark positions are homologous in an evolutionary sense. In the image below BUSCO landmarks are indicated in brown on the grey chromosomes, homologous BUSCO landmarks are connected with gold lines. 
 
+![human_bat_orig](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Amniote-busco/human_bat_original.jpg)
 
+If we take the reverse complement of all the landmark positions in one of the chromosomes we see that most landmark positions are now oriented in the same direction. 
+
+![human_bat_flipped](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Amniote-busco/human_bat_flipped.jpg)
 
   </details>
 
