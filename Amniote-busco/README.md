@@ -51,13 +51,48 @@ Next, we will expand the file so that we can work with it in R
 gunzip gffWithOgs.txt.gz
 ```
 
-There should now be a file called 'gffWithOgs.txt' in your directory. 
+There should now be a file called 'gffWithOgs.txt' in your directory. If not already in your R working directory, please move this file to the working directory before moving to Step 2.
 
 </details>
 
 ## Step 2: Select landmark genes of interest
 <details>
   <summary>Click to expand content!</summary>
+
+In this example we have selected human X-linked BUSCO genes for use as landmarks. To identify these in the gff3 file we will need to use several R packages.
+
+```  
+library(tidyr)
+library(dplyr)
+library(vegan)
+library(stringr)
+```
+
+Now let's load the gff3 file into R. We then need to make a function that will ensure gene_id name formats will not create errors during landmark identification. 
+
+```  
+original_data <- read.csv("gffWithOgs.csv", header = TRUE)
+
+normalize_gene_id <- function(gene_id) {
+  gene_id <- tolower(gene_id)      # Convert to lowercase
+  gene_id <- str_replace_all(gene_id, "[-_]", "")  # Remove hyphens and underscores
+  return(gene_id)
+}
+
+```
+
+Next, we will extract and normalize all BUSCO genes that are located on the human X chromosome
+
+```
+human_X_genes <- original_data %>%
+  filter(genome == "human" & chr == "X") %>%
+  mutate(id = normalize_gene_id(id)) %>%  # Apply normalization function
+  select(id)
+count(human_X_genes)
+
+```
+
+The count read command should report there are 1838 BUSCO genes on the human X chromosome. Now we will move to Step 3 where find occurences of these genes in other speceis and then create a curated list of landmarks found in a single genomic region across all species. 
 
   </details>
 
