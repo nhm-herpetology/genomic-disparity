@@ -207,8 +207,79 @@ tasmaniandevil | X             |        332  |    0.396
 zebrafinch     | 1             |        128  |    0.153
 zebrafinch     | 4A            |        243  |    0.290
 
+This indicates which chromosomes share the highest proportion of X-linked BUSCO landmarks with the human X chromosome. We can see taht most distantly related species have two chromosomes with matching genes whereas closely realted speceis (e.g. other placental mammals) have a single matched chromosome (also the X chromosome). Note: horseshoeBat chromosome 1 is equivalent to the X chromosome in this species. 
 
-# Save the results
+Now we will save these results and extract the species and chromosomes that pass filtering
+
+```
+write.csv(gene_proportions, "filtered_proportion_matching_humanX.csv", row.names = FALSE)
+
+filtered_chromosomes <- gene_proportions %>%
+  select(genome, chr) 
+
+filtered_gene_data <- original_data %>%
+  inner_join(filtered_chromosomes, by = c("genome", "chr"))
+
+gene_counts <- filtered_gene_data %>%
+  group_by(id) %>%
+  summarise(species_count = n_distinct(genome), .groups = "drop")
+
+total_species <- n_distinct(filtered_gene_data$genome)
+
+conserved_genes <- gene_counts %>%
+  filter(species_count == total_species) %>%
+  select(id)
+
+nrow(conserved_genes)
+
+```
+
+The final command should report that there are 53 genes across a single set of chromosomes for the 16 species. This represents a maximized number of landmarks on a single chromosome. Now we merge the gene IDs back with the position data and export a positions spreadsheet for further preparation. 
+
+```
+conserved_gene_data <- filtered_gene_data %>%
+  filter(id %in% conserved_genes$id)
+
+write.csv(conserved_gene_data, "conserved_landmarks_humanX.csv", row.names = FALSE)
+
+```
+
+A final checking step was developed to confirm that one chromosome per species is included in your exported spreadsheet. 
+
+```
+conserved_gene_data <- read.csv("conserved_landmarks_humanX.csv")
+
+chromosome_count_per_species <- conserved_gene_data %>%
+  group_by(genome) %>%
+  summarise(unique_chromosomes = n_distinct(chr), .groups = "drop")
+
+print(chromosome_count_per_species)
+
+```
+
+The last command should result in the following table which confirms that there is only one chromosome per species in the filtered dataset.
+
+genome | unique_chromosomes
+------------ | ------------- 
+   genome   |       unique_chromosomes
+brushtailPossum    |              1
+chicken            |              1
+dolphin            |              1
+echidna            |              1
+garterSnake        |              1
+horseshoeBat       |              1
+human              |              1
+hummingbird        |              1
+mouse              |              1
+opossum            |             1
+platypus           |             1
+sandLizard         |              1
+sloth              |              1
+swan               |              1
+tasmaniandevil     |              1
+zebrafinch         |              1
+
+Now we are ready to proceed to Step 4 where we will prepare our spreadsheet for structural disparity analysis. 
 
   </details>
   
