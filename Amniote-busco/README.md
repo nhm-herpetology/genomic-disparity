@@ -20,24 +20,24 @@
 
 by Poikela et al. [2024](https://academic.oup.com/gbe/article/16/3/evae024/7628473)
 
-Species | Group  | Chromosome
------------- | -------------  | -------------
-_Mus musculus_	| Placental | X 
-_Choloepus hoffmannis_	| Placental | X 
-_Homo sapiens_	| Placental | X 
-_Tursiops truncatus_	| Placental | X
-_Rhinolophus ferrumequinum_	| Placental | X
-_Sarcophilus harrisii_	| Marsupial| X 
-_Trichosurus vulpecula_	| Marsupial | X 
-_Monodelphis domestica_	| Marsupial | X 
-_Tachyglossus aculeatus_ | Monotreme | 6  
-_Ornithorhynchus anatinus_	| Monotreme | 6
-_Taeniopygia guttata_ | Bird | 4A
-_Cygnus olor_	| Bird | 13
-_Calypte anna_ | Bird | 4
-_Gallus gallus_ | Bird | 4
-_Lacerta agilis_ | Squamate | Z 
-_Thamnophis elegans_ | Squamate | 12
+Species | Name (Lovell et al.) | Group  | Chromosome
+------------ | -------------  | ------------- | -------------
+_Mus musculus_	| mouse | Placental | X 
+_Choloepus hoffmannis_	| sloth | Placental | X 
+_Homo sapiens_	| human | Placental | X 
+_Tursiops truncatus_	| dolphin | Placental | X
+_Rhinolophus ferrumequinum_	| horseshoeBat | Placental | X
+_Sarcophilus harrisii_	| tasmaniandevil | Marsupial| X 
+_Trichosurus vulpecula_	| brushtailPossum | Marsupial | X 
+_Monodelphis domestica_	| opossum | Marsupial | X 
+_Tachyglossus aculeatus_ | echidna | Monotreme | 6  
+_Ornithorhynchus anatinus_	| platypus | Monotreme | 6
+_Taeniopygia guttata_ | zebrafinch | Bird | 4A
+_Cygnus olor_	| swan | Bird | 13
+_Calypte anna_ | hummingbird | Bird | 4
+_Gallus gallus_ | chicken | Bird | 4
+_Lacerta agilis_ | sandLizard | Squamate | Z 
+_Thamnophis elegans_ | garterSnake | Squamate | 12
 
 **We will download the gff3 file from Lovell et al. (2022)** 
 
