@@ -305,7 +305,7 @@ write.csv(gene_position_matrix, "gene_position_matrix.csv", row.names = FALSE)
 
 ```
 
-After this step you will have a CSV file called ```gene_position_matrix.csv```. Next we need assess if the orientation of the chromosomes is correct. 
+After this step you will have a CSV file called ```gene_position_matrix.csv```. Next we need assess if the orientation of the landmarks is correct across the chromosomes. 
 
 
 
