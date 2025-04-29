@@ -287,6 +287,27 @@ Now we are ready to proceed to Step 4 where we will prepare our spreadsheet for 
 <details>
   <summary>Click to expand content!</summary>
 
+To prepare our filtered list of chromosomes for downstream analysis we first need to combine species names with chromosome identities and pivot the table. 
+
+
+```
+
+conserved_gene_data <- conserved_gene_data %>%
+  mutate(genome_chr = paste(genome, chr, sep = "_"))
+
+gene_position_data <- conserved_gene_data %>%
+  select(genome_chr, id, start)
+
+gene_position_matrix <- gene_position_data %>%
+  pivot_wider(names_from = id, values_from = start)
+
+write.csv(gene_position_matrix, "gene_position_matrix.csv", row.names = FALSE)
+
+```
+
+Next we need assess if the orientation of the chromosomes is matched. 
+
+
   </details>
 
   ## Step 5: Principal component analysis of landmark disparity
