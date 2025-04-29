@@ -183,7 +183,7 @@ The last command here should produce the following table.
 
 genome | matching_chromosomes | matching_gene_count | proportion
 ------------ | ------------- | ------------- | ------------- 
-brushtailPossum | 2   |          |        137  |    0.163
+brushtailPossum | 2           |        137  |    0.163
 brushtailPossum | X             |        193  |   0.230
 chicken     |    1             |        136  |    0.162
 chicken     |    4             |        249  |    0.297
