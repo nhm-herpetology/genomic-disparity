@@ -406,4 +406,33 @@ Now that we have the chromosome synteny maximized we can proceed to bounding the
 <details>
   <summary>Click to expand content!</summary>
 
+Now that the landmarks have been flipped (when necessary) and bounded, we can conduct the disparity analysis. 
+
+```
+gene_position_matrix <- read.csv("gene_position_matrix_flipped_bounded.csv")
+head(gene_position_matrix)
+# Prepare the data for PCA
+# Extract the species information (genome_chr) and gene positions (gene IDs)
+pca_data <- gene_position_matrix
+species_info <- pca_data$genome_chr  # Save the genome_chr column as the row names
+
+# Remove the genome_chr column, as we won't use it in PCA
+pca_data <- pca_data %>% select(-genome_chr)
+
+# Perform PCA (without scaling)
+pca_result <- prcomp(pca_data, center = TRUE, scale. = FALSE)
+head(pca_result$x)
+
+# Prepare PCA results for plotting
+pca_df <- data.frame(pca_result$x)  
+head(pca_df)
+write.csv(pca_df, file="PCA_humanX.csv")
+pca_df$genome_chr <- species_info  # Add the genome_chr column back to the PCA result for coloring
+head(pca_df$genome_chr)
+head(pca_df)
+write.csv(pca_df, file="PCA_humanX_bounded.csv")
+
+```
+
+
   </details>
