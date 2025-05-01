@@ -305,13 +305,13 @@ write.csv(gene_position_matrix, "gene_position_matrix.csv", row.names = FALSE)
 
 ```
 
-After this step you will have a CSV file called ```gene_position_matrix.csv```. Next we need assess if the orientation of the landmarks is correct across the chromosomes. 
+After this step you will have a CSV file called ```gene_position_matrix.csv```. To improve our estimates of structural disparity, we will need to correct for any orientation errors and bound the landmarks. The rationale for these correctiosn is discussed in Mohan et al. (Under review).  
 
-One way to see evidence of this is to visualize the placement of the landmarks as analyzed in Lovell et al. (2022) on the chromosomes where we can easily see the need to 'flip' the chromsomes for some taxa so that the landmark positions are homologous in an evolutionary sense. In the image below BUSCO landmarks are indicated in brown on the grey chromosomes, homologous BUSCO landmarks are connected with gold lines. 
+One way to see evidence of orientation errors is to visualize the placement of the landmarks as analyzed in Lovell et al. (2022) on the chromosomes. In this example of the comparisons between the human X chromosome and the bat X/1 chromosome we can see evidence of a large inversion of landmarks. In the image below BUSCO landmarks are indicated in brown on the grey chromosomes, homologous BUSCO landmarks are connected with gold lines. 
 
 ![human_bat_orig](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Amniote-busco/human_bat_original.jpg)
 
-If we take the reverse complement of all the landmark positions in one of the chromosomes we see that most landmark positions are now oriented in the same direction. 
+This may be indicative of a real inversion that took place, however, if we take the reverse complement of all the landmark positions in the human chromosome we see that most landmark positions are now matched (syntenically) with the bat chromosomes. This implies that the direction of chromosome sequencing likely explains the putative inversion observed in the first plot (and not a large chromosomal inversion that occurred since humans and bats diverged from a common ancestor). Correcting these type of orientation issues improves the accuracy of structural disparity analysis.  
 
 ![human_bat_flipped](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Amniote-busco/human_bat_flipped.jpg)
 
