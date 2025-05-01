@@ -261,7 +261,6 @@ The last command should result in the following table which confirms that there 
 
 genome | unique_chromosomes
 ------------ | ------------- 
-   genome   |       unique_chromosomes
 brushtailPossum    |              1
 chicken            |              1
 dolphin            |              1
@@ -305,15 +304,101 @@ write.csv(gene_position_matrix, "gene_position_matrix.csv", row.names = FALSE)
 
 ```
 
-After this step you will have a CSV file called ```gene_position_matrix.csv```. To improve our estimates of structural disparity, we will need to correct for any orientation errors and bound the landmarks. The rationale for these correctiosn is discussed in Mohan et al. (Under review).  
+After this step you will have a CSV file called ```gene_position_matrix.csv```. To improve our estimates of structural disparity, we will need to correct for any orientation issues and bound the landmarks. The rationale for these correctiosn is discussed in Mohan et al. (Under review).  
 
-One way to see evidence of orientation errors is to visualize the placement of the landmarks as analyzed in Lovell et al. (2022) on the chromosomes. In this example of the comparisons between the human X chromosome and the bat X/1 chromosome we can see evidence of a large inversion of landmarks. In the image below BUSCO landmarks are indicated in brown on the grey chromosomes, homologous BUSCO landmarks are connected with gold lines. 
+**Orientation issues**
+
+One way to see evidence of orientation issues is to visualize the placement of the landmarks as analyzed in Lovell et al. (2022) on the chromosomes. In this example of the comparisons between the human X chromosome and the bat X/1 chromosome we can see evidence of a large inversion of landmarks. In the image below BUSCO landmarks are indicated in brown on the grey chromosomes, homologous BUSCO landmarks are connected with gold lines. 
 
 ![human_bat_orig](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Amniote-busco/human_bat_original.jpg)
 
 This may be indicative of a real inversion that took place, however, if we take the reverse complement of all the landmark positions in the human chromosome we see that most landmark positions are now matched (syntenically) with the bat chromosomes. This implies that the direction of chromosome sequencing likely explains the putative inversion observed in the first plot (and not a large chromosomal inversion that occurred since humans and bats diverged from a common ancestor). Correcting these type of orientation issues improves the accuracy of structural disparity analysis.  
 
 ![human_bat_flipped](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Amniote-busco/human_bat_flipped.jpg)
+
+When chromosomes are identified with likely orientation issues, we can use R to correct (flip) the landmark positions based on the size of each chromosome. Below are the various chromosome sizes from the Lovell et al. (2022) dataset. 
+
+genome | chromosome_size
+------------ | ------------- 
+brushtailPossum    |              60706338
+chicken            |              90861225
+dolphin            |             128693445 
+echidna            |              61686051
+garterSnake        |              60626299
+horseshoeBat       |              124933378
+human              |              156040895
+hummingbird        |              18597117
+mouse              |              169476592
+opossum            |             89414197
+platypus           |             51493492
+sandLizard         |              47440541
+sloth              |              193839925
+swan               |              21471338
+tasmaniandevil     |              83081154
+zebrafinch         |              19491698
+
+Based on examining the maximized synteny plot from Lovell et al. (2022), we identified eight species that needed to be flipped: (1) human, (2) sloth, (3) opossum, (4) echidna, (5) chicken, (6) swan, (7) hummingbird, and (8) zebrafinch.  
+
+```
+landmarkflip <- read.csv("gene_position_matrix.csv", header =T, row.names = 1)
+
+[INSERT COMMAND FOR INVERTING THE MATRIX]
+
+fun1 <- function(x) {156040895-x}
+fun2 <- function(x) {193839925-x}
+fun3 <- function(x) {89414197-x}
+fun4 <- function(x) {61686051-x}
+fun5 <- function(x) {90861225-x}
+fun6 <- function(x) {21471338-x}
+fun7 <- function(x) {18597117-x}
+fun8 <- function(x) {19491698-x}
+
+Hum <-lapply(landmarkflip$human_x, fun1)
+Slo <-lapply(landmarkflip$sloth_X, fun2)
+Opo <-lapply(landmarkflip$opossum_X, fun3)
+Ech <-lapply(landmarkflip$echidna_6, fun4)
+Chi <-lapply(landmarkflip$chicken_4, fun5)
+Swa <-lapply(landmarkflip$swan_13, fun6)
+Hum <-lapply(landmarkflip$hummingbird_4, fun7)
+Zeb <-lapply(landmarkflip$zebrafinch_4A, fun8)
+
+landmarkflip$human_X <- Hum
+landmarkflip$sloth_X <- Slo
+landmarkflip$opossum_X <- Opo
+landmarkflip$echidna_6 <- Ech
+landmarkflip$chicken_4 <- Chi
+landmarkflip$swan_13 <- Swa
+landmarkflip$hummingbird_4 <- Hum
+landmarkflip$zebrafinch_4A <- Zeb
+
+
+A <-as.numeric(landmarkflip$human_X)
+B <-as.numeric(sloth_X)
+C <-as.numeric(landmarkflip$opossum_Xa)
+D <-as.numeric(landmarkflip$echidna_6)
+E <-as.numeric(landmarkflip$chicken_4)
+F <-as.numeric(landmarkflip$swan_13)
+G <-as.numeric(landmarkflip$hummingbird_4)
+H <-as.numeric(landmarkflip$zebrafinch_4A)
+
+landmarkflip$human_X <- A
+landmarkflip$sloth_X <- B
+landmarkflip$opossum_X <- C
+landmarkflip$echidna_6 <- D
+landmarkflip$chicken_4 <- E
+landmarkflip$swan_13 <- F
+landmarkflip$hummingbird_4 <- G
+landmarkflip$zebrafinch_4A <- H
+
+write.csv(landmarkflip, file = "gene_position_matrix_flipped.csv")
+
+
+```
+
+Now that we have the chromosome synteny maximized we can proceed to bounding the chromosomes prior to Principal Component Analysis. 
+
+**Bounding the landmarks**
+
 
   </details>
 
