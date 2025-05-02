@@ -337,65 +337,64 @@ swan               |              21471338
 tasmaniandevil     |              83081154
 zebrafinch         |              19491698
 
-Based on examining the maximized synteny plot from Lovell et al. (2022), we identified eight species that needed to be flipped: (1) human, (2) sloth, (3) opossum, (4) echidna, (5) chicken, (6) swan, (7) hummingbird, and (8) zebrafinch.  
+Based on examining the maximized synteny plot from Lovell et al. (2022), we identified seven species that needed to be flipped: (1) human, (2) sloth, (3) brushtail possum, (4) echidna, (5) swan, (6) hummingbird, and (7) zebrafinch.  
 
 ```
 landmarkflip <- read.csv("gene_position_matrix.csv", header =T, row.names = 1)
 
-[INSERT COMMAND FOR INVERTING THE MATRIX]
+landmarkflip <- t(landmarkflip)
+
+landmarkflip <-as.data.frame(landmarkflip)
 
 fun1 <- function(x) {156040895-x+1}
 fun2 <- function(x) {193839925-x+1}
-fun3 <- function(x) {89414197-x+1}
+fun3 <- function(x) {60706338-x+1}
 fun4 <- function(x) {61686051-x+1}
-fun5 <- function(x) {90861225-x+1}
-fun6 <- function(x) {21471338-x+1}
-fun7 <- function(x) {18597117-x+1}
-fun8 <- function(x) {19491698-x+1}
+fun5 <- function(x) {21471338-x+1}
+fun6 <- function(x) {18597117-x+1}
+fun7 <- function(x) {19491698-x+1}
 
-Hum <-lapply(landmarkflip$human_x, fun1)
+Hum <-lapply(landmarkflip$human_X, fun1)
 Slo <-lapply(landmarkflip$sloth_X, fun2)
-Opo <-lapply(landmarkflip$opossum_X, fun3)
+Bru <-lapply(landmarkflip$brushtailPossum_X, fun3)
 Ech <-lapply(landmarkflip$echidna_6, fun4)
-Chi <-lapply(landmarkflip$chicken_4, fun5)
-Swa <-lapply(landmarkflip$swan_13, fun6)
-Hum <-lapply(landmarkflip$hummingbird_4, fun7)
-Zeb <-lapply(landmarkflip$zebrafinch_4A, fun8)
+Swa <-lapply(landmarkflip$swan_13, fun5)
+Hub <-lapply(landmarkflip$hummingbird_4, fun6)
+Zeb <-lapply(landmarkflip$zebrafinch_4A, fun7)
 
 landmarkflip$human_X <- Hum
 landmarkflip$sloth_X <- Slo
-landmarkflip$opossum_X <- Opo
+landmarkflip$brushtailPossum_X <- Bru
 landmarkflip$echidna_6 <- Ech
-landmarkflip$chicken_4 <- Chi
 landmarkflip$swan_13 <- Swa
-landmarkflip$hummingbird_4 <- Hum
+landmarkflip$hummingbird_4 <- Hub
 landmarkflip$zebrafinch_4A <- Zeb
 
 
 A <-as.numeric(landmarkflip$human_X)
-B <-as.numeric(sloth_X)
-C <-as.numeric(landmarkflip$opossum_Xa)
+B <-as.numeric(landmarkflip$sloth_X)
+C <-as.numeric(landmarkflip$brushtailPossum_X)
 D <-as.numeric(landmarkflip$echidna_6)
-E <-as.numeric(landmarkflip$chicken_4)
-F <-as.numeric(landmarkflip$swan_13)
-G <-as.numeric(landmarkflip$hummingbird_4)
-H <-as.numeric(landmarkflip$zebrafinch_4A)
+E <-as.numeric(landmarkflip$swan_13)
+F <-as.numeric(landmarkflip$hummingbird_4)
+G <-as.numeric(landmarkflip$zebrafinch_4A)
 
 landmarkflip$human_X <- A
 landmarkflip$sloth_X <- B
-landmarkflip$opossum_X <- C
+landmarkflip$brushtailPossum_X <- C
 landmarkflip$echidna_6 <- D
-landmarkflip$chicken_4 <- E
-landmarkflip$swan_13 <- F
-landmarkflip$hummingbird_4 <- G
-landmarkflip$zebrafinch_4A <- H
+landmarkflip$swan_13 <- E
+landmarkflip$hummingbird_4 <- F
+landmarkflip$zebrafinch_4A <- G
+
+landmarkflip <- t(landmarkflip)
 
 write.csv(landmarkflip, file = "gene_position_matrix_flipped.csv")
 
 
 ```
 
-Now that we have the chromosome synteny maximized we can proceed to bounding the chromosomes prior to Principal Component Analysis. 
+Now that we have the chromosome synteny maximized we can proceed to bounding procedure which will make disparity estimates less influenced by clustered landmarks. 
 
 **Bounding the landmarks**
 
