@@ -398,14 +398,14 @@ This 'flipping' step can be conducted in Excel or similar spreadsheet editor. We
 ```
 landmarkflip <- read.csv("homologous_UCEs_extracted.csv", header =T, row.names = 1)
 
-fun1 <- function(x) {140680885-x}
-fun2 <- function(x) {136231102-x}
-fun3 <- function(x) {188164321-x}
-fun4 <- function(x) {128023632-x}
-fun5 <- function(x) {155611870-x}
-fun6 <- function(x) {92916174-x}
-fun7 <- function(x) {82641348-x}
-fun8 <- function(x) {250202058-x}
+fun1 <- function(x) {140680885-x+1}
+fun2 <- function(x) {136231102-x+1}
+fun3 <- function(x) {188164321-x+1}
+fun4 <- function(x) {128023632-x+1}
+fun5 <- function(x) {155611870-x+1}
+fun6 <- function(x) {92916174-x+1}
+fun7 <- function(x) {82641348-x+1}
+fun8 <- function(x) {250202058-x+1}
 
 Boin <-lapply(landmarkflip$Bos_indicus_CM003022.1.fasta, fun1)
 Bota <-lapply(landmarkflip$Bos_taurus_CM008169.2.fasta, fun2)
