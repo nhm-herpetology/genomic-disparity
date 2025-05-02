@@ -193,7 +193,7 @@ The 'flipping' step can be conducted in Excel or similar spreadsheet editor. We 
 
 ```
 landmarkflip <- read.csv("homologous_UCEs_extracted.csv", row.names = 1)
-fun1 <- function(x) {27217941-x}
+fun1 <- function(x) {27217941-x+1}
 Drfl <-lapply(landmarkflip$mapped_D_flavomontana_c5.fasta, fun1)
 landmarkflip$mapped_D_flavomontana_c5.fasta <- Drfl
 A <-as.numeric(landmarkflip$mapped_D_flavomontana_c5.fasta)
