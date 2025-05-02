@@ -209,7 +209,7 @@ data2 <- landmarkflip[-c(2,4,6,8,10,12)]
 write.csv(data2, file = "homologous_UCEs_extracted_flipped.csv")
 ```
 
-After the last step we have a file called ```homologous_UCEs_extracted_flipped.csv``` that is ready for the final preparation steps. This includes accounting for a specific caveat of using the UCE probe set. The UCE probe set was developed to capture UCEs across diverse taxa, as such some UCEs are targeted by multiple probes. For example, a single UCE 1234 may be targeted by three different probes named UCE_1234_p1, UCE_1234_p2 and UCE_1234_p3. To control for the variation this creates in mapping, we average the probe placement across landmarks targeting the same UCE and remove the probe numbers (e.g. p1, p2, p3). After we average the UCE positions, we transpose the matrix to prepare it for the PCA: 
+After the last step we have a file called ```homologous_UCEs_extracted_flipped.csv``` that is ready for the final preparation steps. This includes accounting for a specific caveat of using the UCE probe set. The UCE probe set was developed to capture UCEs across diverse taxa, as such some UCEs are targeted by multiple probes. For example, a single UCE 1234 may be targeted by three different probes named UCE_1234_p1, UCE_1234_p2 and UCE_1234_p3. To remove non-independent landmarks (multiple probes for one UCE), we first eliminate the '_pX' from landmark labels, and then average the positions of the non-independent landmarks. 
 
 ```
 data3 <- read.csv("homologous_UCEs_extracted_flipped.csv")
