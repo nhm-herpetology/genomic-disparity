@@ -344,14 +344,14 @@ landmarkflip <- read.csv("gene_position_matrix.csv", header =T, row.names = 1)
 
 [INSERT COMMAND FOR INVERTING THE MATRIX]
 
-fun1 <- function(x) {156040895-x}
-fun2 <- function(x) {193839925-x}
-fun3 <- function(x) {89414197-x}
-fun4 <- function(x) {61686051-x}
-fun5 <- function(x) {90861225-x}
-fun6 <- function(x) {21471338-x}
-fun7 <- function(x) {18597117-x}
-fun8 <- function(x) {19491698-x}
+fun1 <- function(x) {156040895-x+1}
+fun2 <- function(x) {193839925-x+1}
+fun3 <- function(x) {89414197-x+1}
+fun4 <- function(x) {61686051-x+1}
+fun5 <- function(x) {90861225-x+1}
+fun6 <- function(x) {21471338-x+1}
+fun7 <- function(x) {18597117-x+1}
+fun8 <- function(x) {19491698-x+1}
 
 Hum <-lapply(landmarkflip$human_x, fun1)
 Slo <-lapply(landmarkflip$sloth_X, fun2)
