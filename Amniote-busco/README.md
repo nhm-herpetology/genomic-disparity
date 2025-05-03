@@ -398,6 +398,50 @@ Now that we have the chromosome synteny maximized we can proceed to bounding pro
 
 **Bounding the landmarks**
 
+Bounding landmarks is a procedure used to transform landmark positions so that the largest and smallest landmark define the region for structural disparity analysis. This step is necessary to avoid disparity inflation due to clustered landmarks. The process of bounding can be conducted in R using the  ```gene_position_matrix_flipped.csv``` file from the last step. 
+
+```
+
+bound <- read.csv("gene_position_matrix_flipped.csv", header =T, row.names = 1)
+
+bounded <- apply(bound, 1, function(row) {row - min(row)})
+
+bounded <- as.data.frame(t(bounded))
+
+colnames(bounded) <- colnames(bound)
+
+write.csv(bounded, file = "gene_position_matrix_flipped_bounded.csv")
+
+```
+
+If you want to conduct any size-corrected analyses, you will also need to save the bounded chromosome sizes.
+
+```
+
+bounded_sizes <- apply(bounded, 1, FUN = max)
+
+```
+
+This command should results in the following bounded sizes:
+
+genome_chr | bounded_size
+------------ | ------------- 
+brushtailPossum_X	| 57013313
+chicken_4	| 17478370
+dolphin_X	| 83065686
+echidna_6	| 58199270
+garterSnake_12	| 27106825
+horseshoeBat_X	| 84204670
+human_X	| 102255467
+hummingbird_4	| 17532364
+mouse_X	| 139941359
+opossum_X	| 61756523
+platypus_6	| 46752107
+sandLizard_Z	| 29735928
+sloth_X	| 139101509
+swan_13	| 20005441
+tasmaniandevil_X | 71377400
+zebrafinch_4A	| 19299029
 
   </details>
 
