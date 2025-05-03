@@ -1,6 +1,6 @@
-# Structural Disparity Analysis: Placental mammal tutorial
+# Structural Disparity Analysis: Placental mammal UCE tutorial
 
-![Mammal-uces-PC2-PC3](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Mammal-uces-PC2-PC3.jpg)
+![Mammal-uces](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/PCA_results_cent1.jpg)
 
 >This tutorial was developed as part of the ULTRAMOD project https://github.com/AshwiniVM/ULTRAMOD
 
