@@ -398,13 +398,13 @@ Now that we have the chromosome synteny maximized we can proceed to bounding pro
 
 **Bounding the landmarks**
 
-Bounding landmarks is a procedure used to transform landmark positions so that the largest and smallest landmark define the region for structural disparity analysis. This step is necessary to avoid disparity inflation due to clustered landmarks. The process of bounding can be conducted in R using the  ```gene_position_matrix_flipped.csv``` file from the last step. 
+Bounding landmarks is a procedure used to transform landmark positions so that the largest and smallest landmarks define the region for structural disparity analysis. This step is necessary to avoid disparity inflation due to clustered landmarks. The process of bounding can be conducted in R using the  ```gene_position_matrix_flipped.csv``` file from the last step. 
 
 ```
 
 bound <- read.csv("gene_position_matrix_flipped.csv", header =T, row.names = 1)
 
-bounded <- apply(bound, 1, function(row) {row - min(row)})
+bounded <- apply(bound, 1, function(row) {row - min(row)+1})
 
 bounded <- as.data.frame(t(bounded))
 
@@ -442,6 +442,12 @@ sloth_X	| 139101509
 swan_13	| 20005441
 tasmaniandevil_X | 71377400
 zebrafinch_4A	| 19299029
+
+After bounding the landmark postions have been adjusted to range from 1 to the highest landmark position. For example, in the human and horseshoe bat example, the landmarks will look like this:
+
+![human_bat_bounded](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Amniote-busco/human_bat_bounded.jpg)
+
+We are now ready to proceed to the final step and conduct a PCA of landmark disparity.
 
   </details>
 
