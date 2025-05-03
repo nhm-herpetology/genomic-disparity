@@ -1,4 +1,4 @@
-# Structural Disparity Analysis: _Drosophila virilis_ group tutorial
+# Structural Disparity Analysis: _Drosophila virilis_ group UCE tutorial
 
 ![Drosophila_header](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Drosophila-uces/Drosophila_header.jpg)
 
