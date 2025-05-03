@@ -288,7 +288,6 @@ Now we are ready to proceed to Step 4 where we will prepare our spreadsheet for 
 
 To prepare our filtered list of chromosomes for downstream analysis we first need to combine species names with chromosome identities and pivot the table. 
 
-
 ```
 
 conserved_gene_data <- conserved_gene_data %>%
@@ -443,7 +442,7 @@ swan_13	| 20005441
 tasmaniandevil_X | 71377400
 zebrafinch_4A	| 19299029
 
-After bounding the landmark postions have been adjusted to range from 1 to the highest landmark position. For example, in the human and horseshoe bat example, the landmarks will look like this:
+After bounding the landmark postions have been adjusted to range from 1 to the highest landmark position. For example, in the human and bat comparison, the landmarks will look like this:
 
 ![human_bat_bounded](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Amniote-busco/human_bat_bounded.jpg)
 
@@ -455,33 +454,63 @@ We are now ready to proceed to the final step and conduct a PCA of landmark disp
 <details>
   <summary>Click to expand content!</summary>
 
-Now that the landmarks have been flipped (when necessary) and bounded, we can conduct the disparity analysis. 
+Now that the landmarks have been flipped (when necessary) and bounded, we can conduct the disparity analysis using the ```gene_position_matrix_flipped_bounded.csv``` file from the last step. We will prepare this file for Principal Component Analysis (PCA) using R.
 
 ```
 gene_position_matrix <- read.csv("gene_position_matrix_flipped_bounded.csv")
-head(gene_position_matrix)
-# Prepare the data for PCA
-# Extract the species information (genome_chr) and gene positions (gene IDs)
-pca_data <- gene_position_matrix
-species_info <- pca_data$genome_chr  # Save the genome_chr column as the row names
 
-# Remove the genome_chr column, as we won't use it in PCA
+colnames(gene_position_matrix)[colnames(gene_position_matrix) == 'X'] <- 'genome_chr'
+
+pca_data <- gene_position_matrix
+
+species_info <- pca_data$genome_chr
+
 pca_data <- pca_data %>% select(-genome_chr)
 
-# Perform PCA (without scaling)
-pca_result <- prcomp(pca_data, center = TRUE, scale. = FALSE)
-head(pca_result$x)
+```
 
-# Prepare PCA results for plotting
-pca_df <- data.frame(pca_result$x)  
-head(pca_df)
-write.csv(pca_df, file="PCA_humanX.csv")
-pca_df$genome_chr <- species_info  # Add the genome_chr column back to the PCA result for coloring
-head(pca_df$genome_chr)
-head(pca_df)
+Now we perform the PCA and extract the results for plotting.
+
+```
+
+pca_result <- prcomp(pca_data, center = TRUE, scale. = FALSE)
+
+pca_df <- data.frame(pca_result$x)
+
+pca_df$genome_chr <- species_info 
+
 write.csv(pca_df, file="PCA_humanX_bounded.csv")
 
 ```
 
+We can plot the results for PC1 and PC2 using the following commands in R.
+
+```
+library(ggplot2)
+
+custom_colors <- c("#A6432D", "#02C2DA", "#B1C3D9", "#FF4896", "#7EA629", "#1B2440", "#73141B", "#01558F", 
+                            "#F3AF9D", "#D94D1A", "#BA026D", "#5F7319", "#0C2C40", "#008CAC", "#F28F38", "#023D75")
+                            
+variance_explained <- pca_result$sdev^2 / sum(pca_result$sdev^2)  # Variance explained by each PC
+pc1_variance <- round(variance_explained[1] * 100, 2)  # Percentage of variance explained by PC1
+pc2_variance <- round(variance_explained[2] * 100, 2)  # Percentage of variance explained by PC2
+
+ggplot(pca_df, aes(x = PC1, y = PC2, color = genome_chr)) +
+  geom_point(size = 3) +
+  geom_text(aes(label = genome_chr), vjust = -0.5, hjust = 0.5, size = 3) +  # Add species name labels
+  theme_minimal() +
+  labs(
+    title = "PCA from human X-linked conserved genes", 
+    x = paste("PC1 (", pc1_variance, "%)", sep = ""),
+    y = paste("PC2 (", pc2_variance, "%)", sep = "")
+  ) +
+  theme(legend.position = "none") +  # Remove the legend
+  scale_color_manual(values = setNames(custom_colors, levels(pca_df$genome_chr)))
+
+```
+
+This should result in the plot depicted below which captures variation in the position of the 53 BUSCO landmarks across all of the species.
+
+![PCA_result](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Amniote-busco/PCA_result.jpg)
 
   </details>
