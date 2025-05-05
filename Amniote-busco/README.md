@@ -18,8 +18,6 @@
 
 >In this tutorial we will use 16 species of amniote vertebrates from Lovell et al. [2022](https://elifesciences.org/articles/78526) and BUSCO landmarks assocaited with the human X chromosome. The groups include representatives from placental mammals, marsupial mammals, monotreme mammals, birds, and squamate reptiles.  
 
-by Poikela et al. [2024](https://academic.oup.com/gbe/article/16/3/evae024/7628473)
-
 Species | Name (Lovell et al.) | Group  | Chromosome
 ------------ | -------------  | ------------- | -------------
 _Mus musculus_	| mouse | Placental | X 
