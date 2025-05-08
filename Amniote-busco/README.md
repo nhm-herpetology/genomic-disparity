@@ -24,7 +24,7 @@ _Mus musculus_	| mouse | Placental | X
 _Choloepus hoffmannis_	| sloth | Placental | X 
 _Homo sapiens_	| human | Placental | X 
 _Tursiops truncatus_	| dolphin | Placental | X
-_Rhinolophus ferrumequinum_	| horseshoeBat | Placental | X
+_Rhinolophus ferrumequinum_	| horseshoeBat | Placental | X/1
 _Sarcophilus harrisii_	| tasmaniandevil | Marsupial| X 
 _Trichosurus vulpecula_	| brushtailPossum | Marsupial | X 
 _Monodelphis domestica_	| opossum | Marsupial | X 
