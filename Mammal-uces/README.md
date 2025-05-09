@@ -349,7 +349,7 @@ write.csv(homologousUCE, file = "homologous_UCEs_extracted.csv", row.names = TRU
 
 After this step you will have a CSV file called ```homologous_UCEs_extracted.csv``` which contains two columns for each species: (1) the 'V2' direction that landmarks were mapped on the chromosomes (0 [forward] or 16 [reverse]) and (2) the mapping location (in base pairs) of each landmark. 
 
-**Flipping chromosomes**
+**Orientation issues**
 
 In the tutorial dataset there should be several examples of species with chromsomes that have been assembled with opposite complementarities. For example, if we look at the first 20 landmark positions for _Capra aegragrus_ and _Capra hircus_ in the ```homologous_UCEs_extracted.csv``` file we should see this:   
 
@@ -461,9 +461,42 @@ write.csv(data5, file = "homologous_UCEs_extracted_flipped.csv")
 
 After the last step we have a file called ```homologous_UCEs_extracted_flipped.csv``` that is ready for the next preparation step, landmark bounding. 
 
-**Landmark bounding**
+**Bounding the landmarks**
 
+Bounding landmarks is a procedure used to transform landmark positions so that the largest and smallest landmarks define the region for structural disparity analysis. This step is necessary to avoid disparity inflation due to clustered landmarks. Justification for this procedure is described in Mohan et al. The process of bounding can be conducted in R using the  ```homologous_UCEs_extracted_flipped.csv``` file from the last step. 
 
+```
+[THIS CODE IS NOT WORKING]
+
+bound <- read.csv("homologous_UCEs_extracted_flipped.csv", header =T, row.names = 1)
+
+bounded <- apply(bound, 1, function(row) {row - min(row)+1})
+
+bounded <- as.data.frame(t(bounded))
+
+colnames(bounded) <- colnames(bound)
+
+write.csv(bounded, file = "homologous_UCEs_extracted_flipped_bounded.csv")
+
+```
+
+If you want to conduct any size-corrected analyses, you will also need to save the bounded chromosome sizes.
+
+```
+
+bounded_sizes <- apply(bounded, 1, FUN = max)
+
+```
+
+This command should results in the following bounded sizes:
+
+genome_chr | bounded_size
+------------ | ------------- 
+First	| XXXXXXX
+
+After bounding the landmark positions have been adjusted to range from 1 to the highest landmark position. For example, in the *Capra* comparison, the landmarks will now look like this:
+
+![Capra_bounded](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Capra_bounded.jpg)
 
 After the last step we have a file called ```homologous_UCEs_extracted_flipped_bounded.csv``` that is ready for the final preparation steps. This includes accounting for a specific caveat of using the UCE probe set. The UCE probe set was developed to capture UCEs across diverse taxa, as such some UCEs are targeted by multiple probes, so to control for the variation this creates in mapping, we average the probe placement across landmarks targeting the same UCE. We will remove the probe numbers (e.g. p1) in order to merge information from the probes targeting multiple parts of the same UCE landmark. After we average the UCE positions, we transpose the matrix to prepare it for the PCA: 
 
