@@ -347,7 +347,11 @@ write.csv(homologousUCE, file = "homologous_UCEs_extracted.csv", row.names = TRU
 
 ```
 
-After this step you will have a CSV file called ```homologous_UCEs_extracted.csv``` which contains two columns for each species: (1) the 'V2' direction that landmarks were mapped on the chromosomes (0 [forward] or 16 [reverse]) and (2) the mapping location (in base pairs) of each landmark. In the tutorial dataset there should be several examples of species with chromsomes that have been assembled with opposite complementarities. For example, if we look at the first 20 landmark positions for _Capra aegragrus_ and _Capra hircus_ in the ```homologous_UCEs_extracted.csv``` file we should see this:   
+After this step you will have a CSV file called ```homologous_UCEs_extracted.csv``` which contains two columns for each species: (1) the 'V2' direction that landmarks were mapped on the chromosomes (0 [forward] or 16 [reverse]) and (2) the mapping location (in base pairs) of each landmark. 
+
+**Flipping chromosomes**
+
+In the tutorial dataset there should be several examples of species with chromsomes that have been assembled with opposite complementarities. For example, if we look at the first 20 landmark positions for _Capra aegragrus_ and _Capra hircus_ in the ```homologous_UCEs_extracted.csv``` file we should see this:   
 
 V2.y.y | Capra_aegagrus_CM003215.1.fasta	  | V2.x.x.x | Capra_hircus_CM004563.1.fasta
 ------------ | -------------  | ------------- | -------------	        	
@@ -455,10 +459,16 @@ data5 <- landmarkflip[-c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40
 write.csv(data5, file = "homologous_UCEs_extracted_flipped.csv")
 ```
 
-After the last step we have a file called ```homologous_UCEs_extracted_flipped.csv``` that is ready for the final preparation steps. This includes accounting for a specific caveat of using the UCE probe set. The UCE probe set was developed to capture UCEs across diverse taxa, as such some UCEs are targeted by multiple probes, so to control for the variation this creates in mapping, we average the probe placement across landmarks targeting the same UCE. We will remove the probe numbers (e.g. p1) in order to merge information from the probes targeting multiple parts of the same UCE landmark. After we average the UCE positions, we transpose the matrix to prepare it for the PCA: 
+After the last step we have a file called ```homologous_UCEs_extracted_flipped.csv``` that is ready for the next preparation step, landmark bounding. 
+
+**Landmark bounding**
+
+
+
+After the last step we have a file called ```homologous_UCEs_extracted_flipped_bounded.csv``` that is ready for the final preparation steps. This includes accounting for a specific caveat of using the UCE probe set. The UCE probe set was developed to capture UCEs across diverse taxa, as such some UCEs are targeted by multiple probes, so to control for the variation this creates in mapping, we average the probe placement across landmarks targeting the same UCE. We will remove the probe numbers (e.g. p1) in order to merge information from the probes targeting multiple parts of the same UCE landmark. After we average the UCE positions, we transpose the matrix to prepare it for the PCA: 
 
 ```
-data6 <- read.csv("homologous_UCEs_extracted_flipped.csv")
+data6 <- read.csv("homologous_UCEs_extracted_flipped_bounded.csv")
 data6$landmarks <- sub("_.*", "", data6$landmarks)
 data6$X <-NULL
 
