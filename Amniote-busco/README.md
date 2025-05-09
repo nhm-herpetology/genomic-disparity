@@ -301,7 +301,7 @@ write.csv(gene_position_matrix, "gene_position_matrix.csv", row.names = FALSE)
 
 ```
 
-After this step you will have a CSV file called ```gene_position_matrix.csv```. To improve our estimates of structural disparity, we will need to correct for any orientation issues and bound the landmarks. The rationale for these correctiosn is discussed in Mohan et al. (Under review).  
+After this step you will have a CSV file called ```gene_position_matrix.csv```. To improve our estimates of structural disparity, we will need to correct for any orientation issues and bound the landmarks. The rationale for these corrections is discussed in Mohan et al. (Under review).  
 
 **Orientation issues**
 
@@ -440,7 +440,7 @@ swan_13	| 20005441
 tasmaniandevil_X | 71377400
 zebrafinch_4A	| 19299029
 
-After bounding the landmark postions have been adjusted to range from 1 to the highest landmark position. For example, in the human and bat comparison, the landmarks will look like this:
+After bounding the landmark positions have been adjusted to range from 1 to the highest landmark position. For example, in the human and bat comparison, the landmarks will look like this:
 
 ![human_bat_bounded](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Amniote-busco/human_bat_bounded.jpg)
 
