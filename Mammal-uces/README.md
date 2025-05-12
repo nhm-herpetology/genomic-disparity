@@ -599,7 +599,7 @@ Peromyscus_maniculatus_CM010882.2.fasta	| 37960822
 Piliocolobus_tephrosceles_CM019250.1.fasta	| 41801809
 Rattus_norvegicus_CM070393.1.fasta	| 39727701
 
-With the outlier landmark removed, the range of bounded sizes is now much narrower. If we visualize the the *Capra* comparison following the outlier removal, wee see that the bounded regions are now of similar sizes and completely syntenic. 
+With the outlier landmark removed, the range of bounded sizes is now much narrower. If we visualize the the *Capra* comparison following the outlier removal, we see that the bounded regions are now of similar sizes and completely syntenic. 
 
 ![Capra_bounded_out](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Capra_bounded_out.jpg)
 
@@ -621,14 +621,11 @@ library(dplyr)
 library(ggplot2)
 library(cowplot)
 
-Set1_PCA <- read.csv("homologous_UCEs_Set1_PCA.csv", row.names = 1)
-names(Set1_PCA) <- Set1_PCA[1,]
-Set1_PCA <- Set1_PCA[-1,]
+Set1_PCA <- read.csv("homologous_UCEs_extracted_flipped_bounded_out.csv", row.names = 1)
 
-PCprep <- Set1_PCA %>% mutate_at(1:186, as.numeric)
+PCprep <- Set1_PCA %>% mutate_at(1:185, as.numeric)
 
 PCA1 <-prcomp(PCprep)
-
 ```
 
 After the PCA has completed there will be five lists of results including "sdev", "rotation", "center", "scale", and "x". The "x" variable contains the PC scores that we will use for Genomic Disparity analysis. We will now extract them and visualize the genomic disparity results in ggplot2.
@@ -636,13 +633,13 @@ After the PCA has completed there will be five lists of results including "sdev"
 ```
 PCA1_scores <-as.data.frame(PCA1$x)
 
-Order <-c("Artiodactyla", "Artiodactyla", "Artiodactyla", "Artiodactyla", "Artiodactyla", "Perissodactyla", "Rodentia", "Perissodactyla", "Perissodactyla", "Carnivora", "Artiodactyla", "Primates", "Primates", "Rodentia", "Rodentia", "Rodentia", "Rodentia", "Carnivora", "Artiodactyla", "Primates", "Carnivora", "Primates", "Rodentia", "Primates", "Rodentia")
+Order <-c("Artiodactyla", "Artiodactyla", "Artiodactyla", "Artiodactyla", "Artiodactyla", "Perissodactyla", "Rodentia", "Perissodactyla", "Perissodactyla", "Carnivora", "Artiodactyla", "Primates", "Primates", "Primates", "Rodentia", "Rodentia", "Rodentia", "Rodentia", "Carnivora", "Artiodactyla", "Primates", "Carnivora", "Primates", "Rodentia", "Primates", "Rodentia")
 
 PCA1_plots <-cbind(PCA1_scores, Order)
 
-P1 <-ggplot(PCA1_plots, aes(x = PC1, y = PC2, color = Order)) + geom_point(size = 4, alpha=0.9) + scale_color_manual(breaks = c("Artiodactyla","Carnivora","Perissodactyla","Primates","Rodentia"), values=c("orange", "red","brown","blue","purple")) + theme_classic()
+P1 <-ggplot(PCA1_plots, aes(x = PC1, y = PC2, color = Order)) + geom_point(size = 4, alpha=0.9) + scale_color_manual(breaks = c("Artiodactyla","Carnivora","Perissodactyla","Primates","Rodentia"), values=c("#F28F38","#CD5C5C","#5F7319","#4682B4","#551A8B")) + theme_classic()
 
-P2 <-ggplot(PCA1_plots, aes(x = PC3, y = PC4, color = Order)) + geom_point(size = 4, alpha=0.9) + scale_color_manual(breaks = c("Artiodactyla","Carnivora","Perissodactyla","Primates","Rodentia"), values=c("orange", "red","brown","blue","purple")) + theme_classic()
+P2 <-ggplot(PCA1_plots, aes(x = PC3, y = PC4, color = Order)) + geom_point(size = 4, alpha=0.9) + scale_color_manual(breaks = c("Artiodactyla","Carnivora","Perissodactyla","Primates","Rodentia"), values=c("#F28F38","#CD5C5C","#5F7319","#4682B4","#551A8B")) + theme_classic()
 
 plot_grid(P1, P2, ncol = 1)
 ```
@@ -657,17 +654,17 @@ We should see that 100% of the variance in landmark position is explained by the
 
 Variable | PC1 | PC2 | PC3 | PC4
 ------------ | -------------  | ------------- | ------------- | -------------     	
-Standard deviation | 4.681e+08 | 4.708e+07 | 8.612e+06 | 2.376e+06
-Proportion of Variance | 0.9896 | 0.0100 | 0.0034 | 0.0003 
-Cumulative Proportion | 0.9896 |0.9960 | 0.9999 | 1.0000
+Standard deviation | 1.507e+07 | 3.138e+06 | 1.047e+06 | 4.988e+05
+Proportion of Variance | 9.525e-01 | 4.133e-02 | 4.600e-03 | 1.040e-03 
+Cumulative Proportion | 9.525e-01 | 9.938e-01 | 9.984e-01 | 9.994e-01
 
-Most of the variance is explained by PC1, which we show in the Mohan et al. (2024) paper is associated with chromosome size (similar to the body size varaible of morphological PCAs). While the remaining three PCs do not cumulatively explain much variance, we can see from the plot above they are likely biologically meaningful. We can further intepret the patterns by exploring which UCE landmarks are weighted heavily on each axis by further examining the "rotation" list from the PCA. 
+Most of the variance is explained by PC1, however, while the remaining three PCs do not cumulatively explain much variance, we can see from the plot above they are likely biologically meaningful. We can further intepret the patterns by exploring which UCE landmarks are weighted heavily on each axis by further examining the "rotation" list from the PCA. 
 
 ```
 write.csv(PCA1$rotation, file = "component_loadings_PCA.csv")
 ```
 
-Exploring this spreadsheet will help identify which UCE landmarks are driving the patterns observed in the above plots. For example, in PC3 by arranging the scores in order from smallest to largest we can see that landmarks **uce.884**, **uce.7269**, **uce.7947**, and **uce.6988** are likely involved in the pattern as they represent the highest and lowest component loadings.  
+Exploring this spreadsheet will help identify which UCE landmarks are driving the patterns observed in the above plots. For example, in PC3 by arranging the scores in order from smallest to largest we can see that landmarks **uce.884**, **uce.884**, **uce.7947**, **uce.7269**, and **uce.442** are likely involved in the pattern as they represent the highest and lowest component loadings.  
 
 >At this point you have completed the tutorial and should have all the tools necessary to conduct Genomic Disparity Analysis on your own interspecific dataset. 
 
@@ -680,9 +677,9 @@ cent2 <- aggregate(cbind(PC3, PC4) ~Order, data = PCA1_plots, FUN = mean)
 segs1 <- merge(PCA1_plots, setNames(cent1, c('Order','oPC1','oPC2')), by = 'Order', sort = FALSE)
 segs2 <- merge(PCA1_plots, setNames(cent2, c('Order','oPC3','oPC4')), by = 'Order', sort = FALSE)
 
-out1 <-ggplot(PCA1_plots, aes(x = PC1, y = PC2, color = Order)) + geom_segment(data = segs1, mapping = aes(xend = oPC1, yend = oPC2)) + geom_point(data = cent1, size = 5) + geom_point() + coord_fixed() + xlab('PC1 (98.9%)') + ylab('PC2 (1.0%)') + scale_color_manual(breaks = c("Artiodactyla", "Carnivora","Perissodactyla","Primates","Rodentia"), values=c("orange", "red","brown","blue","purple")) + theme_classic()
+out1 <-ggplot(PCA1_plots, aes(x = PC1, y = PC2, color = Order)) + geom_segment(data = segs1, mapping = aes(xend = oPC1, yend = oPC2)) + geom_point(data = cent1, size = 5) + geom_point() + coord_fixed() + xlab('PC1 (98.9%)') + ylab('PC2 (1.0%)') + scale_color_manual(breaks = c("Artiodactyla", "Carnivora","Perissodactyla","Primates","Rodentia"), values=c("#F28F38","#CD5C5C","#5F7319","#4682B4","#551A8B")) + theme_classic()
 
-out2 <-ggplot(PCA1_plots, aes(x = PC3, y = PC4, color = Order)) + geom_segment(data = segs2, mapping = aes(xend = oPC3, yend = oPC4)) + geom_point(data = cent2, size = 5) + geom_point() + coord_fixed() + xlab('PC3 (0.3%)') + ylab('PC4 (0.03%)') + scale_color_manual(breaks = c("Artiodactyla", "Carnivora","Perissodactyla","Primates","Rodentia"), values=c("orange", "red","brown","blue","purple")) + theme_classic()
+out2 <-ggplot(PCA1_plots, aes(x = PC3, y = PC4, color = Order)) + geom_segment(data = segs2, mapping = aes(xend = oPC3, yend = oPC4)) + geom_point(data = cent2, size = 5) + geom_point() + coord_fixed() + xlab('PC3 (0.3%)') + ylab('PC4 (0.03%)') + scale_color_manual(breaks = c("Artiodactyla", "Carnivora","Perissodactyla","Primates","Rodentia"), values=c("#F28F38","#CD5C5C","#5F7319","#4682B4","#551A8B")) + theme_classic()
 
 plot_grid(out1, out2, ncol = 1)
 ```
