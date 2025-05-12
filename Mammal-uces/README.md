@@ -677,9 +677,9 @@ cent2 <- aggregate(cbind(PC3, PC4) ~Order, data = PCA1_plots, FUN = mean)
 segs1 <- merge(PCA1_plots, setNames(cent1, c('Order','oPC1','oPC2')), by = 'Order', sort = FALSE)
 segs2 <- merge(PCA1_plots, setNames(cent2, c('Order','oPC3','oPC4')), by = 'Order', sort = FALSE)
 
-out1 <-ggplot(PCA1_plots, aes(x = PC1, y = PC2, color = Order)) + geom_segment(data = segs1, mapping = aes(xend = oPC1, yend = oPC2)) + geom_point(data = cent1, size = 5) + geom_point() + coord_fixed() + xlab('PC1 (98.9%)') + ylab('PC2 (1.0%)') + scale_color_manual(breaks = c("Artiodactyla", "Carnivora","Perissodactyla","Primates","Rodentia"), values=c("#F28F38","#CD5C5C","#5F7319","#4682B4","#551A8B")) + theme_classic()
+out1 <-ggplot(PCA1_plots, aes(x = PC1, y = PC2, color = Order)) + geom_segment(data = segs1, mapping = aes(xend = oPC1, yend = oPC2)) + geom_point(data = cent1, size = 5) + geom_point() + coord_fixed() + xlab('PC1') + ylab('PC2') + scale_color_manual(breaks = c("Artiodactyla", "Carnivora","Perissodactyla","Primates","Rodentia"), values=c("#F28F38","#CD5C5C","#5F7319","#4682B4","#551A8B")) + theme_classic()
 
-out2 <-ggplot(PCA1_plots, aes(x = PC3, y = PC4, color = Order)) + geom_segment(data = segs2, mapping = aes(xend = oPC3, yend = oPC4)) + geom_point(data = cent2, size = 5) + geom_point() + coord_fixed() + xlab('PC3 (0.3%)') + ylab('PC4 (0.03%)') + scale_color_manual(breaks = c("Artiodactyla", "Carnivora","Perissodactyla","Primates","Rodentia"), values=c("#F28F38","#CD5C5C","#5F7319","#4682B4","#551A8B")) + theme_classic()
+out2 <-ggplot(PCA1_plots, aes(x = PC3, y = PC4, color = Order)) + geom_segment(data = segs2, mapping = aes(xend = oPC3, yend = oPC4)) + geom_point(data = cent2, size = 5) + geom_point() + coord_fixed() + xlab('PC3') + ylab('PC4') + scale_color_manual(breaks = c("Artiodactyla", "Carnivora","Perissodactyla","Primates","Rodentia"), values=c("#F28F38","#CD5C5C","#5F7319","#4682B4","#551A8B")) + theme_classic()
 
 plot_grid(out1, out2, ncol = 1)
 ```
