@@ -495,7 +495,7 @@ bounded <- apply(bt, 1, function(row) {row - min(row)+1})
 
 bounded <- as.data.frame(t(bounded))
 
-write.csv(bounded, file = "homologous_UCEs_extracted_flipped_bounded-test.csv")
+write.csv(bounded, file = "homologous_UCEs_extracted_flipped_bounded.csv")
 
 ```
 
@@ -542,6 +542,68 @@ After bounding the landmark positions have been adjusted to range from 1 to the 
 
 ![Capra_bounded](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Capra_bounded.jpg)
 
+*Note: To make plots as above in [ChromoMap](https://lakshay-anand.github.io/chromoMap/), you need to +1 to the bounded chromosome size so that all positions are within the boundary.*
+
+Interestingly, we notice that a single landmark found at the far left side of the *Capra aegragrus* chromosome deviates from the (otherwise) syntenic placement of the landmarks in comparisons to *Cara hircus*. This could be a real difference between the chromosomes, however, as discussed in Mohan et al. this may also be indication of a spurious landmark that is not single-copy. In this case, Mohan et al. show that this landmark (UCE 6948) is not single-copy and should be removed.
+
+We now need to remove this landmark and bound the chromosomes again with the new position information. Let's go back to the ```homologous_UCEs_Set1_PCA.csv``` file and remove this spurious landmark.
+
+```
+
+bound <- read.csv("homologous_UCEs_Set1_PCA.csv", row.names = 1)
+
+names(bound) <- bound[1,]
+
+bound <- bound[-1,]
+
+bt <- bound %>% mutate_at(1:186, as.numeric)
+
+bounded <- apply(bt, 1, function(row) {row - min(row)+1})
+
+bounded <- as.data.frame(t(bounded))
+
+write.csv(bounded, file = "homologous_UCEs_extracted_flipped_bounded_out.csv")
+
+```
+
+After removing the spurious landmark, we have **185 UCE landmarks** and we will also need to save a new set of bounded chromosome sizes if we want to perform any size-corrected analyses.
+
+```
+
+bounded_sizes_out <- apply(bounded, 1, FUN = max)
+
+```
+
+This command should results in the following updated bounded sizes:
+
+genome_chr | bounded_size
+------------ | ------------- 
+Bos_indicus_CM003022.1.fasta	| 107349672
+Bos_taurus_CM008169.2.fasta	| 103735955
+Bubalus_bubalis_CM034272.1.fasta	| 103289153
+Capra_aegagrus_CM003215.1.fasta	| 94398638
+Capra_hircus_CM004563.1.fasta	| 41924329
+Ceratotherium_simum_CM043826.1.fasta	| 38723577
+Cricetulus_griseus_CM023440.1.fasta	| 43186096
+Equus_asinus_CM027693.2.fasta	| 35907549
+Equus_caballus_CM027693.2.fasta	| 35907549
+Felis_catus_CM031419.1.fasta	| 37898929
+Giraffa_tippelskirchi_CM018105.1.fasta	| 39962831
+Gorilla_gorilla_CM055457.2.fasta	| 46932177
+Macaca_fascicularis_BLPH02000012.1.fasta	| 60998311
+Macaca_mulatta_CM014347.1.fasta	| 41376923
+Mus_caroli_LT608244.1.fasta	| 68447369
+Mus_musculus_CM000995.3.fasta	| 119730785
+Mus_pahari_LT608290.1.fasta	| 52672612
+Mus_spretus_OW971679.1.fasta	| 87675272
+Neomonachus_schauinslandi_CM035899.1.fasta	| 37134275
+Ovis_aries_CM028705.1.fasta	| 100204464
+Pan_troglodytes_CM054447.2.fasta	| 60153481
+Panthera_tigris_CM031438.1.fasta	| 37668932
+Papio_anubis_CM018189.1.fasta	| 87565722
+Peromyscus_maniculatus_CM010882.2.fasta	| 38460274
+Piliocolobus_tephrosceles_CM019250.1.fasta	| 41801809
+Rattus_norvegicus_CM070393.1.fasta	| 82249680
 
 </details>
 
