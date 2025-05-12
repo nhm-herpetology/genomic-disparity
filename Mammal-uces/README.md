@@ -459,46 +459,7 @@ data5 <- landmarkflip[-c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40
 write.csv(data5, file = "homologous_UCEs_extracted_flipped.csv")
 ```
 
-After the last step we have a file called ```homologous_UCEs_extracted_flipped.csv``` that is ready for the next preparation step, landmark bounding. 
-
-**Bounding the landmarks**
-
-Bounding landmarks is a procedure used to transform landmark positions so that the largest and smallest landmarks define the region for structural disparity analysis. This step is necessary to avoid disparity inflation due to clustered landmarks. Justification for this procedure is described in Mohan et al. The process of bounding can be conducted in R using the  ```homologous_UCEs_extracted_flipped.csv``` file from the last step. 
-
-```
-[THIS CODE IS NOT WORKING]
-
-bound <- read.csv("homologous_UCEs_extracted_flipped.csv", header =T, row.names = 1)
-
-bounded <- apply(bound, 1, function(row) {row - min(row)+1})
-
-bounded <- as.data.frame(t(bounded))
-
-colnames(bounded) <- colnames(bound)
-
-write.csv(bounded, file = "homologous_UCEs_extracted_flipped_bounded.csv")
-
-```
-
-If you want to conduct any size-corrected analyses, you will also need to save the bounded chromosome sizes.
-
-```
-
-bounded_sizes <- apply(bounded, 1, FUN = max)
-
-```
-
-This command should results in the following bounded sizes:
-
-genome_chr | bounded_size
------------- | ------------- 
-First	| XXXXXXX
-
-After bounding the landmark positions have been adjusted to range from 1 to the highest landmark position. For example, in the *Capra* comparison, the landmarks will now look like this:
-
-![Capra_bounded](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Capra_bounded.jpg)
-
-After the last step we have a file called ```homologous_UCEs_extracted_flipped_bounded.csv``` that is ready for the final preparation steps. This includes accounting for a specific caveat of using the UCE probe set. The UCE probe set was developed to capture UCEs across diverse taxa, as such some UCEs are targeted by multiple probes, so to control for the variation this creates in mapping, we average the probe placement across landmarks targeting the same UCE. We will remove the probe numbers (e.g. p1) in order to merge information from the probes targeting multiple parts of the same UCE landmark. After we average the UCE positions, we transpose the matrix to prepare it for the PCA: 
+After the last step we have a file called ```homologous_UCEs_extracted_flipped.csv``` that is ready for the next preparation step. This step accounting for a specific caveat of using the UCE probe set. The UCE probe set was developed to capture UCEs across diverse taxa, as such some UCEs are targeted by multiple probes, so to control for the variation this creates in mapping, we average the probe placement across landmarks targeting the same UCE. We will remove the probe numbers (e.g. p1) in order to merge information from the probes targeting multiple parts of the same UCE landmark. After we average the UCE positions, we transpose the matrix to prepare it for the PCA: 
 
 ```
 data6 <- read.csv("homologous_UCEs_extracted_flipped_bounded.csv")
@@ -514,7 +475,73 @@ transposed_data <- data7 %>% t() %>% as.data.frame()
 write.csv(transposed_data, file = "homologous_UCEs_Set1_PCA.csv")
 ```
   
-After averaging the positions, there should be **186 UCE landmarks**. This final prep will produce the file ```homologous_UCEs_cluster1_PCA.csv``` which is the input file for Genomic Disparity Analysis as outlined in the final step of the tutorial. 
+After averaging the positions, there should be **186 UCE landmarks**. This final prep will produce the file ```homologous_UCEs_cluster1_PCA.csv``` which is the input file for the final preparation step, landmark bounding. 
+
+**Bounding the landmarks**
+
+Bounding landmarks is a procedure used to transform landmark positions so that the largest and smallest landmarks define the region for structural disparity analysis. This step is necessary to avoid disparity inflation due to clustered landmarks. Justification for this procedure is described in Mohan et al. The process of bounding can be conducted in R using the  ```homologous_UCEs_Set1_PCA.csv``` file from the last step. 
+
+```
+
+bound <- read.csv("homologous_UCEs_Set1_PCA.csv", row.names = 1)
+
+names(bound) <- bound[1,]
+
+bound <- bound[-1,]
+
+bt <- bound %>% mutate_at(1:186, as.numeric)
+
+bounded <- apply(bt, 1, function(row) {row - min(row)+1})
+
+bounded <- as.data.frame(t(bounded))
+
+write.csv(bounded, file = "homologous_UCEs_extracted_flipped_bounded-test.csv")
+
+```
+
+If you want to conduct any size-corrected analyses, you will also need to save the bounded chromosome sizes.
+
+```
+
+bounded_sizes <- apply(bounded, 1, FUN = max)
+
+```
+
+This command should results in the following bounded sizes:
+
+genome_chr | bounded_size
+------------ | ------------- 
+Bos_indicus_CM003022.1.fasta	| 107349672
+Bos_taurus_CM008169.2.fasta	| 103735955
+Bubalus_bubalis_CM034272.1.fasta	| 103289153
+Capra_aegagrus_CM003215.1.fasta	| 94398638
+Capra_hircus_CM004563.1.fasta	| 41924329
+Ceratotherium_simum_CM043826.1.fasta	| 38723577
+Cricetulus_griseus_CM023440.1.fasta	| 43186096
+Equus_asinus_CM027693.2.fasta	| 35907549
+Equus_caballus_CM027693.2.fasta	| 35907549
+Felis_catus_CM031419.1.fasta	| 37898929
+Giraffa_tippelskirchi_CM018105.1.fasta	| 39962831
+Gorilla_gorilla_CM055457.2.fasta	| 46932177
+Macaca_fascicularis_BLPH02000012.1.fasta	| 60998311
+Macaca_mulatta_CM014347.1.fasta	| 41376923
+Mus_caroli_LT608244.1.fasta	| 68447369
+Mus_musculus_CM000995.3.fasta	| 119730785
+Mus_pahari_LT608290.1.fasta	| 52672612
+Mus_spretus_OW971679.1.fasta	| 87675272
+Neomonachus_schauinslandi_CM035899.1.fasta	| 37134275
+Ovis_aries_CM028705.1.fasta	| 100204464
+Pan_troglodytes_CM054447.2.fasta	| 60153481
+Panthera_tigris_CM031438.1.fasta	| 37668932
+Papio_anubis_CM018189.1.fasta	| 87565722
+Peromyscus_maniculatus_CM010882.2.fasta	| 38460274
+Piliocolobus_tephrosceles_CM019250.1.fasta	| 41801809
+Rattus_norvegicus_CM070393.1.fasta	| 82249680
+
+After bounding the landmark positions have been adjusted to range from 1 to the highest landmark position. For example, in the *Capra* comparison, the landmarks will now look like this:
+
+![Capra_bounded](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Capra_bounded.jpg)
+
 
 </details>
 
