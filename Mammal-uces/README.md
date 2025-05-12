@@ -482,7 +482,6 @@ After averaging the positions, there should be **186 UCE landmarks**. This final
 Bounding landmarks is a procedure used to transform landmark positions so that the largest and smallest landmarks define the region for structural disparity analysis. This step is necessary to avoid disparity inflation due to clustered landmarks. Justification for this procedure is described in Mohan et al. The process of bounding can be conducted in R using the  ```homologous_UCEs_Set1_PCA.csv``` file from the last step. 
 
 ```
-
 bound <- read.csv("homologous_UCEs_Set1_PCA.csv", row.names = 1)
 
 names(bound) <- bound[1,]
@@ -496,15 +495,12 @@ bounded <- apply(bt, 1, function(row) {row - min(row)+1})
 bounded <- as.data.frame(t(bounded))
 
 write.csv(bounded, file = "homologous_UCEs_extracted_flipped_bounded.csv")
-
 ```
 
 If you want to conduct any size-corrected analyses, you will also need to save the bounded chromosome sizes.
 
 ```
-
 bounded_sizes <- apply(bounded, 1, FUN = max)
-
 ```
 
 This command should results in the following bounded sizes:
@@ -549,61 +545,65 @@ Interestingly, we notice that a single landmark found at the far left side of th
 We now need to remove this landmark and bound the chromosomes again with the new position information. Let's go back to the ```homologous_UCEs_Set1_PCA.csv``` file and remove this spurious landmark.
 
 ```
-
 bound <- read.csv("homologous_UCEs_Set1_PCA.csv", row.names = 1)
 
 names(bound) <- bound[1,]
 
 bound <- bound[-1,]
 
-bt <- bound %>% mutate_at(1:186, as.numeric)
+bound$uce.6948 <-NULL
+
+bt <- bound %>% mutate_at(1:185, as.numeric)
 
 bounded <- apply(bt, 1, function(row) {row - min(row)+1})
 
 bounded <- as.data.frame(t(bounded))
 
 write.csv(bounded, file = "homologous_UCEs_extracted_flipped_bounded_out.csv")
-
 ```
 
 After removing the spurious landmark, we have **185 UCE landmarks** and we will also need to save a new set of bounded chromosome sizes if we want to perform any size-corrected analyses.
 
 ```
-
 bounded_sizes_out <- apply(bounded, 1, FUN = max)
-
 ```
 
 This command should results in the following updated bounded sizes:
 
 genome_chr | bounded_size
 ------------ | ------------- 
-Bos_indicus_CM003022.1.fasta	| 107349672
-Bos_taurus_CM008169.2.fasta	| 103735955
-Bubalus_bubalis_CM034272.1.fasta	| 103289153
-Capra_aegagrus_CM003215.1.fasta	| 94398638
+Bos_indicus_CM003022.1.fasta	| 44037916
+Bos_taurus_CM008169.2.fasta	| 41812367
+Bubalus_bubalis_CM034272.1.fasta	| 41828498
+Capra_aegagrus_CM003215.1.fasta	| 43205949
 Capra_hircus_CM004563.1.fasta	| 41924329
-Ceratotherium_simum_CM043826.1.fasta	| 38723577
-Cricetulus_griseus_CM023440.1.fasta	| 43186096
+Ceratotherium_simum_CM043826.1.fasta	| 36637524
+Cricetulus_griseus_CM023440.1.fasta	| 37558942
 Equus_asinus_CM027693.2.fasta	| 35907549
 Equus_caballus_CM027693.2.fasta	| 35907549
 Felis_catus_CM031419.1.fasta	| 37898929
 Giraffa_tippelskirchi_CM018105.1.fasta	| 39962831
-Gorilla_gorilla_CM055457.2.fasta	| 46932177
-Macaca_fascicularis_BLPH02000012.1.fasta	| 60998311
+Gorilla_gorilla_CM055457.2.fasta	| 41332810
+Macaca_fascicularis_BLPH02000012.1.fasta	| 41461479
 Macaca_mulatta_CM014347.1.fasta	| 41376923
-Mus_caroli_LT608244.1.fasta	| 68447369
-Mus_musculus_CM000995.3.fasta	| 119730785
-Mus_pahari_LT608290.1.fasta	| 52672612
-Mus_spretus_OW971679.1.fasta	| 87675272
+Mus_caroli_LT608244.1.fasta	| 37803152
+Mus_musculus_CM000995.3.fasta	| 38762532
+Mus_pahari_LT608290.1.fasta	| 37504247
+Mus_spretus_OW971679.1.fasta	| 39408973
 Neomonachus_schauinslandi_CM035899.1.fasta	| 37134275
-Ovis_aries_CM028705.1.fasta	| 100204464
-Pan_troglodytes_CM054447.2.fasta	| 60153481
+Ovis_aries_CM028705.1.fasta	| 42081576
+Pan_troglodytes_CM054447.2.fasta	| 41385201
 Panthera_tigris_CM031438.1.fasta	| 37668932
-Papio_anubis_CM018189.1.fasta	| 87565722
-Peromyscus_maniculatus_CM010882.2.fasta	| 38460274
+Papio_anubis_CM018189.1.fasta	| 41231565
+Peromyscus_maniculatus_CM010882.2.fasta	| 37960822
 Piliocolobus_tephrosceles_CM019250.1.fasta	| 41801809
-Rattus_norvegicus_CM070393.1.fasta	| 82249680
+Rattus_norvegicus_CM070393.1.fasta	| 39727701
+
+With the outlier landmark removed, the range of bounded sizes is now much narrower. If we visualize the the *Capra* comparison following the outlier removal, wee see that the bounded regions are now of similar sizes and completely syntenic. 
+
+![Capra_bounded_out](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/Capra_bounded_out.jpg)
+
+Now that we have flipped, bounded, and removed spurious landmarks, we are ready to proceed to the final step of the Structural Disparity Analysis. 
 
 </details>
 
@@ -614,7 +614,7 @@ Rattus_norvegicus_CM070393.1.fasta	| 82249680
 
 >In this final step we will visualize the disparity in landmark placement using Principal Components Analysis (PCA). We will specifically focus on PCs 1, 2 and 3 from this analysis. 
 
-At the end of **Step 4** we will have the file ```homologous_UCEs_Set1_PCA.csv```, which we will now load into R for the PCA:  
+At the end of **Step 4** we will have the file ```homologous_UCEs_extracted_flipped_bounded_out.csv```, which we will now load into R for the PCA:  
 
 ```
 library(dplyr)
