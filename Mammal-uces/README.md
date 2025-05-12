@@ -683,6 +683,6 @@ out2 <-ggplot(PCA1_plots, aes(x = PC3, y = PC4, color = Order)) + geom_segment(d
 
 plot_grid(out1, out2, ncol = 1)
 ```
-![PCA_results_cent](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/PCA_results_cent.jpg)
+![PCA_results_cent2](https://github.com/nhm-herpetology/genomic-disparity/blob/main/Mammal-uces/PCA_results_cent2.jpg)
 
 </details>
