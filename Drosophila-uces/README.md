@@ -143,7 +143,7 @@ file_list <- list.files(folder_path, pattern = "\\.tsv$", full.names = TRUE)
 matrices <- list()
 for (file in file_list) {
   species <- gsub(".tsv", "", basename(file))
-  data <- read.table(file, header = FALSE, sep = "\t")
+  data <- read.table(file, fill = TRUE, header = FALSE, sep = "\t")
   matrix <- as.matrix(data)
   matrices[[species]] <- matrix
 }
