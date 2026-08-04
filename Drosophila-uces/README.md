@@ -26,8 +26,8 @@ _Drosophila americana_	| 5 | CM061086.1
 _Drosophila flavomontana_	| 5 | Poikela et al. (2024)
 _Drosophila montana_	|  5 | Poikela et al. (2024)
 _Drosophila novamexicana_	| 5 | CM061080.1
-_Drosophila virilia_	| 5 | CM017608.2
-_Drosophila virilia_	| 5 | CM061075.1
+_Drosophila virilis_	| 5 | CM017608.2
+_Drosophila virilis_	| 5 | CM061075.1
 
 >The two chromosome 5 assemblies from Poikela et al. (2024) were obtained from https://zenodo.org/records/10635471.
 
