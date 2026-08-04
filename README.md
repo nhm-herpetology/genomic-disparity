@@ -6,7 +6,7 @@ Chromosome architecture has played a key role in the evolution of biodiversity. 
 
 >Citation:
 
-**Mohan, A.V., Goswami, A., Streicher J.W. 2024. Quantifying structural variants in chromosomes using landmark-based disparity. Under Revision.**
+**Mohan, A.V., Goswami, A., Streicher J.W. 2026. Quantifying structural variants in chromosomes using landmark-based disparity. Under Revision.**
 [Supporting files](https://github.com/nhm-herpetology/genomic-disparity/tree/main/Supporting-files/)
 
 <br/>
