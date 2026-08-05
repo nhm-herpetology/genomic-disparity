@@ -7,9 +7,9 @@
 
 miniprot -d genome.mp genome.fa
 
-## use the .mp file and map BUSCO genes downloaded from Orthod DB (https://www.orthodb.org); this can be using BUSCO
+## use the .mp file and map BUSCO genes downloaded from Orthod DB (https://www.orthodb.org)
 
-miniprot -t 6  genome.mp refseq_db.faa >  genome.paf
+miniprot -t 6  genome.mp refseqs_ancestral.faa >  genome.paf
 
 ## remove the tags column (column 12 in .paf file which contain tags)
 
