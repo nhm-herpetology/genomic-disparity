@@ -1,0 +1,254 @@
+### This provides key steps to map protein sequences using miniprot and extract landmarks using genome coordinates produced by miniprot
+### This is a more conservative way to map BUSCO genes as it uses protein sequences instead of DNA sequences 
+## install miniprot, follow steps on miniprot's Github (https://github.com/lh3/miniprot)
+
+## STEP 1: miniprot mapping 
+## create an .mp file 
+
+miniprot -d genome.mp genome.fa
+
+## use the .mp file and map BUSCO genes downloaded from Orthod DB (https://www.orthodb.org); this can be using BUSCO
+
+miniprot -t 6  genome.mp refseq_db.faa >  genome.paf
+
+## remove the tags column (column 12 in .paf file which contain tags)
+
+cut -f1-12 genome.paf > genome_notags.paf
+
+## STEP 2: Comapre and dotplot 
+
+#############################################
+######## R script ###########################
+#############################################
+
+#packages
+library(pafr)
+library(dplyr)
+library(ggplot2)
+
+#custom function to read .paf files so that pafr's read.paf does not mis-parse miniprot's tags, in case any remains, it is discarded 
+
+read_paf_safe <- function(paf_path) {
+  lines <- readLines(paf_path)
+  fields <- strsplit(lines, "\t")
+  first12 <- vapply(fields, function(x) paste(x[1:12], collapse = "\t"), character(1))
+  
+  tmp <- tempfile(fileext = ".paf")
+  writeLines(first12, tmp)
+  ali <- as.data.frame(read_paf(tmp))
+  unlink(tmp)
+  ali
+}
+
+#custom function to compare two pafs, so a pair of genomes can be used at once. It uses geneid to combine the two .pafs, use genome coordinates of geneids and create a dot plot where colinear and non-linear segments are identified
+## In this case, it is extracting a gene's midpoint; but essnetially a starting point could also be used. These codes can be easily modified to do the same
+
+compare_two_paf <- function(paf_a, paf_b, species_a = "Species A", species_b = "Species B") {
+{
+  a <- read_paf_safe(paf_a) %>%
+    distinct(qname, .keep_all = TRUE) %>%
+    transmute(gene_id = qname, chrom_a = tname, tstart_a = tstart, tend_a = tend, strand_a = strand)
+  
+  b <- read_paf_safe(paf_b) %>%
+    distinct(qname, .keep_all = TRUE) %>%
+    transmute(gene_id = qname, chrom_b = tname, tstart_b = tstart, tend_b = tend, strand_b = strand)
+  
+  pairs <- inner_join(a, b, by = "gene_id") %>%
+    mutate(mid_a = (tstart_a + tend_a) / 2,
+           mid_b = (tstart_b + tend_b) / 2)
+  
+  pairs <- add_genome_offsets(pairs, "chrom_a", "mid_a", "gw_a")
+  bounds_a <- attr(pairs, "chrom_bounds")
+  pairs <- add_genome_offsets(pairs, "chrom_b", "mid_b", "gw_b")
+  bounds_b <- attr(pairs, "chrom_bounds")
+  
+  pairs <- pairs %>%
+    mutate(same_strand = ifelse(strand_a == strand_b,
+                                "Collinear (same strand)",
+                                "Candidate inversion (opposite strand)"))
+  
+  p <- ggplot(pairs, aes(gw_a, gw_b, color = same_strand)) +
+    geom_vline(data = bounds_a, aes(xintercept = offset), color = "grey85", linewidth = 0.3) +
+    geom_hline(data = bounds_b, aes(yintercept = offset), color = "grey85", linewidth = 0.3) +
+    geom_point(size = 2, alpha = 0.85) +
+    scale_color_manual(values = c("Collinear (same strand)" = "black",
+                                  "Candidate inversion (opposite strand)" = "orange")) +
+    labs(x = paste0("Ortholog position in ", species_a),
+         y = paste0("Ortholog position in ", species_b),
+         color = NULL,
+         title = paste0(species_a, " vs ", species_b)) +
+    theme_minimal() +
+    theme(legend.position = "bottom")
+  
+  list(plot = p, data = pairs)
+}
+
+
+## now using these custom functions, compare every pair of species and create the plots, I provide two examples below
+
+result1 <- compare_two_paf("D_americana.paf", "D_montana.paf", species_a = "D_americana", species_b = "D_montana")
+result2 <- compare_two_paf("D_americana.paf", "D_novamexicana.paf", species_a = "D_americana", species_b = "D_novamexicana")
+
+## visualise the plots and save them
+
+result1$plot 
+result2$plot
+
+## sanity check to see the number of genes which were mapped more than once, in such a case, the first instance of the gene is considered as the landmark
+
+## function to check multihits
+check_multihits <- function(paf_path) {
+  ali <- read_paf_safe(paf_path)   # from compare_two_paf_dotplot.R
+  n_total   <- nrow(ali)
+  n_genes   <- n_distinct(ali$qname)
+  dup_genes <- ali %>% count(qname) %>% filter(n > 1) %>% nrow()
+  cat(sprintf("total hit rows: %d | unique genes: %d | genes with >1 hit: %d\n",
+              n_total, n_genes, dup_genes))
+}
+
+## usage
+check_multihits("D_americana.paf")
+
+
+## STEP 3: Extracting gene landmarks 
+
+# load necessary packages 
+library(pafr)   # read_paf()
+library(dplyr)   # data wrangling
+library(tidyr)   # pivot_wider()
+library(tibble)  # column_to_rownames()
+library(purrr)   # map_dfr()
+library(scatterplot3d) #scatterplot in 3D 
+
+## link to folder containing .paf files
+paf_dir <- "/path/to/paf/files"
+files <- list.files(paf_dir, pattern = "\\.paf$", full.names = TRUE)
+
+## this step reads every .paf file in the folder, extract gene ID (qname), start position of the genome, and only keep one row per geneid (when more than one, it retains only first hit)
+
+long <- map_dfr(files, function(f) {
+  species <- sub("\\.paf$", "", basename(f))
+  read_paf_safe(f) %>%
+    distinct(qname, .keep_all = TRUE) %>%
+    transmute(species = species, gene_id = qname, start_pos = tstart)
+})
+
+## Retain geneids present in all the species only (homologous landmarks) 
+common_genes <- long %>%
+  count(gene_id) %>%
+  filter(n == n_species) %>%
+  pull(gene_id)
+
+## Reshape the data intwo wide format wherein one row/species, one column/gene, and values repreesent start bp of the genes
+gene_matrix <- long %>%
+  filter(gene_id %in% common_genes) %>%
+  pivot_wider(names_from = gene_id, values_from = start_pos) %>%
+  column_to_rownames("species")
+
+##check structure of the matrix
+str(gene_matrix)
+gene_matrix[1:3, 1:3]
+
+## save the matrix
+write.csv(gene_matrix, "gene_positions_common.csv", row.names = TRUE)
+cat("Done —", ncol(gene_matrix), "common genes across", nrow(gene_matrix), "species.\n")
+
+## STEP 4: PCA with homologous gene landmarks extracting by miniprot mapping
+
+data <- read.csv("gene_positions_common.csv",header =T, row.names = 1)
+my_pca <- prcomp(data)
+#check results
+my_pca$x
+write.csv(my_pca$x. file="Gene_coordinates_PCA.csv")
+
+## save loadings of genes 
+write.csv(my_pca$rotation, file="Gene_coordinates_PCA_loadings.csv")
+
+## calculate variance explained by PCs
+my_pca$sdev
+var_explained <- (my_pca$sdev^2) / sum(my_pca$sdev^2) * 100
+var_explained
+var_table <- tibble(
+  PC            = paste0("PC", seq_along(var_explained)),
+  var_explained = round(var_explained, 2),
+  cumulative    = round(cumsum(var_explained), 2)
+)
+var_table
+write.csv(var_table, file="Gene_coordinates_PCA_variance.csv")
+
+# plotting 
+# Sample names from column 1
+sample_names <- rownames(data)
+sample_names
+# Assign a colour to each unique sample
+sample_colours <- c(
+  "D_flavomontana_ancestral_notags" = "#c9919b",
+  "D_montana_ancestral_notags" = "#810405",
+  "D_novamexicana_ancestral_notags" = "#046201",
+  "D_americana_ancestral_notags" = "#f5a50a",
+  "D_virilisA_ancestral_notags" = "#9a22f2",
+  "D_virilisB_ancestral_notags" = "#9a22f2"
+)
+
+# Match colours to your samples
+point_colours <- sample_colours[sample_names]
+
+# Axis labels
+xlab <- paste0("PC1 (",var_table[1,2],"%)")
+xlab
+ylab <- paste0("PC2 (",var_table[2,2],"%)")
+ylab
+zlab <- paste0("PC3 (",var_table[3,2],"%)")
+zlab
+
+## 3D PCA plot 
+s3d <- scatterplot3d(
+  my_pca$x[,1],
+  my_pca$x[,2],
+  my_pca$x[,3],
+  color = point_colours,
+  pch = 19,
+  xlab = xlab,
+  ylab = ylab,
+  zlab = zlab
+)
+
+#plot only two PCs at a time 
+plot(
+  my_pca$x[,1],
+  my_pca$x[,2],
+  col = point_colours,
+  pch = 19,
+  xlab = xlab,
+  ylab = ylab
+)
+
+
+## STEP 5: calcualte disparity using PC values, here we demonstrate using only PC1
+
+# extract PC1
+axis1 <- my_pca$x[, 1]
+axis1
+
+## create unique pairs of species to calcualte disparity
+# Create all unique pairs
+pairs <- combn(sample_names, 2)
+pairs
+
+## calcualte their absolute distances in PC1
+
+results <- data.frame(
+  sp1_vs_sp2 = paste(pairs[1, ], pairs[2, ], sep = "_vs_"),
+  value = abs(axis1[pairs[1, ]] - axis1[pairs[2, ]])
+)
+
+# View results
+results 
+write.csv(results,file="disparity_BUSCO_PC1.csv")
+
+
+
+
+
+
+
