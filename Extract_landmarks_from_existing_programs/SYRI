@@ -1,0 +1,273 @@
+# SYRI and other such SV detecting programs can be used to carryout a 'crude' version of measuring SVs between species
+# This uses SV counts rather than landmarking genomic regions to measure the amount of SVs, so we do not recommend this pipeline
+# However, to get an idea of the 'number' of SVs accumulated across different species pairs, one could use the following script to filter and carryout an MDS
+
+# Assumes users have already run SYRI, see SYRI's github for how to run SYRI (https://github.com/schneebergerlab/syri)
+
+# SYRI identifies SVs and stores output in a vcf format that also contains information on Single Nucleotide Polymorphisms (SNPs), Syntenic regions (SYNs), and highly diverged regions (HDRs) as it works on pairwise genome alignments
+# None of these are true SVs, and therefore we need to filter these out from the vcf files
+
+#each pairwise comparison produces a vcf file, so do this for all the vcf files
+
+# CAVEATS
+# pairwise comparisons
+# subject to evolutionary divergence between species being compared (close species align better, they could have more 'fine-scale' SVs than specie that do not align very well
+# Using SV counts only 
+
+# ALL STEPS IN R 
+#################################
+######## STEP 1 #################
+#################################
+#load libraries
+
+library(dplyr)
+library(readr)
+library(stringr)
+library(tidyr)
+library(purrr)
+
+# ---------------------------------------------------------------------------
+# Function to read SYRI's vcf files and parse it into tiny tibble
+# ---------------------------------------------------------------------------
+
+
+read_syri_vcf <- function(vcf_path) {
+  
+  # readr's `comment` only strips lines starting with "##", so the "#CHROM ..." header line is kept and used as the column names.
+  df <- read_tsv(
+    vcf_path,
+    comment   = "##",
+    col_types = cols(.default = "c"),
+    progress  = FALSE
+  )
+  names(df)[1] <- "CHROM"
+  
+  # SVTYPE from the ALT field, e.g. "<TRANS>" -> "TRANS"
+  df$SVTYPE <- str_remove_all(df$ALT, "[<>]")
+  
+  # Parse the INFO column (semicolon-separated key=value pairs) into columns
+  info_keys <- c("END", "ChrB", "StartB", "EndB", "Parent", "VarType", "DupType")
+  
+  parse_info <- function(info_string) {
+    pairs <- str_split(info_string, ";")[[1]]
+    kv <- str_split_fixed(pairs, "=", 2)
+    vals <- setNames(as.list(rep(NA_character_, length(info_keys))), info_keys)
+    for (i in seq_len(nrow(kv))) {
+      key <- kv[i, 1]
+      if (key %in% info_keys) vals[[key]] <- kv[i, 2]
+    }
+    as_tibble(vals)
+  }
+  
+  info_df <- map_dfr(df$INFO, parse_info)
+  df <- bind_cols(df %>% select(-INFO), info_df)
+  
+  # Numeric coercion; "." (missing in SyRI) becomes NA
+  to_num <- function(x) suppressWarnings(as.numeric(na_if(x, ".")))
+  
+  df <- df %>%
+    mutate(
+      POS    = to_num(POS),
+      END    = to_num(END),
+      StartB = to_num(StartB),
+      EndB   = to_num(EndB)
+    )
+  
+  df
+}
+
+# ---------------------------------------------------------------------------
+# function to filter out non SVs and retain SVs that are atleast 500bp long (either the reference or the query), so any SV that involves atleast 500 bp gets retained. This cutoff can be modified based on the user's question
+# ---------------------------------------------------------------------------
+
+
+extract_syri_svs <- function(df, min_size = 500) {
+  df %>%
+    filter(VarType %in% c("SR", "ShV")) %>%
+    filter(SVTYPE != "HDR") %>%
+    filter(SVTYPE != "SYN") %>%
+    filter(SVTYPE != "SNP") %>%
+    mutate(
+      ref_len   = END - POS + 1,
+      query_len = EndB - StartB + 1,
+      SVLEN     = pmax(ref_len, query_len, na.rm = TRUE)
+    ) %>%
+    filter(SVLEN >= min_size) %>%
+    select(-REF, -ALT, -FILTER, -QUAL) %>%
+    relocate(CHROM, POS, END, ID, SVTYPE, ChrB, StartB, EndB, SVLEN, DupType)
+}
+
+# ---------------------------------------------------------------------------
+# function to write the filtered VCF files
+# ---------------------------------------------------------------------------
+
+write_filtered_vcf <- function(vcf_path, keep_ids, out_path) {
+  lines <- readLines(vcf_path)
+  
+  is_header  <- startsWith(lines, "#")
+  header_lns <- lines[is_header]
+  data_lns   <- lines[!is_header]
+  
+  # ID is the 3rd tab-separated field
+  ids <- vapply(data_lns, function(l) str_split(l, "\t")[[1]][3], character(1))
+  keep_lns <- data_lns[ids %in% keep_ids]
+  
+  writeLines(c(header_lns, keep_lns), out_path)
+  invisible(out_path)
+}
+
+# ---------------------------------------------------------------------------
+# Function to extract any particular type of SVs of interest, here we were interested in extracting inversions 
+# ---------------------------------------------------------------------------
+
+
+extract_inversions <- function(df, min_size = 500) {
+  inv_types <- c("INV", "INVTR", "INVDP")
+  
+  df %>%
+    filter(SVTYPE %in% inv_types) %>%
+    mutate(
+      ref_len   = END - POS + 1,
+      query_len = EndB - StartB + 1,
+      SVLEN     = pmax(ref_len, query_len, na.rm = TRUE)
+    ) %>%
+    filter(SVLEN >= min_size) %>%
+    select(-REF, -ALT, -FILTER, -QUAL) %>%
+    relocate(CHROM, POS, END, ID, SVTYPE, ChrB, StartB, EndB, SVLEN, DupType)
+}
+
+
+# ---------------------------------------------------------------------------
+# Run it on vcf files to create filtered vcfs with only SVs of atleast 5000bp
+# ---------------------------------------------------------------------------
+
+## usage 
+syri_df   <- read_syri_vcf(genomeA_genomeB.vcf")
+svs_500   <- extract_syri_svs(syri_df, min_size = 500)
+inv_500 <- extract_inversions(syri_df, min_size = 500)
+
+#check
+head(inv_500)
+head(svs_500)
+
+# write files 
+write_csv(inv_500, "genomeA_genomeB_inversions_500bp.csv")
+write_csv(svs_500, "genomeA_genomeB_allsvs_500bp.csv")
+
+## keep all the pairwise compared SV files in one folder. For example, all species pairs inversions in one folder 
+
+
+#################################
+######## STEP 2 #################
+#################################
+
+# ---------------------------------------------------------------------------
+# function to count SVs in the .csv files, assumes all csv files in the same folder and named as speciesA_svs_speciesB.csv
+# ---------------------------------------------------------------------------
+
+count_pairwise_csvs <- function(dir_path,
+                                file_glob = "*_svs_*.csv",
+                                pattern   = "^(.+?)-(.+?)_(?:svs|inversions).*\\.csv$") {
+  
+  files <- list.files(dir_path, pattern = utils::glob2rx(file_glob), full.names = TRUE)
+  
+  purrr::map_dfr(files, function(f) {
+    fname <- basename(f)
+    m <- stringr::str_match(fname, pattern)
+    if (is.na(m[1, 1])) {
+      warning("Filename didn't match expected pattern, skipping: ", fname)
+      return(NULL)
+    }
+    n_rows <- nrow(readr::read_csv(f, show_col_types = FALSE))
+    tibble::tibble(
+      species_a  = m[1, 2],
+      species_b  = m[1, 3],
+      n_variants = n_rows,
+      file       = fname
+    )
+  })
+}
+
+# ---------------------------------------------------------------------------
+# function to convert long format into NXN matrix
+# ---------------------------------------------------------------------------
+
+build_dist_matrix <- function(long_df, species_a = "species_a", species_b = "species_b", value = "n_variants") {
+  sp <- sort(unique(c(long_df[[species_a]], long_df[[species_b]])))
+  n  <- length(sp)
+  m  <- matrix(0, n, n, dimnames = list(sp, sp))
+  
+  for (i in seq_len(nrow(long_df))) {
+    a <- long_df[[species_a]][i]
+    b <- long_df[[species_b]][i]
+    v <- long_df[[value]][i]
+    m[a, b] <- v
+    m[b, a] <- v
+  }
+  m
+}
+
+# ---------------------------------------------------------------------------
+# function to run MDS and calculate how much variance is explained by an axis, change k value if more than two axes is of interest
+# ---------------------------------------------------------------------------
+run_mds <- function(dist_matrix, k = 2) {
+  fit <- stats::cmdscale(as.dist(dist_matrix), k = k, eig = TRUE)
+  coords <- as.data.frame(fit$points)
+  colnames(coords) <- paste0("MDS", seq_len(k))
+  coords <- tibble::rownames_to_column(coords, "species")
+  
+  # % variance explained by each axis (only meaningful for non-negative eigenvalues)
+  var_explained <- fit$eig / sum(abs(fit$eig)) * 100
+  attr(coords, "var_explained") <- var_explained[seq_len(k)]
+  coords
+}
+
+# ---------------------------------------------------------------------------
+# functions to plot results from MDS, two axes at a time 
+# ---------------------------------------------------------------------------
+plot_mds <- function(mds_df, title = "MDS") {
+  ve <- attr(mds_df, "var_explained")
+  xlab <- if (!is.null(ve)) sprintf("MDS1 (%.1f%%)", ve[1]) else "MDS1"
+  ylab <- if (!is.null(ve)) sprintf("MDS2 (%.1f%%)", ve[2]) else "MDS2"
+  
+  ggplot(mds_df, aes(MDS1, MDS2, label = species)) +
+    geom_point(size = 3) +
+    ggrepel::geom_text_repel(seed = 1) +
+    labs(title = title, x = xlab, y = ylab) +
+    theme_minimal()
+}
+
+# ---------------------------------------------------------------------------
+# Run MDS on all svs csv files and inversion csv files and plot the results 
+# ---------------------------------------------------------------------------
+
+sv_counts  <- count_pairwise_csvs("./svs_csv", file_glob = "*_svs_*.csv")
+head(sv_counts)
+
+inv_counts <- count_pairwise_csvs("./svs_csv", file_glob = "*_inversions_*.csv")
+head(inv_counts)
+
+
+sv_dist  <- build_dist_matrix(sv_counts)
+inv_dist <- build_dist_matrix(inv_counts)
+
+#if there are 0 inversions between a species pair, change that to a small number to avoid NaN values 
+inv_dist[inv_dist == 0 & row(inv_dist) != col(inv_dist)] <- 0.01
+
+head(sv_dist)
+head(inv_dist)
+
+
+## MDS 
+sv_mds <- cmdscale(dist(sv_dist), k = 3,eig = TRUE)
+sv_mds
+inv_mds <- cmdscale(dist(inv_dist), k = 3,eig = TRUE)
+inv_mds
+
+#plot
+plot_mds(sv_mds,  "MDS - All SVs")
+plot_mds(inv_mds, "MDS - Inversions only")
+
+# For better plots, plot using ggplot2 or any other plotting method
+
+
