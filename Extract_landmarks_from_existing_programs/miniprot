@@ -41,10 +41,11 @@ read_paf_safe <- function(paf_path) {
 }
 
 #custom function to compare two pafs, so a pair of genomes can be used at once. It uses geneid to combine the two .pafs, use genome coordinates of geneids and create a dot plot where colinear and non-linear segments are identified
-## In this case, it is extracting a gene's midpoint; but essnetially a starting point could also be used. These codes can be easily modified to do the same
+
+
+## In this case, it is extracting a gene's midpoint; but essentially a starting point could also be used. These codes can be easily modified to do the same
 
 compare_two_paf <- function(paf_a, paf_b, species_a = "Species A", species_b = "Species B") {
-
   a <- read_paf_safe(paf_a) %>%
     distinct(qname, .keep_all = TRUE) %>%
     transmute(gene_id = qname, chrom_a = tname, tstart_a = tstart, tend_a = tend, strand_a = strand)
@@ -56,16 +57,13 @@ compare_two_paf <- function(paf_a, paf_b, species_a = "Species A", species_b = "
   pairs <- inner_join(a, b, by = "gene_id") %>%
     mutate(mid_a = (tstart_a + tend_a) / 2,
            mid_b = (tstart_b + tend_b) / 2)
-
   
   pairs <- pairs %>%
     mutate(same_strand = ifelse(strand_a == strand_b,
                                 "Collinear (same strand)",
                                 "Candidate inversion (opposite strand)"))
   
-  p <- ggplot(pairs, aes(gw_a, gw_b, color = same_strand)) +
-    geom_vline(data = bounds_a, aes(xintercept = offset), color = "grey85", linewidth = 0.3) +
-    geom_hline(data = bounds_b, aes(yintercept = offset), color = "grey85", linewidth = 0.3) +
+  p <- ggplot(pairs, aes(mid_a, mid_b, color = same_strand)) +
     geom_point(size = 2, alpha = 0.85) +
     scale_color_manual(values = c("Collinear (same strand)" = "black",
                                   "Candidate inversion (opposite strand)" = "orange")) +
@@ -78,7 +76,6 @@ compare_two_paf <- function(paf_a, paf_b, species_a = "Species A", species_b = "
   
   list(plot = p, data = pairs)
 }
-
 
 ## now using these custom functions, compare every pair of species and create the plots, I provide two examples below
 
