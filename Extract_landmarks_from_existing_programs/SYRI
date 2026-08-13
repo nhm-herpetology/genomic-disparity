@@ -11,7 +11,7 @@
 
 # CAVEATS
 # pairwise comparisons
-# subject to evolutionary divergence between species being compared (close species align better, they could have more 'fine-scale' SVs than specie that do not align very well
+# subject to evolutionary divergence between species being compared (close species align better, they could have more 'fine-scale' SVs than species that do not align very well
 # Using SV counts only 
 
 # ALL STEPS IN R 
