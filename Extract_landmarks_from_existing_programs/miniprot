@@ -44,7 +44,7 @@ read_paf_safe <- function(paf_path) {
 ## In this case, it is extracting a gene's midpoint; but essnetially a starting point could also be used. These codes can be easily modified to do the same
 
 compare_two_paf <- function(paf_a, paf_b, species_a = "Species A", species_b = "Species B") {
-{
+
   a <- read_paf_safe(paf_a) %>%
     distinct(qname, .keep_all = TRUE) %>%
     transmute(gene_id = qname, chrom_a = tname, tstart_a = tstart, tend_a = tend, strand_a = strand)
@@ -56,11 +56,7 @@ compare_two_paf <- function(paf_a, paf_b, species_a = "Species A", species_b = "
   pairs <- inner_join(a, b, by = "gene_id") %>%
     mutate(mid_a = (tstart_a + tend_a) / 2,
            mid_b = (tstart_b + tend_b) / 2)
-  
-  pairs <- add_genome_offsets(pairs, "chrom_a", "mid_a", "gw_a")
-  bounds_a <- attr(pairs, "chrom_bounds")
-  pairs <- add_genome_offsets(pairs, "chrom_b", "mid_b", "gw_b")
-  bounds_b <- attr(pairs, "chrom_bounds")
+
   
   pairs <- pairs %>%
     mutate(same_strand = ifelse(strand_a == strand_b,
@@ -133,7 +129,10 @@ long <- map_dfr(files, function(f) {
     transmute(species = species, gene_id = qname, start_pos = tstart)
 })
 
-## Retain geneids present in all the species only (homologous landmarks) 
+## Retain geneids present in all the species only (homologous landmarks)
+
+n_species <- n_distinct(long$species)
+
 common_genes <- long %>%
   count(gene_id) %>%
   filter(n == n_species) %>%
@@ -159,7 +158,7 @@ data <- read.csv("gene_positions_common.csv",header =T, row.names = 1)
 my_pca <- prcomp(data)
 #check results
 my_pca$x
-write.csv(my_pca$x. file="Gene_coordinates_PCA.csv")
+write.csv(my_pca$x, file="Gene_coordinates_PCA.csv")
 
 ## save loadings of genes 
 write.csv(my_pca$rotation, file="Gene_coordinates_PCA_loadings.csv")
@@ -180,7 +179,7 @@ write.csv(var_table, file="Gene_coordinates_PCA_variance.csv")
 # Sample names from column 1
 sample_names <- rownames(data)
 sample_names
-# Assign a colour to each unique sample
+# Assign a colour to each unique sample, change sample names (here they are made to match Drosophila virilis group dataset in the MS)
 sample_colours <- c(
   "D_flavomontana_ancestral_notags" = "#c9919b",
   "D_montana_ancestral_notags" = "#810405",
