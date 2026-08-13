@@ -15,7 +15,7 @@ miniprot -t 6  genome.mp refseqs_ancestral.faa >  genome.paf
 
 cut -f1-12 genome.paf > genome_notags.paf
 
-## STEP 2: Comapre and dotplot 
+## STEP 2: Compare and dotplot 
 
 #############################################
 ######## R script ###########################
